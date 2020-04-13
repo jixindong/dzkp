@@ -1,0 +1,34 @@
+<!--pages/user/user.wxml-->
+<!-- 头部 -->
+<image src="/images/bg01.png" class="header"></image>
+<!-- 头部 end -->
+
+<!-- 主体 -->
+<view class="container">
+	<!-- 个人信息 -->
+	<view class="userInfo boxShadow">
+		<view class="avatarBox">
+			<button class="avatar" bindgetuserinfo="getUserInfo" open-type="getUserInfo" wx:if="{{isLogin == false}}">
+				<image src="https://s1.ax1x.com/2020/03/17/8UwKEj.jpg"></image>
+			</button>
+
+			<image src="{{userInfo.avatarUrl}}" wx:if="{{isLogin == true}}" class="avatar"></image>
+		</view>
+
+		<text wx:if="{{isLogin==false}}">点击头像登录</text>
+		<text class="userName" wx:if="{{isLogin==true}}">{{userInfo.nickName}}</text>
+	</view>
+
+	<!-- 功能列表 -->
+	<view class="fList boxShadow">
+		<!-- 地址管理 -->
+		<navigator url="#" class="listLine">
+			<image src="/images/server.png"></image>
+			<text>地址管理</text>
+			<image src="/images/arrowRight.png"></image>
+		</navigator>
+
+
+	</view>
+</view>
+<!-- 主体 end -->

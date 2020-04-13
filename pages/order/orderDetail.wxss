@@ -1,0 +1,336 @@
+/* pages/order/orderDetail.wxss */
+/* 头部 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 40rpx;
+  height: 190rpx;
+  color: #f5f5f5;
+  font-size: 36rpx;
+  background-color: #1865F3;
+}
+
+.header .anewOrder {
+  width: 200rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 26rpx;
+  text-align: center;
+  border: 1rpx solid #fff;
+  border-radius: 10rpx;
+}
+
+/* 头部 end */
+
+/* 主体 */
+.container {
+  margin-top: -90rpx;
+  padding: 0 20rpx;
+}
+
+/* 待支付信息 */
+.container .waitPay {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 10rpx 0;
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+
+.container .waitPay .title {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 20rpx;
+  color: #1A1A1A;
+  font-size: 30rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.container .waitPay .title .time {
+  color: #999;
+}
+
+.container .waitPay .btnBox {
+  display: flex;
+  justify-content: center;
+}
+
+.container .waitPay .btnBox .btn {
+  margin: 30rpx 10rpx 10rpx;
+  padding: 10rpx 40rpx;
+  color: #999;
+  font-size: 26rpx;
+  border: 1rpx solid #999;
+  border-radius: 10rpx;
+}
+
+.container .waitPay .btnBox .btn2 {
+  margin: 30rpx 10rpx 10rpx;
+  padding: 10rpx 40rpx;
+  color: #1865F3;
+  font-size: 26rpx;
+  border: 1rpx solid #1865F3;
+  border-radius: 10rpx;
+}
+
+/* 待支付信息 end */
+
+/* 待接单信息 */
+.container .waitOrder {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 10rpx 0;
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+
+.container .waitOrder .tip {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.container .waitOrder .tip .wait {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 0;
+  color: #1865F3;
+  font-size: 28rpx;
+}
+
+.container .waitOrder .tip .wait image {
+  margin: 0 20rpx 0 0;
+  width: 48rpx;
+  height: 38rpx;
+}
+
+.container .waitOrder .tip .info {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 0;
+  color: #F88616;
+  font-size: 24rpx;
+}
+
+.container .waitOrder .tip .info image {
+  margin: 0 20rpx 0 0;
+  width: 28rpx;
+  height: 24rpx;
+}
+
+.container .waitOrder .btnBox {
+  display: flex;
+  justify-content: center;
+}
+
+.container .waitOrder .btnBox .btn {
+  margin: 30rpx 20rpx 10rpx;
+  padding: 10rpx 40rpx;
+  color: #999;
+  font-size: 26rpx;
+  border: 1rpx solid #999;
+  border-radius: 10rpx;
+}
+
+/* 待接单信息 end */
+
+/* 订单进行信息 */
+.container .orderProceed {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 10rpx 0;
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+
+.container .orderProceed .title {
+  padding: 0 0 20rpx;
+  color: #1A1A1A;
+  font-size: 30rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.container .orderProceed .info {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 40rpx;
+  font-size: 26rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.container .orderProceed .info .getImg {
+  display: flex;
+  align-items: center;
+  color: #999;
+
+}
+
+.container .orderProceed .info .getImg image {
+  margin: 0 20rpx 0 0;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 10rpx;
+}
+
+.container .orderProceed .info .contact {
+  display: flex;
+  align-items: center;
+  color: #1865F3;
+}
+
+.container .orderProceed .info .contact image {
+  margin: 0 20rpx 0 0;
+  width: 20rpx;
+  height: 24rpx;
+}
+
+.container .orderProceed .btnBox {
+  display: flex;
+  justify-content: center;
+}
+
+.container .orderProceed .btnBox .btn {
+  margin: 30rpx 10rpx 10rpx;
+  padding: 10rpx 40rpx;
+  color: #999;
+  font-size: 26rpx;
+  border: 1rpx solid #999;
+  border-radius: 10rpx;
+}
+
+.container .orderProceed .btnBox .btn2 {
+  margin: 30rpx 10rpx 10rpx;
+  padding: 10rpx 40rpx;
+  color: #1865F3;
+  font-size: 26rpx;
+  border: 1rpx solid #1865F3;
+  border-radius: 10rpx;
+}
+
+/* 订单进行信息 end */
+
+/* 订单已完成 */
+.container .orderComplete {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 10rpx 0;
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+
+.container .orderComplete .title {
+  padding: 0 0 20rpx;
+  color: #1A1A1A;
+  font-size: 30rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.container .orderComplete .info {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 40rpx;
+  font-size: 26rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.container .orderComplete .info .getImg {
+  display: flex;
+  align-items: center;
+  color: #999;
+
+}
+
+.container .orderComplete .info .getImg image {
+  margin: 0 20rpx 0 0;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 10rpx;
+}
+
+.container .orderComplete .info .contact {
+  display: flex;
+  align-items: center;
+  color: #1865F3;
+}
+
+.container .orderComplete .info .contact image {
+  margin: 0 20rpx 0 0;
+  width: 20rpx;
+  height: 24rpx;
+}
+
+.container .orderComplete .btnBox {
+  display: flex;
+  justify-content: center;
+}
+
+.container .orderComplete .btnBox .btn {
+  margin: 30rpx 20rpx 10rpx;
+  padding: 10rpx 40rpx;
+  color: #999;
+  font-size: 26rpx;
+  border: 1rpx solid #999;
+  border-radius: 10rpx;
+}
+
+.container .orderComplete .btnBox .btn2 {
+  margin: 30rpx 20rpx 10rpx;
+  padding: 10rpx 40rpx;
+  color: #1865F3;
+  font-size: 26rpx;
+  border: 1rpx solid #1865F3;
+  border-radius: 10rpx;
+}
+
+/* 订单已完成 end */
+
+/* 订单明细 */
+.container .orderDetail {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 10rpx 0;
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+
+.container .orderDetail .title {
+  padding: 0 0 30rpx;
+  color: #1A1A1A;
+  font-size: 30rpx;
+}
+
+.container .orderDetail .detailLine {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  color: #1A1A1A;
+  font-size: 26rpx;
+  overflow: hidden;
+  border-top: 1rpx solid #e6e6e6;
+}
+
+.container .orderDetail .detailLine .info {
+  flex: 1;
+  padding: 0 0 0 20rpx;
+  color: #999;
+  text-align: right;
+}
+
+.container .orderDetail .detailLine image {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 10rpx;
+}
+
+/* 订单明细 end */
+/* 主体 end */

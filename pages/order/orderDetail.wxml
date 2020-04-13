@@ -1,0 +1,149 @@
+<!--pages/order/orderDetail.wxml-->
+<!-- 头部 -->
+<view class="header">
+	<text wx:if="{{statusCode == 1}}">待支付</text>
+	<text wx:if="{{statusCode == 2}}">待接单</text>
+	<text wx:if="{{statusCode == 3}}">订单进行中...</text>
+	<text wx:if="{{statusCode == 4}}">订单已完成</text>
+	<text wx:if="{{statusCode == 5}}">订单已取消</text>
+
+	<text wx:if="{{getCode && statusCode != 5}}">取件码：{{getCode}}</text>
+
+	<navigator url="#" class="anewOrder" wx:if="{{statusCode == 5}}">重新下单</navigator>
+</view>
+<!-- 头部 end -->
+
+<!-- 主体 -->
+<view class="container">
+	<!-- 待支付信息 -->
+	<view class="waitPay boxShadow" wx:if="{{statusCode == 1}}">
+		<view class="title">
+			<text>请在15分钟内完成支付</text>
+			<text class="time">11:11</text>
+		</view>
+
+		<view class="btnBox">
+			<navigator url="#" class="btn" bindtap="cancelOrder">取消订单</navigator>
+			<navigator url="#" class="btn">修改订单</navigator>
+			<navigator url="#" class="btn2">立即支付</navigator>
+		</view>
+	</view>
+	<!-- 待支付信息 end -->
+
+	<!-- 待接单信息 -->
+	<view class="waitOrder boxShadow" wx:if="{{statusCode == 2}}">
+		<view class="tip">
+			<view class="wait">
+				<image src="/images/service2.png"></image>
+				<text>等待骑手接单...</text>
+			</view>
+
+			<view class="info">
+				<image src="/images/trumpet.png"></image>
+				<text>齐心协力抗疫情，代综快跑为您服务</text>
+			</view>
+		</view>
+
+		<view class="btnBox">
+			<navigator url="#" class="btn" bindtap="cancelOrder">取消订单</navigator>
+			<navigator url="#" class="btn">修改订单</navigator>
+		</view>
+	</view>
+	<!-- 待接单信息 end -->
+
+	<!-- 订单进行信息 -->
+	<view class="orderProceed boxShadow" wx:if="{{statusCode == 3}}">
+		<view class="title">预计11:00送达</view>
+
+		<view class="info">
+			<view class="getImg">
+				<image src="{{getImg}}"></image>
+				<text>已拍照取件</text>
+			</view>
+
+			<navigator url="#" class="contact" bindtap="telHorseman">
+				<image src="/images/tel2.png"></image>
+				<text>联系骑手</text>
+			</navigator>
+		</view>
+
+		<view class="btnBox">
+			<navigator url="#" class="btn" bindtap="cancelOrder">取消订单</navigator>
+			<navigator url="#" class="btn">修改订单</navigator>
+			<navigator url="#" class="btn2">确认送达</navigator>
+		</view>
+	</view>
+	<!-- 订单进行信息 end -->
+
+	<!-- 订单已完成 -->
+	<view class="orderComplete boxShadow" wx:if="{{statusCode == 4}}">
+		<view class="title">11:00准时送达</view>
+
+		<view class="info">
+			<view class="getImg">
+				<image src="{{getImg}}"></image>
+				<text>已拍照取件</text>
+			</view>
+
+			<navigator url="#" class="contact" bindtap="telHorseman">
+				<image src="/images/tel2.png"></image>
+				<text>联系骑手</text>
+			</navigator>
+		</view>
+
+		<view class="btnBox">
+			<navigator url="#" class="btn">联系商家</navigator>
+			<navigator url="#" class="btn2">再来一单</navigator>
+		</view>
+	</view>
+	<!-- 订单已完成 end -->
+
+	<!-- 订单明细 -->
+	<view class="orderDetail boxShadow">
+		<view class="title">订单明细</view>
+
+		<!-- 订单编号 -->
+		<view class="detailLine">
+			<view>订单编号</view>
+			<text class="info ellipsis" bindtap="copyNum">{{orderNumber}}</text>
+		</view>
+
+		<!-- 订单时间 -->
+		<view class="detailLine">
+			<view>订单时间</view>
+			<text class="info ellipsis">{{orderTime}}</text>
+		</view>
+
+		<!-- 服务内容 -->
+		<view class="detailLine">
+			<view>服务内容</view>
+			<text class="info ellipsis">{{serve}}</text>
+		</view>
+
+		<!-- 照片 -->
+		<view class="detailLine">
+			<view>照片</view>
+			<image src="{{orderImg}}"></image>
+		</view>
+
+		<!-- 订单金额 -->
+		<view class="detailLine">
+			<view>订单金额</view>
+			<text class="info ellipsis">{{price}}</text>
+		</view>
+
+		<!-- 保价 -->
+		<view class="detailLine">
+			<view>是否保价</view>
+			<text class="info ellipsis">{{supportValue}}</text>
+		</view>
+
+		<!-- 备注 -->
+		<view class="detailLine">
+			<view>备注</view>
+			<text class="info">{{remark}}</text>
+		</view>
+	</view>
+	<!-- 订单明细 end -->
+</view>
+<!-- 主体 end -->

@@ -1,0 +1,636 @@
+/**index.wxss**/
+
+/* 顶部轮播图 */
+
+.topSwiper {
+  margin: 20rpx;
+  height: 280rpx;
+  overflow: hidden;
+  border-radius: 10rpx;
+}
+
+.topSwiper .wx-swiper-dot {
+  margin: 0 10rpx;
+  width: 10rpx;
+  height: 10rpx;
+}
+
+/* 顶部轮播图 end */
+
+/* 服务 */
+
+.service {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0 20rpx 50rpx;
+  overflow: hidden;
+  border-radius: 20rpx;
+}
+
+/* 标题列表 */
+
+.service .tabHead {
+  height: 80rpx;
+  line-height: 80rpx;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.service .tabHead .tabHeadItem {
+  position: relative;
+  display: inline-block;
+  width: 25%;
+  color: #666;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.service .tabHead .tabHeadItem.active {
+  color: #1a1a1a;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.service .tabHead .tabHeadItem.active:after {
+  position: absolute;
+  left: 35%;
+  bottom: 0;
+  display: block;
+  width: 30%;
+  height: 6rpx;
+  content: '';
+  background-color: #1865f3;
+}
+
+/* 标题列表 end */
+
+/* 内容 */
+
+.service .tabContent swiper-item {
+  height: auto !important;
+}
+
+/* 内容公共部分 */
+
+/* 地址 */
+
+.service .tabContent .addressBox {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 30rpx;
+  border-radius: 10rpx;
+}
+
+.service .tabContent .addressBox .address {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 16rpx 0 16rpx 6rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.service .tabContent .addressBox .address image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.service .tabContent .addressBox .address .chooseAddress {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0 20rpx;
+  width: 440rpx;
+}
+
+.service .tabContent .addressBox .address .chooseAddress .choice {
+  width: 100%;
+  color: #ccc;
+  font-size: 26rpx;
+}
+
+.service .tabContent .addressBox .address .chooseAddress .detail {
+  width: 100%;
+  color: #1a1a1a;
+  font-size: 28rpx;
+}
+
+.service .tabContent .addressBox .address .chooseAddress .location {
+  width: 100%;
+  color: #999;
+  font-size: 22rpx;
+}
+
+.service .tabContent .addressBox .address .common {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  width: 74rpx;
+  height: 36rpx;
+  color: #fff;
+  font-size: 22rpx;
+  background-color: #1a1a1a;
+  border-radius: 10rpx;
+}
+
+/* 地址 end */
+
+/* 购买 */
+
+.service .tabContent .purchase {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 20rpx 0;
+  padding: 20rpx 0 0;
+  border-radius: 10rpx;
+}
+
+.service .tabContent .purchase .pLine {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 10rpx 20rpx 30rpx;
+}
+
+.service .tabContent .purchase .pLine .leftImg {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 20rpx;
+}
+
+.service .tabContent .purchase .pLine .pBoxBorder:after {
+  position: absolute;
+  left: 0;
+  bottom: -20rpx;
+  display: block;
+  width: 100%;
+  height: 1rpx;
+  content: '';
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.service .tabContent .purchase .pLine .pBox .title {
+  margin-right: auto;
+  color: #1a1a1a;
+  font-size: 28rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox picker {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox picker image {
+  margin: 0 10rpx 0 20rpx;
+  width: 12rpx;
+  height: 22rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox picker .active {
+  color: #1a1a1a;
+}
+
+/* 选择规格 */
+
+.service .tabContent .purchase .pLine .pBox .chooseSize {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.service .tabContent .purchase .pLine .pBox .chooseSize text {
+  color: #999;
+  font-size: 26rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox .chooseSize image {
+  margin: 0 10rpx 0 20rpx;
+  width: 12rpx;
+  height: 22rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox .chooseSize .choice {
+  max-width: 400rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox .chooseSize .choice text {
+  color: #1a1a1a;
+  font-size: 26rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox .chooseSize .choice image {
+  margin: 0 10rpx;
+  width: 30rpx;
+  height: 26rpx;
+  vertical-align: middle;
+}
+
+/* 选择规格 end */
+
+/* 优惠券 */
+
+.service .tabContent .purchase .pLine .pBox .discount {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.service .tabContent .purchase .pLine .pBox .discount text {
+  color: #999;
+  font-size: 26rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox .discount image {
+  margin: 0 10rpx 0 20rpx;
+  width: 12rpx;
+  height: 22rpx;
+}
+
+.service .tabContent .purchase .pLine .pBox .haveDiscount .num {
+  color: #f78617;
+}
+
+/* 优惠券 end */
+
+/* 备注按钮 */
+
+.service .tabContent .purchase .pLine .pBox .remark text {
+  display: inline-block;
+  max-width: 500rpx;
+  color: #999;
+  font-size: 26rpx;
+}
+
+/* 购买 end */
+
+/* 下单 */
+
+.service .tabContent .placeOrder {
+  align-self: flex-end;
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 30rpx 30rpx 40rpx 0;
+  padding: 20rpx 40rpx;
+  background-color: #f78617;
+  border-radius: 40rpx;
+  box-shadow: 0 0 40rpx 0 rgba(247, 134, 23, 0.5);
+}
+
+.service .tabContent .placeOrder text {
+  padding: 0 20rpx;
+  color: #fff;
+  font-size: 26rpx;
+}
+
+/* 下单 end */
+
+/* 内容公共部分 end */
+
+/* 帮我买 */
+
+.service .tabContent .toBuy {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 20rpx;
+}
+
+/* 市场 */
+
+.service .tabContent .toBuy .market {
+  margin: 20rpx 0;
+  width: 100%;
+  height: 120rpx;
+  border-radius: 80rpx;
+}
+
+.service .tabContent .toBuy .market image {
+  width: 100%;
+  height: 100%;
+}
+
+.service .tabContent .toBuy .marketInfo {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0 0 20rpx 0;
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+
+.service .tabContent .toBuy .marketInfo .title {
+  color: #666;
+  font-size: 28rpx;
+}
+
+.service .tabContent .toBuy .marketInfo .detail {
+  padding: 10rpx;
+  font-size: 24rpx;
+}
+
+/* 市场 end */
+
+/* 购买商品 */
+
+.service .tabContent .toBuy .product {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+
+.service .tabContent .toBuy .product .title {
+  color: #1a1a1a;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.service .tabContent .toBuy .product textarea {
+  padding: 10rpx;
+  width: 100%;
+  height: 140rpx;
+  color: #ccc;
+  font-size: 26rpx;
+}
+
+/* 购买商品 end */
+
+/* 帮我买 end */
+
+/* 帮我送 */
+
+.service .tabContent .toSend {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 20rpx;
+}
+
+/* 帮我送 end */
+
+/* 帮我取 */
+
+.service .tabContent .toFetch {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 20rpx;
+}
+
+/* 帮我取 end */
+
+/* 其他服务 */
+
+.service .tabContent .toDo {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 20rpx;
+}
+
+/* 服务事项 */
+
+.service .tabContent .toDo .serveItemBox {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 20rpx 0;
+  padding: 10rpx 0;
+}
+
+.service .tabContent .toDo .serveItemBox .serveItem {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 10rpx;
+  width: 200rpx;
+  height: 74rpx;
+  color: #1a1a1a;
+  font-size: 26rpx;
+  background-color: #f2f2f2;
+  border-radius: 20rpx;
+}
+
+.service .tabContent .toDo .serveItemBox .serveItem.active {
+  color: #fff;
+  background-color: #1865f3;
+}
+
+.service .tabContent .toDo .serveItemBox .serveItem radio {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.service .tabContent .toDo .serveItemBox .serveItem image {
+  margin: 0 10rpx 0 0;
+  width: 32rpx;
+  height: 26rpx;
+}
+
+/* 服务事项 end */
+
+/* 服务具体事项 */
+
+.service .tabContent .toDo .serveDetail {
+  padding: 20rpx;
+  border-radius: 10rpx;
+}
+
+.service .tabContent .toDo .serveDetail text {
+  color: #1a1a1a;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.service .tabContent .toDo .serveDetail textarea {
+  padding: 10rpx;
+  width: 100%;
+  height: 140rpx;
+  color: #ccc;
+  font-size: 24rpx;
+}
+
+/* 服务具体事项 end */
+
+/* 其他服务 end */
+
+/* 内容 end */
+
+/* 服务 end */
+
+/* 备注隐藏盒子 */
+
+.remarkBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.remarkBox .mask {
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.remarkBox .container {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 20rpx;
+  width: 100%;
+  background-color: #fff;
+}
+
+.remarkBox .container textarea {
+  padding: 20rpx;
+  width: 100%;
+  font-size: 26rpx;
+  background-color: rgb(245, 245, 245);
+}
+
+.remarkBox .container .sure {
+  margin: 20rpx auto;
+  width: 360rpx;
+  height: 74rpx;
+  line-height: 74rpx;
+  color: #fff;
+  font-size: 26rpx;
+  text-align: center;
+  background-color: #1865f3;
+  border-radius: 10rpx;
+}
+
+/* 备注隐藏盒子 end */
+
+/* 选择物品信息隐藏盒子 */
+.choiceInfoBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.choiceInfoBox .mask {
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.choiceInfoBox .container {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 20rpx;
+  width: 100%;
+  background-color: #fff;
+}
+
+/* 头部 */
+.choiceInfoBox .container .header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #E6E6E6;
+}
+
+.choiceInfoBox .container .header text {
+  flex: 1;
+  color: #1a1a1a;
+  font-size: 30rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.choiceInfoBox .container .header navigator {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+}
+
+.choiceInfoBox .container .header navigator image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 标题 */
+.choiceInfoBox .container .title {
+  padding: 20rpx 0;
+  color: #1a1a1a;
+  font-size: 28rpx;
+}
+
+/* 单选框、复选框 */
+.choiceInfoBox .container .goodItemBox {
+  display: flex;
+  flex-flow: row wrap;
+
+}
+
+.choiceInfoBox .container .goodItemBox .goodItem {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 10rpx auto;
+  width: 210rpx;
+  height: 64rpx;
+  color: #333;
+  font-size: 24rpx;
+  background-color: #f2f2f2;
+  border-radius: 8rpx;
+}
+
+.choiceInfoBox .container .goodItemBox .goodItem.active {
+  color: #fff;
+  background-color: #1865f3;
+}
+
+.choiceInfoBox .container .goodItemBox .goodItem radio {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.choiceInfoBox .container .goodItemBox .goodItem checkbox {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+/* 重量 */
+.choiceInfoBox .container .weight {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  color: #333;
+  font-size: 24rpx;
+}
+
+.choiceInfoBox .container .weight input {
+  margin: 0 20rpx 0 auto;
+  width: 90rpx;
+  text-align: right;
+}
+
+/* 确定按钮 */
+.choiceInfoBox .container .sure {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40rpx 0 0;
+  width: 100%;
+  height: 70rpx;
+  color: #fff;
+  font-size: 30rpx;
+  background-color: #1865F3;
+  border-radius: 10rpx;
+}
+
+/* 选择物品信息隐藏盒子 end */

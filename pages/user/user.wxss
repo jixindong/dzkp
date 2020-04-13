@@ -1,0 +1,76 @@
+/* pages/user/user.wxss */
+/* 头部 */
+.header {
+  width: 100%;
+  height: 200rpx;
+}
+
+/* 头部 end */
+
+/* 主体 */
+.container {
+  margin-top: -130rpx;
+}
+
+/* 个人信息 */
+.container .userInfo {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 20rpx;
+  color: #999;
+  font-size: 26rpx;
+  border-radius: 10rpx;
+}
+
+.container .userInfo text {
+  margin: 20rpx 0;
+}
+
+.container .userInfo .avatarBox {
+  margin-top: -45rpx;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.container .userInfo .avatarBox .avatar {
+  padding: 0;
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.container .userInfo .avatarBox .avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.container .userInfo .userName {
+  font-size: 30rpx;
+  color: #1a1a1a;
+}
+
+/* 个人信息 end */
+
+/* 功能列表 */
+.container .fList {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0 20rpx;
+}
+
+.container .fList .listLine {
+  padding: 20rpx;
+  color: #1A1A1A;
+  font-size: 26rpx;
+  border-radius: 10rpx;
+}
+
+.container .fList .listLine image {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+/* 功能列表 end */
+/* 主体 end */

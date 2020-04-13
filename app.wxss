@@ -1,0 +1,48 @@
+/**app.wxss**/
+
+page {
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: 100vh;
+  background-color: #f6f6f6;
+}
+
+view, scroll-view, swiper-item, navigator, image, input, textarea {
+  box-sizing: border-box;
+}
+
+swiper {
+  width: 100%;
+  height: 100%;
+}
+
+swiper image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 主体盒子 */
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.container view {
+  background-color: #fff;
+}
+
+/* 盒子阴影 */
+
+.boxShadow {
+  box-shadow: 2rpx 2rpx 4rpx 4rpx rgba(222, 222, 222, 0.4);
+}
+
+/* 超出文字变... */
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

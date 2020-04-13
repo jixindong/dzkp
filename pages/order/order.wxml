@@ -1,0 +1,82 @@
+<!--pages/order/order.wxml-->
+<view class="container">
+	<!-- 标题列表 -->
+	<scroll-view scroll-x="true" class="tabHead">
+		<view class="tabHeadItem {{currentTab == 0?'active':''}}" data-current="0" bindtap="swichNav">全部</view>
+		<view class="tabHeadItem {{currentTab == 1?'active':''}}" data-current="1" bindtap="swichNav">待支付</view>
+		<view class="tabHeadItem {{currentTab == 2?'active':''}}" data-current="2" bindtap="swichNav">待接单</view>
+		<view class="tabHeadItem {{currentTab == 3?'active':''}}" data-current="3" bindtap="swichNav">进行中</view>
+		<view class="tabHeadItem {{currentTab == 4?'active':''}}" data-current="4" bindtap="swichNav">已完成</view>
+		<view class="tabHeadItem {{currentTab == 5?'active':''}}" data-current="5" bindtap="swichNav">已取消</view>
+	</scroll-view>
+	<!-- 标题列表 end -->
+
+	<!-- 内容 -->
+	<swiper class="tabContent" style="height:{{contentHeight}}rpx" current="{{currentTab}}" duration="500" circular bindchange="switchTab">
+		<swiper-item>
+			<scroll-view scroll-y="true" class="scrollBox">
+				<!-- 订单卡片 -->
+				<block wx:for="{{orderAll}}" wx:key="*this">
+					<navigator url="/pages/order/orderDetail" class="orderCard boxShadow">
+						<!-- 头部 -->
+						<view class="header">
+							<text class="title" wx:if="{{item.nameCode == 1}}">帮我买</text>
+							<text class="title" wx:if="{{item.nameCode == 2}}">帮我送</text>
+							<text class="title" wx:if="{{item.nameCode == 3}}">帮我取</text>
+
+							<text class="waitPay" wx:if="{{item.statusCode == 1}}">待支付</text>
+							<text class="waitReceive" wx:if="{{item.statusCode == 2}}">待接单</text>
+							<text class="proceed" wx:if="{{item.statusCode == 3}}">进行中</text>
+							<text wx:if="{{item.statusCode == 4}}">已完成</text>
+							<text wx:if="{{item.statusCode == 5}}">已取消</text>
+						</view>
+
+						<!-- 中部 -->
+						<view class="detailBox">
+							<view class="detail">
+								<image src="/images/buy2.png" wx:if="{{item.nameCode == 1}}"></image>
+								<image src="/images/fetch.png" wx:if="{{item.nameCode == 2}}"></image>
+								<image src="/images/fetch.png" wx:if="{{item.nameCode == 3}}"></image>
+
+								<text>买货地址：</text>
+								<text class="address ellipsis">{{item.address1}}</text>
+							</view>
+
+							<view class="detail">
+								<image src="/images/receive2.png"></image>
+								<text>收货地址：</text>
+								<text class="address ellipsis">{{item.address2}}</text>
+							</view>
+
+							<view class="detail">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.tel}}</text>
+							</view>
+						</view>
+
+						<!-- 底部 -->
+						<view class="footer">
+							<view class="time">
+								<image src="/images/time.png"></image>
+								<text>{{item.time}}</text>
+							</view>
+
+							<view class="getCode">
+								<text>收货码：</text>
+								<text>{{item.getCode}}</text>
+							</view>
+						</view>
+					</navigator>
+				</block>
+				<!-- 订单卡片 end -->
+			</scroll-view>
+		</swiper-item>
+		<swiper-item>2</swiper-item>
+		<swiper-item>3</swiper-item>
+		<swiper-item>4</swiper-item>
+		<swiper-item>5</swiper-item>
+		<swiper-item>6</swiper-item>
+	</swiper>
+	<!-- 内容 end -->
+</view>

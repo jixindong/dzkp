@@ -1,0 +1,505 @@
+<!--index.wxml-->
+<view class="container">
+	<!-- 顶部轮播图 -->
+	<view class="topSwiper boxShadow">
+		<swiper autoplay indicator-dots indicator-color="#fff" indicator-active-color="#1865F3" interval="5000" circular>
+			<swiper-item wx:for="{{topSwiper}}" wx:key="*this">
+				<image src="{{item.img}}"></image>
+			</swiper-item>
+		</swiper>
+	</view>
+	<!-- 顶部轮播图 end -->
+
+	<!-- 服务 -->
+	<view class="service boxShadow">
+		<!-- 标题列表 -->
+		<scroll-view scroll-x="true" class="tabHead">
+			<view class="tabHeadItem {{currentTab == 0?'active':''}}" data-current="0" bindtap="swichNav">帮我买</view>
+			<view class="tabHeadItem {{currentTab == 1?'active':''}}" data-current="1" bindtap="swichNav">帮我送</view>
+			<view class="tabHeadItem {{currentTab == 2?'active':''}}" data-current="2" bindtap="swichNav">帮我取</view>
+			<view class="tabHeadItem {{currentTab == 3?'active':''}}" data-current="3" bindtap="swichNav">其他服务</view>
+		</scroll-view>
+		<!-- 标题列表 end -->
+
+		<!-- 内容 -->
+		<swiper class="tabContent" style="height:{{height}}" current="{{currentTab}}" duration="500" circular bindchange="switchTab">
+			<!-- 帮我买 -->
+			<swiper-item class="toBuy">
+				<!-- 地址 -->
+				<view class="addressBox boxShadow">
+					<view class="address">
+						<image src="/images/buy.png"></image>
+						<navigator url="#" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{!buyAddress||!buyAddressArea}}">请选择购买地址</text>
+							<text class="ellipsis detail" wx:if="{{buyAddress&&buyAddressArea}}">{{buyAddress}}</text>
+							<text class="ellipsis location" wx:if="{{buyAddress&&buyAddressArea}}">{{buyAddressArea}}</text>
+						</navigator>
+						<navigator url="#" class="common">常用</navigator>
+					</view>
+
+					<view class="address">
+						<image src="/images/receive.png"></image>
+						<navigator url="#" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{!takeAddress||!takeAddressArea}}">请选择收货地址</text>
+							<text class="ellipsis detail" wx:if="{{takeAddress&&takeAddressArea}}">{{takeAddress}}</text>
+							<text class="ellipsis location" wx:if="{{takeAddress&&takeAddressArea}}">{{takeAddressArea}}</text>
+						</navigator>
+						<navigator url="#" class="common">常用</navigator>
+					</view>
+				</view>
+				<!-- 地址 end -->
+
+				<!-- 市场 -->
+				<navigator url="#" class="market boxShadow">
+					<image src="https://ae01.alicdn.com/kf/H69fa7006c5b347348ef46b19dd4c61faJ.png"></image>
+				</navigator>
+				<view class="marketInfo boxShadow" wx:if="{{marketDetail}}">
+					<text class="title">已选购商品</text>
+					<view class="detail">{{marketDetail}}</view>
+				</view>
+				<!-- 市场 end -->
+
+				<!-- 购买商品 -->
+				<view class="product boxShadow">
+					<text class="title">填写需要购买的商品</text>
+					<textarea maxlength="200" placeholder="请填写商品名称和数量等"></textarea>
+				</view>
+				<!-- 购买商品 end -->
+
+				<!-- 购买 -->
+				<view class="purchase boxShadow">
+					<!-- 购买时间 -->
+					<view class="pLine">
+						<image src="/images/time.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">购买时间</text>
+
+							<picker bindchange="buyTimeChange" value="{{buyTimeIndex}}" range="{{buyTime}}">
+								<text class="{{buyTimeIndex!=0?'active':''}}">{{buyTime[buyTimeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker>
+						</view>
+					</view>
+
+					<!-- 小费 -->
+					<view class="pLine">
+						<image src="/images/fee.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">小费</text>
+
+							<picker bindchange="feeChange" value="{{feeIndex}}" range="{{fee}}">
+								<text class="{{feeIndex!=0?'active':''}}">{{fee[feeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker>
+						</view>
+					</view>
+
+					<!-- 备注 -->
+					<view class="pLine">
+						<image src="/images/write.png" class="leftImg"></image>
+						<view class="pBox">
+							<text class="title">备注</text>
+
+							<navigator url="#" class="remark" catchtap="showRemarkBox">
+								<text class="ellipsis">{{remark}}</text>
+							</navigator>
+						</view>
+					</view>
+				</view>
+				<!-- 购买 end -->
+
+				<!-- 下单 -->
+				<navigator url="#" class="placeOrder" catchtap="placeOrder">
+					<text>跑腿费￥{{price}}</text>
+					<text>|</text>
+					<text>下单</text>
+				</navigator>
+				<!-- 下单 end -->
+			</swiper-item>
+			<!-- 帮我买 end -->
+
+			<!-- 帮我送 -->
+			<swiper-item class="toSend">
+				<!-- 地址 -->
+				<view class="addressBox boxShadow">
+					<view class="address">
+						<image src="/images/send.png"></image>
+						<navigator url="#" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{!sendAddress||!sendAddressArea}}">请选择发货地址</text>
+							<text class="ellipsis detail" wx:if="{{sendAddress&&sendAddressArea}}">{{sendAddress}}</text>
+							<text class="ellipsis location" wx:if="{{sendAddress&&sendAddressArea}}">{{sendAddressArea}}</text>
+						</navigator>
+						<navigator url="#" class="common">常用</navigator>
+					</view>
+
+					<view class="address">
+						<image src="/images/receive.png"></image>
+						<navigator url="#" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{!sendTakeAddress||!sendTakeAddressArea}}">请选择收货地址</text>
+							<text class="ellipsis detail" wx:if="{{sendTakeAddress&&sendTakeAddressArea}}">{{sendTakeAddress}}</text>
+							<text class="ellipsis location" wx:if="{{sendTakeAddress&&sendTakeAddressArea}}">{{sendTakeAddressArea}}</text>
+						</navigator>
+						<navigator url="#" class="common">常用</navigator>
+					</view>
+				</view>
+				<!-- 地址 end -->
+
+				<!-- 购买 -->
+				<view class="purchase boxShadow">
+					<!-- 物品信息 -->
+					<view class="pLine">
+						<image src="/images/box.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">物品信息</text>
+
+							<navigator url="#" class="chooseSize" catchtap="showChoiceInfokBox">
+								<text wx:if="{{!sendGoods}}">选择物品规格</text>
+
+								<view class="choice" wx:if="{{sendGoods}}">
+									<text>{{sendGoods}}</text>
+									<image src="/images/image.png" wx:if="{{sendGoodsImg}}"></image>
+								</view>
+
+								<image src="/images/arrowRight.png"></image>
+							</navigator>
+						</view>
+					</view>
+
+					<!-- 发货时间 -->
+					<view class="pLine">
+						<image src="/images/time.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">发货时间</text>
+
+							<picker bindchange="sendTimeChange" value="{{sendTimeIndex}}" range="{{sendTime}}">
+								<text class="{{sendTimeIndex!=0?'active':''}}">{{sendTime[sendTimeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker>
+						</view>
+					</view>
+
+					<!-- 优惠券 -->
+					<view class="pLine">
+						<image src="/images/discount.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">优惠券</text>
+
+							<navigator url="#" class="discount">
+								<text wx:if="{{!discount}}">暂无优惠券</text>
+
+								<view class="haveDiscount" wx:if="{{discount}}">
+									<text>您有</text>
+									<text space="nbsp" class="num"> {{discount}} </text>
+									<text>张优惠券可用</text>
+								</view>
+
+								<image src="/images/arrowRight.png"></image>
+							</navigator>
+						</view>
+					</view>
+
+					<!-- 小费 -->
+					<view class="pLine">
+						<image src="/images/fee.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">小费</text>
+
+							<picker bindchange="feeChange" value="{{feeIndex}}" range="{{fee}}">
+								<text class="{{feeIndex!=0?'active':''}}">{{fee[feeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker>
+						</view>
+					</view>
+
+					<!-- 备注 -->
+					<view class="pLine">
+						<image src="/images/write.png" class="leftImg"></image>
+						<view class="pBox">
+							<text class="title">备注</text>
+
+							<navigator url="#" class="remark" catchtap="showRemarkBox">
+								<text class="ellipsis">{{remark}}</text>
+							</navigator>
+						</view>
+					</view>
+				</view>
+				<!-- 购买 end -->
+
+				<!-- 下单 -->
+				<navigator url="#" class="placeOrder" catchtap="placeOrder">
+					<text>跑腿费￥{{price}}</text>
+					<text>|</text>
+					<text>下单</text>
+				</navigator>
+				<!-- 下单 end -->
+			</swiper-item>
+			<!-- 帮我送 end -->
+
+			<!-- 帮我取 -->
+			<swiper-item class="toFetch">
+				<!-- 地址 -->
+				<view class="addressBox boxShadow">
+					<view class="address">
+						<image src="/images/send.png"></image>
+						<navigator url="#" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{!fetchAddress||!fetchAddressArea}}">请选择取货地址</text>
+							<text class="ellipsis detail" wx:if="{{fetchAddress&&fetchAddressArea}}">{{fetchAddress}}</text>
+							<text class="ellipsis location" wx:if="{{fetchAddress&&fetchAddressArea}}">{{fetchAddressArea}}</text>
+						</navigator>
+						<navigator url="#" class="common">常用</navigator>
+					</view>
+
+					<view class="address">
+						<image src="/images/receive.png"></image>
+						<navigator url="#" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{!fetchTakeAddress||!fetchTakeAddressArea}}">请选择收货地址</text>
+							<text class="ellipsis detail" wx:if="{{fetchTakeAddress&&fetchTakeAddressArea}}">{{fetchTakeAddress}}</text>
+							<text class="ellipsis location" wx:if="{{fetchTakeAddress&&fetchTakeAddressArea}}">{{fetchTakeAddressArea}}</text>
+						</navigator>
+						<navigator url="#" class="common">常用</navigator>
+					</view>
+				</view>
+				<!-- 地址 end -->
+
+				<!-- 购买 -->
+				<view class="purchase boxShadow">
+					<!-- 物品信息 -->
+					<view class="pLine">
+						<image src="/images/box.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">物品信息</text>
+
+							<navigator url="#" class="chooseSize" catchtap="showChoiceInfokBox">
+								<text wx:if="{{!fetchGoods}}">选择物品规格</text>
+
+								<view class="choice" wx:if="{{fetchGoods}}">
+									<text>{{fetchGoods}}</text>
+									<image src="/images/image.png" wx:if="{{fetchGoodsImg}}"></image>
+								</view>
+
+								<image src="/images/arrowRight.png"></image>
+							</navigator>
+						</view>
+					</view>
+
+					<!-- 取货时间 -->
+					<view class="pLine">
+						<image src="/images/time.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">取货时间</text>
+
+							<picker bindchange="fetchTimeChange" value="{{fetchTimeIndex}}" range="{{fetchTime}}">
+								<text class="{{fetchTimeIndex!=0?'active':''}}">{{fetchTime[fetchTimeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker>
+						</view>
+					</view>
+
+					<!-- 优惠券 -->
+					<view class="pLine">
+						<image src="/images/discount.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">优惠券</text>
+
+							<navigator url="#" class="discount">
+								<text wx:if="{{!discount}}">暂无优惠券</text>
+
+								<view class="haveDiscount" wx:if="{{discount}}">
+									<text>您有</text>
+									<text space="nbsp" class="num"> {{discount}} </text>
+									<text>张优惠券可用</text>
+								</view>
+
+								<image src="/images/arrowRight.png"></image>
+							</navigator>
+						</view>
+					</view>
+
+					<!-- 小费 -->
+					<view class="pLine">
+						<image src="/images/fee.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">小费</text>
+
+							<picker bindchange="feeChange" value="{{feeIndex}}" range="{{fee}}">
+								<text class="{{feeIndex!=0?'active':''}}">{{fee[feeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker>
+						</view>
+					</view>
+
+					<!-- 备注 -->
+					<view class="pLine">
+						<image src="/images/write.png" class="leftImg"></image>
+						<view class="pBox">
+							<text class="title">备注</text>
+
+							<navigator url="#" class="remark" catchtap="showRemarkBox">
+								<text class="ellipsis">{{remark}}</text>
+							</navigator>
+						</view>
+					</view>
+				</view>
+				<!-- 购买 end -->
+
+				<!-- 下单 -->
+				<navigator url="#" class="placeOrder" catchtap="placeOrder">
+					<text>跑腿费￥{{price}}</text>
+					<text>|</text>
+					<text>下单</text>
+				</navigator>
+				<!-- 下单 end -->
+			</swiper-item>
+			<!-- 帮我取 end -->
+
+			<!-- 其他服务 -->
+			<swiper-item class="toDo">
+				<!-- 服务事项 -->
+				<radio-group class="serveItemBox boxShadow" bindchange="serveRadioChange">
+					<block wx:for="{{serveItems}}" wx:for-index="idx" wx:key="*this">
+						<label class="serveItem {{item.checked?'active':''}}">
+							<radio value="{{idx}}" checked="{{item.checked}}" />
+
+							<image src="{{item.img}}" wx:if="{{item.checked}}"></image>
+							<image src="{{item.imgSelected}}" wx:if="{{!item.checked}}"></image>
+
+							<text>{{item.value}}</text>
+						</label>
+					</block>
+				</radio-group>
+				<!-- 服务事项 end -->
+
+				<!-- 地址 -->
+				<view class="addressBox boxShadow">
+					<view class="address">
+						<image src="/images/help.png"></image>
+						<navigator url="#" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{!helpAddress||!helpAddressArea}}">请选择收货地址</text>
+							<text class="ellipsis detail" wx:if="{{helpAddress&&helpAddressArea}}">{{helpAddress}}</text>
+							<text class="ellipsis location" wx:if="{{helpAddress&&helpAddressArea}}">{{helpAddressArea}}</text>
+						</navigator>
+						<navigator url="#" class="common">常用</navigator>
+					</view>
+				</view>
+				<!-- 地址 end -->
+
+				<!-- 购买 -->
+				<view class="purchase boxShadow">
+					<!-- 服务时间 -->
+					<view class="pLine">
+						<image src="/images/time.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">服务时间</text>
+
+							<picker bindchange="helpTimeChange" value="{{helpTimeIndex}}" range="{{helpTime}}">
+								<text class="{{helpTimeIndex!=0?'active':''}}">{{helpTime[helpTimeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker>
+						</view>
+					</view>
+
+					<!-- 小费 -->
+					<view class="pLine">
+						<image src="/images/fee.png" class="leftImg"></image>
+						<view class="pBox pBoxBorder">
+							<text class="title">小费</text>
+
+							<picker bindchange="feeChange" value="{{feeIndex}}" range="{{fee}}">
+								<text class="{{feeIndex!=0?'active':''}}">{{fee[feeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker>
+						</view>
+					</view>
+				</view>
+				<!-- 购买 end -->
+
+				<!-- 服务具体事项 -->
+				<view class="serveDetail boxShadow">
+					<text>填写具体事项</text>
+					<textarea maxlength="200" placeholder="请填写您的具体要求与注意事项" bindinput="serveDetail"></textarea>
+				</view>
+				<!-- 服务具体事项 end -->
+
+				<!-- 下单 -->
+				<navigator url="#" class="placeOrder" catchtap="placeOrder">
+					<text>跑腿费￥{{price}}</text>
+					<text>|</text>
+					<text>下单</text>
+				</navigator>
+				<!-- 下单 end -->
+			</swiper-item>
+			<!-- 其他服务 end -->
+		</swiper>
+		<!-- 内容 end -->
+	</view>
+	<!-- 服务 end -->
+</view>
+
+<!-- 备注隐藏盒子 -->
+<view class="remarkBox" hidden="{{remarkBox}}">
+	<view class="mask" catchtouchmove="catchTouchMove" catchtap="remarkMask"></view>
+	<view class="container" catchtouchmove="catchTouchMove">
+		<textarea maxlength="200" value="{{remark}}" bindinput="inputRemark"></textarea>
+		<navigator url="#" class="sure" catchtap="returnRemark">确定</navigator>
+	</view>
+</view>
+<!-- 备注隐藏盒子 end -->
+
+<!-- 选择物品信息隐藏盒子 -->
+<view class="choiceInfoBox" hidden="{{choiceInfoBox}}">
+	<view class="mask" catchtouchmove="catchTouchMove" catchtap="choiceInfoMask"></view>
+	<view class="container" catchtouchmove="catchTouchMove">
+		<!-- 头部 -->
+		<view class="header">
+			<text>请选择物品信息</text>
+			<navigator url="#" catchtap="choiceInfoMask">
+				<image src="/images/close.png"></image>
+			</navigator>
+		</view>
+
+		<!-- 物品类型 -->
+		<text class="title">物品类型</text>
+		<checkbox-group class="goodItemBox" bindchange="goodCheckboxChange">
+			<block wx:for="{{goodItems}}" wx:for-index="idx" wx:key="*this">
+				<label class="goodItem {{item.checked?'active':''}}">
+					<checkbox value="{{idx}}" checked="{{item.checked}}" />
+					<text>{{item.value}}</text>
+				</label>
+			</block>
+		</checkbox-group>
+
+		<!-- 物品价值 -->
+		<text class="title">物品价值</text>
+		<radio-group class="goodItemBox" bindchange="valueRadioChange">
+			<block wx:for="{{valueItems}}" wx:for-index="idx" wx:key="*this">
+				<label class="goodItem {{item.checked?'active':''}}">
+					<radio value="{{idx}}" checked="{{item.checked}}" />
+					<text>{{item.value}}</text>
+				</label>
+			</block>
+		</radio-group>
+
+		<!-- 保价服务 -->
+		<text class="title">保价服务</text>
+		<radio-group class="goodItemBox" bindchange="guardRadioChange">
+			<block wx:for="{{guardItems}}" wx:for-index="idx" wx:key="*this">
+				<label class="goodItem {{item.checked?'active':''}}">
+					<radio value="{{idx}}" checked="{{item.checked}}" />
+					<text>{{item.value}}</text>
+				</label>
+			</block>
+		</radio-group>
+
+		<!-- 物品重量 -->
+		<text class="title">物品重量</text>
+		<view class="weight">
+			<text>5公斤内不加价，最大25公斤</text>
+			<input maxlength="2" value="{{goodWeight}}" placeholder="请输入" bindinput="goodWeight"></input>
+			<text>公斤</text>
+		</view>
+
+		<!-- 确定按钮 -->
+		<navigator url="#" class="sure" catchtap="subGoodInfo">确定</navigator>
+	</view>
+</view>
+<!-- 选择物品信息隐藏盒子 end -->

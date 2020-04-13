@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/order/order",
+    "pages/order/orderDetail",
+    "pages/user/user"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1865F3",
+    "navigationBarTitleText": "代综快跑",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "list": [{
+        "pagePath": "pages/index/index",
+        "text": "服务",
+        "iconPath": "/images/service.png",
+        "selectedIconPath": "/images/serviceSelected.png"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "订单",
+        "iconPath": "/images/order.png",
+        "selectedIconPath": "/images/orderSelected.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "/images/user.png",
+        "selectedIconPath": "/images/userSelected.png"
+      }
+    ],
+    "color": "#999",
+    "selectedColor": "#1865F3"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
