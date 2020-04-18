@@ -1,0 +1,97 @@
+<!--pages/address/address.wxml-->
+<view class="container">
+	<!-- 标题列表 -->
+	<scroll-view scroll-x="true" class="tabHead">
+		<view class="tabHeadItem {{currentTab == 0?'active':''}}" data-current="0" bindtap="swichNav">发货地址</view>
+		<view class="tabHeadItem {{currentTab == 1?'active':''}}" data-current="1" bindtap="swichNav">收货地址</view>
+	</scroll-view>
+	<!-- 标题列表 end -->
+
+	<!-- 内容 -->
+	<swiper class="tabContent" style="height:{{contentHeight}}rpx" current="{{currentTab}}" duration="500" circular bindchange="switchTab">
+		<!-- 发货地址 -->
+		<swiper-item>
+			<scroll-view scroll-y="true" class="scrollBox">
+				<radio-group class="" bindchange="sAddrRadioChange">
+					<!-- 地址卡片 -->
+					<block wx:for="{{sendAddress}}" wx:for-index="idx" wx:key="*this">
+						<view class="addressCard boxShadow">
+							<view class="title">
+								<text>发货人：{{item.username}}</text>
+								<text>{{item.phone}}</text>
+							</view>
+
+							<view class="address">{{item.address}} {{item.address_detail}}</view>
+
+							<view class="btnBox">
+								<label>
+									<radio value="{{idx}}" checked="{{item.checked}}" />
+									<text class="common" wx:if="{{item.checked}}">默认地址</text>
+									<text wx:if="{{!item.checked}}">设为默认</text>
+								</label>
+
+								<navigator url="#" data-index="{{idx}}" catchtap="delSendAddr">删除</navigator>
+							</view>
+						</view>
+					</block>
+					<!-- 地址卡片 end -->
+				</radio-group>
+
+				<!-- 暂无地址 -->
+				<view class="noData" wx:if="{{sendAddress.length == 0}}">
+					<image src="/images/noData.png"></image>
+					<text>暂无发货地址</text>
+				</view>
+				<!-- 暂无地址 end -->
+
+				<!-- 新增地址 -->
+				<navigator url="/pages/address/addAddress?addrId=1" class="addAddress boxShadow">新增发货地址</navigator>
+				<!-- 新增地址 end -->
+			</scroll-view>
+		</swiper-item>
+		<!-- 发货地址 end -->
+
+		<!-- 收货地址 -->
+		<swiper-item>
+			<scroll-view scroll-y="true" class="scrollBox">
+				<radio-group class="" bindchange="rAddrRadioChange">
+					<!-- 地址卡片 -->
+					<block wx:for="{{receiveAddress}}" wx:for-index="idx" wx:key="*this">
+						<view class="addressCard boxShadow">
+							<view class="title">
+								<text>收货人：{{item.username}}</text>
+								<text>{{item.phone}}</text>
+							</view>
+
+							<view class="address">{{item.address}} {{item.address_detail}}</view>
+
+							<view class="btnBox">
+								<label>
+									<radio value="{{idx}}" checked="{{item.checked}}" />
+									<text class="common" wx:if="{{item.checked}}">默认地址</text>
+									<text wx:if="{{!item.checked}}">设为默认</text>
+								</label>
+
+								<navigator url="#" data-index="{{idx}}" catchtap="delReceiveAddr">删除</navigator>
+							</view>
+						</view>
+					</block>
+					<!-- 地址卡片 end -->
+				</radio-group>
+
+				<!-- 暂无地址 -->
+				<view class="noData" wx:if="{{receiveAddress.length == 0}}">
+					<image src="/images/noData.png"></image>
+					<text>暂无收货地址</text>
+				</view>
+				<!-- 暂无地址 end -->
+
+				<!-- 新增地址 -->
+				<navigator url="/pages/address/addAddress?addrId=2" class="addAddress boxShadow">新增收货地址</navigator>
+				<!-- 新增地址 end -->
+			</scroll-view>
+		</swiper-item>
+		<!-- 收货地址 end -->
+	</swiper>
+	<!-- 内容 end -->
+</view>

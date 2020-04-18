@@ -7,28 +7,80 @@
 <view class="container">
 	<!-- 个人信息 -->
 	<view class="userInfo boxShadow">
+		<!-- 头像 -->
 		<view class="avatarBox">
-			<button class="avatar" bindgetuserinfo="getUserInfo" open-type="getUserInfo" wx:if="{{isLogin == false}}">
+			<button class="avatar" bindgetuserinfo="getUserInfo" open-type="getUserInfo" wx:if="{{!userInfo}}">
 				<image src="https://s1.ax1x.com/2020/03/17/8UwKEj.jpg"></image>
 			</button>
 
-			<image src="{{userInfo.avatarUrl}}" wx:if="{{isLogin == true}}" class="avatar"></image>
+			<image src="{{userInfo.avatarUrl}}" wx:if="{{userInfo}}" class="avatar"></image>
 		</view>
 
-		<text wx:if="{{isLogin==false}}">点击头像登录</text>
-		<text class="userName" wx:if="{{isLogin==true}}">{{userInfo.nickName}}</text>
+		<!-- 昵称 -->
+		<text wx:if="{{!userInfo}}">点击头像登录</text>
+		<text class="userName" wx:if="{{userInfo}}">{{userInfo.nickName}}</text>
+
+		<!-- 电话 -->
+		<view class="tel" hidden="{{!userInfo}}">
+			<text bindtap="showTelBox" wx:if="{{tel}}">{{tel}}</text>
+
+			<navigator url="#" class="verify" bindtap="showTelBox" wx:if="{{!tel}}">
+				<text>去验证手机号</text>
+				<image src="/images/arrowRight2.png"></image>
+			</navigator>
+		</view>
 	</view>
 
 	<!-- 功能列表 -->
 	<view class="fList boxShadow">
 		<!-- 地址管理 -->
-		<navigator url="#" class="listLine">
-			<image src="/images/server.png"></image>
+		<navigator url="#" class="listLine" bindtap="toAddress">
+			<image src="/images/site.png"></image>
 			<text>地址管理</text>
-			<image src="/images/arrowRight.png"></image>
+			<image src="/images/arrowRight.png" class="arrow"></image>
 		</navigator>
 
+		<view class="line"></view>
 
+		<!-- 客服 -->
+		<button open-type="contact" class="serveBtn">
+			<image src="/images/server.png"></image>
+			<text>客服</text>
+			<image src="/images/arrowRight.png" class="arrow"></image>
+		</button>
+
+		<view class="line"></view>
+
+		<!-- 关于我们 -->
+		<navigator url="#" class="listLine">
+			<image src="/images/information.png"></image>
+			<text>关于我们</text>
+			<image src="/images/arrowRight.png" class="arrow"></image>
+		</navigator>
 	</view>
+	<!-- 功能列表 end -->
 </view>
 <!-- 主体 end -->
+
+<!-- 验证手机号隐藏盒子 -->
+<view class="telBox" hidden="{{telBox}}">
+	<view class="mask" catchtouchmove="catchTouchMove" catchtap="telkMask"></view>
+	<view class="container" catchtouchmove="catchTouchMove">
+		<view class="telLine">
+			<input maxlength="11" placeholder="请输入手机号码" value="{{iTel}}" bindinput="iTel"></input>
+		</view>
+
+		<view class="telLine">
+			<input maxlength="8" placeholder="请输入验证码" value="{{verifyCode}}" bindinput="iVerifyCode"></input>
+
+			<navigator url="#" class="getCode" catchtap="getVerifyCode" wx:if="{{status != 3}}">
+				<text wx:if="{{status == 1}}">获取验证码</text>
+				<text wx:if="{{status == 2}}">重新获取</text>
+			</navigator>
+			<view class="getCode disabled" wx:if="{{status == 3}}">{{countTime}}</view>
+		</view>
+
+		<navigator url="#" class="sure" catchtap="sure">确定</navigator>
+	</view>
+</view>
+<!-- 验证手机号隐藏盒子 end -->

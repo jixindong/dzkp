@@ -86,7 +86,7 @@ Page({
     ], //保价服务（帮我送、帮我取）
     goodWeight: 1, //物品重量（帮我送、帮我取）
 
-    marketDetail: '狗不理包子', //市场选购详情（帮我买）
+    marketDetail: '', //市场选购详情（帮我买）
     buyTimeIndex: 0, //购买时间 picker index（帮我买）
     buyTime: ['购买时间', '立即购买', '预约购买'], //购买时间 picker（帮我买）
     buyAddress: '这是购买地址', //购买地址（帮我买）
@@ -145,6 +145,8 @@ Page({
   onLoad: function (e) {
     const that = this;
 
+    wx.removeStorageSync('marketDetail'); //清除缓存 已选商品字符串
+
     that.swiperHeight(); //设置当前选项卡高度
   },
 
@@ -159,7 +161,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let marketDetail = wx.getStorageSync('marketDetail'); //市场选购详情（帮我买）
 
+    this.setData({
+      marketDetail //市场选购详情（帮我买）
+    })
   },
 
   /**

@@ -86,9 +86,9 @@ Page({
     wx.showModal({
       title: '取消订单',
       content: '您确认取消订单吗？',
-      cancelColor: '#999',
+      cancelColor: '#1865F3',
       cancelText: '点错啦',
-      confirmColor: '#1865F3',
+      confirmColor: '#999',
       confirmText: '取消订单',
       success(res) {
         if (res.confirm) {

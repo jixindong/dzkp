@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "stepper": "/components/stepper/stepper"
+  },
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "同济农贸市场",
+  "navigationBarBackgroundColor": "#fff"
+}

@@ -1,0 +1,38 @@
+<!--pages/coupon/coupon.wxml-->
+<view class="container">
+	<!-- 优惠券卡片 -->
+	<block wx:for="{{coupons}}" wx:for-index="idx" wx:key="*this">
+		<navigator url="#" class="couponCard boxShadow" data-index="{{idx}}" data-cid="{{item.id}}" bindtap="getCoupon">
+			<view class="priceBox {{item.tag==1?'':'used'}}">
+				<view>
+					<text>￥</text>
+					<text class="price">{{item.price}}</text>
+				</view>
+				<text space="nbsp">满 {{item.quota}} 可用</text>
+			</view>
+
+			<view class="limit {{item.tag==1?'':'used'}}">
+				<text>有效期</text>
+				<text class="time {{item.tag==1?'':'used'}}">{{item.stattime}}-{{item.endtime}}</text>
+			</view>
+
+			<view class="flag">
+				<image src="/images/couponBg01.png" wx:if="{{item.tag == 1}}"></image>
+				<image src="/images/couponBg02.png" wx:if="{{item.tag == 0}}"></image>
+
+				<view class="tip" wx:if="{{item.tag == 1}}">
+					<text>立</text>
+					<text>即</text>
+					<text>使</text>
+					<text>用</text>
+				</view>
+				<view class="tip" wx:if="{{item.tag == 0}}">
+					<text>已</text>
+					<text>使</text>
+					<text>用</text>
+				</view>
+			</view>
+		</navigator>
+	</block>
+	<!-- 优惠券卡片 end -->
+</view>

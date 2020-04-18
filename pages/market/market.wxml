@@ -1,0 +1,65 @@
+<!--pages/market/market.wxml-->
+<view class="container">
+	<!-- banner -->
+	<view class="banner">
+		<image src="https://s1.ax1x.com/2020/04/15/JCYy2q.png" class="bannerImg"></image>
+
+		<view class="bannerTitle">
+			<image src="/images/greens.png"></image>
+			<text>选购商品</text>
+		</view>
+	</view>
+	<!-- banner end -->
+
+	<!-- 标题列表 -->
+	<scroll-view scroll-x="true" scroll-left="{{scrollLeft+'rpx'}}" class="tabHead">
+		<block wx:for="{{goods}}" wx:for-index="tid" wx:key="*this">
+			<view class="tabHeadItem {{currentTab == tid?'active':''}}" data-current="{{tid}}" bindtap="swichNav">{{item.name}}</view>
+		</block>
+	</scroll-view>
+	<!-- 标题列表 end -->
+
+	<!-- 商品列表 -->
+	<swiper class="tabContent" style="height:{{height}};min-height:{{minHeight}}" current="{{currentTab}}" duration="500" circular bindchange="switchTab">
+		<block wx:for="{{goods}}" wx:key="*this">
+			<swiper-item id="{{'s'+index}}" data-index="{{index}}">
+				<!-- 商品 -->
+				<block wx:for="{{item.child}}" wx:key="*this">
+					<view data-pid="{{item.id}}" class="good">
+						<image src="{{item.photoimages}}" class="goodImg" wx:if="{{item.photoimages}}"></image>
+						<image src="/images/goodImgNone.jpg" class="goodImg" wx:if="{{!item.photoimages}}"></image>
+
+						<view class="goodInfo">
+							<text space="nbsp">{{item.name}} {{item.zhongliang}}</text>
+							<text class="price">￥{{item.price}}</text>
+						</view>
+
+						<stepper pid="{{item.id}}" pdetail="{{item.name}}{{item.zhongliang}}" price="{{item.price}}" bind:goodInfo="calcPrice" />
+					</view>
+				</block>
+				<!-- 商品 end -->
+
+				<!-- 暂无商品 -->
+				<view class="noData" wx:if="{{item.child.length == 0}}">
+					<image src="/images/noData.png"></image>
+					<text>暂无商品</text>
+				</view>
+				<!-- 暂无商品 end -->
+			</swiper-item>
+		</block>
+	</swiper>
+	<!-- 商品列表 end -->
+</view>
+
+<!-- 购物车 -->
+<view class="cart boxShadow">
+	<view class="goodsNum">
+		<image src="/images/cart.png"></image>
+		<view class="num" style="height:{{selectedNumHeight}};line-height:{{selectedNumHeight}}" hidden="{{!selectedNum}}">{{selectedNum}}</view>
+	</view>
+
+	<text space="nbsp" class="price">￥ {{totalPrice}}</text>
+
+	<navigator url="#" class="sure" catchtap="sure">确定</navigator>
+</view>
+<!-- 购物车 end -->

@@ -29,7 +29,7 @@
 				<view class="addressBox boxShadow">
 					<view class="address">
 						<image src="/images/buy.png"></image>
-						<navigator url="#" class="chooseAddress">
+						<navigator url="/pages/address/fillAddress" class="chooseAddress">
 							<text class="ellipsis choice" wx:if="{{!buyAddress||!buyAddressArea}}">请选择购买地址</text>
 							<text class="ellipsis detail" wx:if="{{buyAddress&&buyAddressArea}}">{{buyAddress}}</text>
 							<text class="ellipsis location" wx:if="{{buyAddress&&buyAddressArea}}">{{buyAddressArea}}</text>
@@ -39,7 +39,7 @@
 
 					<view class="address">
 						<image src="/images/receive.png"></image>
-						<navigator url="#" class="chooseAddress">
+						<navigator url="/pages/address/fillAddress" class="chooseAddress">
 							<text class="ellipsis choice" wx:if="{{!takeAddress||!takeAddressArea}}">请选择收货地址</text>
 							<text class="ellipsis detail" wx:if="{{takeAddress&&takeAddressArea}}">{{takeAddress}}</text>
 							<text class="ellipsis location" wx:if="{{takeAddress&&takeAddressArea}}">{{takeAddressArea}}</text>
@@ -50,7 +50,7 @@
 				<!-- 地址 end -->
 
 				<!-- 市场 -->
-				<navigator url="#" class="market boxShadow">
+				<navigator url="/pages/market/market" class="market boxShadow">
 					<image src="https://ae01.alicdn.com/kf/H69fa7006c5b347348ef46b19dd4c61faJ.png"></image>
 				</navigator>
 				<view class="marketInfo boxShadow" wx:if="{{marketDetail}}">
@@ -124,7 +124,7 @@
 				<view class="addressBox boxShadow">
 					<view class="address">
 						<image src="/images/send.png"></image>
-						<navigator url="#" class="chooseAddress">
+						<navigator url="/pages/address/fillAddress" class="chooseAddress">
 							<text class="ellipsis choice" wx:if="{{!sendAddress||!sendAddressArea}}">请选择发货地址</text>
 							<text class="ellipsis detail" wx:if="{{sendAddress&&sendAddressArea}}">{{sendAddress}}</text>
 							<text class="ellipsis location" wx:if="{{sendAddress&&sendAddressArea}}">{{sendAddressArea}}</text>
@@ -134,7 +134,7 @@
 
 					<view class="address">
 						<image src="/images/receive.png"></image>
-						<navigator url="#" class="chooseAddress">
+						<navigator url="/pages/address/fillAddress" class="chooseAddress">
 							<text class="ellipsis choice" wx:if="{{!sendTakeAddress||!sendTakeAddressArea}}">请选择收货地址</text>
 							<text class="ellipsis detail" wx:if="{{sendTakeAddress&&sendTakeAddressArea}}">{{sendTakeAddress}}</text>
 							<text class="ellipsis location" wx:if="{{sendTakeAddress&&sendTakeAddressArea}}">{{sendTakeAddressArea}}</text>
@@ -184,7 +184,7 @@
 						<view class="pBox pBoxBorder">
 							<text class="title">优惠券</text>
 
-							<navigator url="#" class="discount">
+							<navigator url="/pages/coupon/coupon" class="discount">
 								<text wx:if="{{!discount}}">暂无优惠券</text>
 
 								<view class="haveDiscount" wx:if="{{discount}}">
@@ -241,7 +241,7 @@
 				<view class="addressBox boxShadow">
 					<view class="address">
 						<image src="/images/send.png"></image>
-						<navigator url="#" class="chooseAddress">
+						<navigator url="/pages/address/fillAddress" class="chooseAddress">
 							<text class="ellipsis choice" wx:if="{{!fetchAddress||!fetchAddressArea}}">请选择取货地址</text>
 							<text class="ellipsis detail" wx:if="{{fetchAddress&&fetchAddressArea}}">{{fetchAddress}}</text>
 							<text class="ellipsis location" wx:if="{{fetchAddress&&fetchAddressArea}}">{{fetchAddressArea}}</text>
@@ -251,7 +251,7 @@
 
 					<view class="address">
 						<image src="/images/receive.png"></image>
-						<navigator url="#" class="chooseAddress">
+						<navigator url="/pages/address/fillAddress" class="chooseAddress">
 							<text class="ellipsis choice" wx:if="{{!fetchTakeAddress||!fetchTakeAddressArea}}">请选择收货地址</text>
 							<text class="ellipsis detail" wx:if="{{fetchTakeAddress&&fetchTakeAddressArea}}">{{fetchTakeAddress}}</text>
 							<text class="ellipsis location" wx:if="{{fetchTakeAddress&&fetchTakeAddressArea}}">{{fetchTakeAddressArea}}</text>
@@ -301,7 +301,7 @@
 						<view class="pBox pBoxBorder">
 							<text class="title">优惠券</text>
 
-							<navigator url="#" class="discount">
+							<navigator url="/pages/coupon/coupon" class="discount">
 								<text wx:if="{{!discount}}">暂无优惠券</text>
 
 								<view class="haveDiscount" wx:if="{{discount}}">
@@ -373,7 +373,7 @@
 				<view class="addressBox boxShadow">
 					<view class="address">
 						<image src="/images/help.png"></image>
-						<navigator url="#" class="chooseAddress">
+						<navigator url="/pages/address/fillAddress" class="chooseAddress">
 							<text class="ellipsis choice" wx:if="{{!helpAddress||!helpAddressArea}}">请选择收货地址</text>
 							<text class="ellipsis detail" wx:if="{{helpAddress&&helpAddressArea}}">{{helpAddress}}</text>
 							<text class="ellipsis location" wx:if="{{helpAddress&&helpAddressArea}}">{{helpAddressArea}}</text>

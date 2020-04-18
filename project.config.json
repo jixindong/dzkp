@@ -75,6 +75,41 @@
 					"id": -1,
 					"name": "我的",
 					"pathName": "pages/user/user",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "新增地址",
+					"pathName": "pages/address/addAddress",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "地址管理",
+					"pathName": "pages/address/address",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "填写地址",
+					"pathName": "pages/address/fillAddress",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券",
+					"pathName": "pages/coupon/coupon",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "市场",
+					"pathName": "pages/market/market",
 					"scene": null
 				}
 			]

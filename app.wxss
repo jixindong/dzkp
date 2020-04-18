@@ -7,7 +7,13 @@ page {
   background-color: #f6f6f6;
 }
 
-view, scroll-view, swiper-item, navigator, image, input, textarea {
+view,
+scroll-view,
+swiper-item,
+navigator,
+image,
+input,
+textarea {
   box-sizing: border-box;
 }
 
@@ -45,4 +51,21 @@ swiper image {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+/* 暂无数据 */
+.noData {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 240rpx 0 0;
+  color: #ccc;
+  font-size: 26rpx;
+  background-color: transparent !important;
+}
+
+.noData image {
+  margin: 0 0 10rpx;
+  width: 100rpx;
+  height: 100rpx;
 }

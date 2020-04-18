@@ -3,7 +3,12 @@
     "pages/index/index",
     "pages/order/order",
     "pages/order/orderDetail",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/address/address",
+    "pages/address/addAddress",
+    "pages/address/fillAddress",
+    "pages/coupon/coupon",
+    "pages/market/market"
   ],
   "window": {
     "backgroundTextStyle": "light",

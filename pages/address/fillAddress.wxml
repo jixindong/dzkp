@@ -1,0 +1,60 @@
+<!--pages/address/fillAddress.wxml-->
+<view class="container">
+	<!-- 地址信息 -->
+	<view class="addrInfo">
+		<!-- 地区 -->
+		<view class="infoLine">
+			<image src="/images/site2.png"></image>
+			<text>所在地区</text>
+
+			<picker mode="region" bindchange="bindRegionChange" value="{{region}}">
+				<text class="choice" wx:if="{{region.length == 0}}">选择地区</text>
+				<text wx:if="{{region.length != 0}}">{{region[0]}} {{region[1]}} {{region[2]}}</text>
+
+				<image src="/images/arrowRight.png" class="arrow"></image>
+			</picker>
+		</view>
+
+		<view class="line"></view>
+
+		<!-- 详细地址 -->
+		<view class="infoLine">
+			<image src="/images/building.png"></image>
+			<text>详细地址</text>
+
+			<input maxlength="50" placeholder="街道、楼牌号等" bindinput="getDetailAddr"></input>
+		</view>
+
+		<view class="line"></view>
+
+		<!-- 姓名 -->
+		<view class="infoLine">
+			<image src="/images/user2.png"></image>
+			<text>姓名</text>
+
+			<input maxlength="20" placeholder="请输入姓名" bindinput="getName"></input>
+		</view>
+
+		<view class="line"></view>
+
+		<!-- 电话 -->
+		<view class="infoLine">
+			<image src="/images/tel3.png"></image>
+			<text>联系方式</text>
+
+			<input maxlength="20" placeholder="请输入联系方式" bindinput="getTel"></input>
+		</view>
+	</view>
+	<!-- 地址信息 end -->
+
+	<!-- 智能填写 -->
+	<view class="autoFill boxShadow">
+		<text class="title">智能填写</text>
+		<textarea placeholder="粘贴个人信息，按确定键智能拆分" bindinput="smartFill"></textarea>
+	</view>
+	<!-- 智能填写 end -->
+
+	<!-- 确定 -->
+	<navigator url="#" class="sure boxShadow" bindtap="sure">确定</navigator>
+	<!-- 确定 end -->
+</view>

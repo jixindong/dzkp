@@ -1,0 +1,127 @@
+/* pages/address/address.wxss */
+
+/* 标题列表 */
+
+.tabHead {
+  height: 80rpx;
+  line-height: 80rpx;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tabHead .tabHeadItem {
+  position: relative;
+  display: inline-block;
+  width: 50%;
+  color: #999;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.tabHead .tabHeadItem.active {
+  color: #1865f3;
+}
+
+.tabHead .tabHeadItem.active:after {
+  position: absolute;
+  left: 35%;
+  bottom: 0;
+  display: block;
+  width: 30%;
+  height: 6rpx;
+  content: '';
+  background-color: #1865f3;
+}
+
+/* 标题列表 end */
+
+/* 内容 */
+.tabContent .scrollBox {
+  height: 100%;
+}
+
+/* 地址卡片 */
+.tabContent .scrollBox .addressCard {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 20rpx;
+  padding: 20rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+}
+
+.tabContent .scrollBox .addressCard .title {
+  display: flex;
+  justify-content: space-between;
+  color: #1A1A1A;
+  font-size: 26rpx;
+}
+
+.tabContent .scrollBox .addressCard .address {
+  padding: 10rpx 0 20rpx;
+  color: #999;
+  font-size: 26rpx;
+  border-bottom: 1rpx solid #E6E6E6;
+}
+
+.tabContent .scrollBox .addressCard .btnBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10rpx;
+  color: #1A1A1A;
+  font-size: 26rpx;
+}
+
+.tabContent .scrollBox .addressCard .btnBox .common {
+  color: #1865F3;
+}
+
+/* radio */
+
+/* radio 选项框大小 */
+
+.tabContent .scrollBox .addressCard .btnBox radio .wx-radio-input {
+  margin-top: -2rpx;
+  width: 24rpx;
+  height: 24rpx;
+  border: 1rpx solid #1865F3;
+  border-radius: 50%;
+}
+
+/* radio 选中后样式 */
+
+.tabContent .scrollBox .addressCard .btnBox radio .wx-radio-input.wx-radio-input-checked {
+  background-color: #1865F3;
+  border-radius: 50%;
+}
+
+/* radio 选中后图标样式 */
+
+.tabContent .scrollBox .addressCard .btnBox radio .wx-radio-input.wx-radio-input-checked::before {
+  width: 24rpx;
+  height: 24rpx;
+  line-height: 24rpx;
+  font-size: 16rpx;
+  text-align: center;
+  color: #fff;
+  background-color: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+/* radio end */
+/* 地址卡片 end */
+
+/* 新增地址 */
+.tabContent .scrollBox .addAddress {
+  margin: 60rpx 20rpx;
+  padding: 16rpx 0;
+  color: #fff;
+  font-size: 28rpx;
+  text-align: center;
+  background-color: #1865f3;
+  border-radius: 10rpx;
+}
+
+/* 新增地址 end */
+/* 内容 end */
