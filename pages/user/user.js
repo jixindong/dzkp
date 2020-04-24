@@ -146,15 +146,11 @@ Page({
 
   },
   iTel: function (e) { //输入 用户手机号
-    console.log('用户手机号', e.detail.value);
-
     this.setData({
       iTel: e.detail.value
     })
   },
   iVerifyCode: function (e) { //输入 验证码
-    console.log('验证码', e.detail.value);
-
     this.setData({
       verifyCode: e.detail.value
     })

@@ -1,4 +1,7 @@
 // pages/order/order.js
+
+let util = require('../../utils/util');
+
 Page({
 
   /**
@@ -7,60 +10,82 @@ Page({
   data: {
     currentTab: 0, //当前选项卡
     contentHeight: '', //内容窗口高度
-    orderAll:[
-      {
-        nameCode:1,
-        statusCode:1,
-        getCode:5001,
-        address1:'北京同仁堂',
-        address2:'人民大会堂',
-        tel:'12345678910',
-        time:'2020年4月13日09:42:10'
-      },
-      {
-        nameCode:2,
-        statusCode:2,
-        getCode:5002,
-        address1:'北京同仁堂',
-        address2:'人民大会堂',
-        tel:'12345678910',
-        time:'2020年4月13日09:42:10'
-      },
-      {
-        nameCode:3,
-        statusCode:3,
-        getCode:5003,
-        address1:'北京同仁堂',
-        address2:'人民大会堂',
-        tel:'12345678910',
-        time:'2020年4月13日09:42:10'
-      },
-      {
-        nameCode:1,
-        statusCode:4,
-        getCode:5004,
-        address1:'北京同仁堂',
-        address2:'人民大会堂',
-        tel:'12345678910',
-        time:'2020年4月13日09:42:10'
-      },
-      {
-        nameCode:1,
-        statusCode:5,
-        getCode:5005,
-        address1:'北京同仁堂',
-        address2:'人民大会堂',
-        tel:'12345678910',
-        time:'2020年4月13日09:42:10'
-      }
-    ],//全部订单
+    orderAll: [],//全部订单
+    orderNoPay: [],//待支付订单
+    orderNoRec: [],//待接单订单
+    orderUnderway: [],//进行中订单
+    orderComplete: [],//已完成订单
+    orderCanceled: []//已取消订单
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (e) {
-    const that = this;
+  onLoad: function () {
+    let that = this;
+    let userId = wx.getStorageSync('userId');//用户id
+
+    wx.request({//获取我的所有订单
+      url: 'https://daizongpaotui.zlogic.cn/index.php/api/orders/getMyorders',
+      method: 'POST',
+      data: {
+        token: userId
+      },
+      success: function (res) {
+        let orderAll = res.data[0];//全部订单
+        let orderNoPay = res.data[1];//待支付订单
+        let orderNoRec = res.data[2];//待接单订单
+        let orderUnderway = res.data[3];//进行中订单
+        let orderComplete = res.data[4];//已完成订单
+        let orderCanceled = res.data[5];//已取消订单
+
+        orderAll.forEach(value => {
+          let timestamp = value.create_time * 1000; //订单时间 时间戳
+          let date = new Date(timestamp); //订单时间 时间对象
+          let orderTime = util.formatTimeA(date); //订单时间
+          value.create_time = orderTime;
+        })
+        orderNoPay.forEach(value => {
+          let timestamp = value.create_time * 1000;
+          let date = new Date(timestamp);
+          let orderTime = util.formatTimeA(date);
+          value.create_time = orderTime;
+        })
+        orderNoRec.forEach(value => {
+          let timestamp = value.create_time * 1000;
+          let date = new Date(timestamp);
+          let orderTime = util.formatTimeA(date);
+          value.create_time = orderTime;
+        })
+        orderUnderway.forEach(value => {
+          let timestamp = value.create_time * 1000;
+          let date = new Date(timestamp);
+          let orderTime = util.formatTimeA(date);
+          value.create_time = orderTime;
+        })
+        orderComplete.forEach(value => {
+          let timestamp = value.create_time * 1000;
+          let date = new Date(timestamp);
+          let orderTime = util.formatTimeA(date);
+          value.create_time = orderTime;
+        })
+        orderCanceled.forEach(value => {
+          let timestamp = value.create_time * 1000;
+          let date = new Date(timestamp);
+          let orderTime = util.formatTimeA(date);
+          value.create_time = orderTime;
+        })
+
+        that.setData({
+          orderAll,//全部订单
+          orderNoPay,//待支付订单
+          orderNoRec,//待接单订单
+          orderUnderway,//进行中订单
+          orderComplete,//已完成订单
+          orderCanceled//已取消订单
+        })
+      }
+    })
 
     that.calcContentHeight(); //内容高度自适应
   },

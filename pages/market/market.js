@@ -14,7 +14,7 @@ Page({
     selectedGoodsStr: '', //已选商品字符串（即帮我买 已选购商品）
     selectedNum: 0, //已选商品数量
     selectedNumHeight: '', //已选商品数量盒子高度
-    totalPrice: '0', //总价
+    totalPrice: '0', //同济市场选购商品总价
   },
 
   /**
@@ -168,7 +168,7 @@ Page({
     let selectedGoods = this.data.selectedGoods; //已选商品
     let selectedGoodsStr = ''; //已选商品字符串（即帮我买 已选购商品）
     let selectedNum = 0; //已选商品数量
-    let totalPrice = 0; //总价
+    let totalPrice = 0; //同济市场选购商品总价
     let pid = e.detail.pid; //当前商品id
     let pdetail = e.detail.pdetail; //当前商品 名称、重量
     let num = e.detail.num; //当前商品数量
@@ -176,11 +176,13 @@ Page({
 
     //更新已选商品
     selectedGoods[pid] = {
+      pid: pid,
       num: num,
       pdetail,
       price: price
     };
     console.log('已选商品', selectedGoods);
+
 
     // 更新已选商品字符串（即帮我买 已选购商品）、更新已选商品数量、根据已选商品计算总价
     selectedGoods.forEach((value, index) => {
@@ -194,7 +196,7 @@ Page({
 
     console.log('已选商品字符串', selectedGoodsStr);
     console.log('已选商品数量', selectedNum);
-    console.log('总价', totalPrice);
+    console.log('同济市场选购商品总价', totalPrice);
 
     this.setData({
       selectedGoods,
@@ -206,10 +208,22 @@ Page({
     this.selNumHeight(); //设置已选商品数量盒子高度
   },
   sure: function () { //确定按钮
+    let selectedGoods = this.data.selectedGoods; //已选商品
+    let marketSelGoods = [];
     let selectedGoodsStr = this.data.selectedGoodsStr; //已选商品字符串（即帮我买 已选购商品）
+    let totalPrice = this.data.totalPrice; //同济市场选购商品总价
 
-    wx.removeStorageSync('marketDetail'); //清除缓存 已选商品字符串
+    // 清空 已选商品中的空值 并转为字符串
+    selectedGoods.forEach(value => {
+      if (value != '') {
+        marketSelGoods.push(value)
+      }
+    })
+    marketSelGoods = JSON.stringify(marketSelGoods);
+
+    wx.setStorageSync('marketSelGoods', marketSelGoods); //放入缓存 已选商品
     wx.setStorageSync('marketDetail', selectedGoodsStr); //放入缓存 已选商品字符串
+    wx.setStorageSync('marketPrice', totalPrice); //放入缓存 同济市场选购商品总价
 
     wx.showToast({
       title: '选购成功',

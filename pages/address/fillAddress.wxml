@@ -7,12 +7,16 @@
 			<image src="/images/site2.png"></image>
 			<text>所在地区</text>
 
-			<picker mode="region" bindchange="bindRegionChange" value="{{region}}">
-				<text class="choice" wx:if="{{region.length == 0}}">选择地区</text>
-				<text wx:if="{{region.length != 0}}">{{region[0]}} {{region[1]}} {{region[2]}}</text>
+			<navigator url="/pages/address/chooseAddress?addrSign=fill" class="chooseAddr">
+				<view wx:if="{{!address || !region}}">点击搜索地址</view>
+
+				<view class="address" wx:if="{{address && region}}">
+					<text class="detail">{{address}}</text>
+					<text>{{region}}</text>
+				</view>
 
 				<image src="/images/arrowRight.png" class="arrow"></image>
-			</picker>
+			</navigator>
 		</view>
 
 		<view class="line"></view>
@@ -48,10 +52,10 @@
 	<!-- 地址信息 end -->
 
 	<!-- 智能填写 -->
-	<view class="autoFill boxShadow">
+	<!-- <view class="autoFill boxShadow">
 		<text class="title">智能填写</text>
 		<textarea placeholder="粘贴个人信息，按确定键智能拆分" bindinput="smartFill"></textarea>
-	</view>
+	</view> -->
 	<!-- 智能填写 end -->
 
 	<!-- 确定 -->

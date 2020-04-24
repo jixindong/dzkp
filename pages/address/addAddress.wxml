@@ -2,6 +2,32 @@
 <view class="container">
 	<!-- 新增地址 -->
 	<view class="infoBox">
+		<!-- 地区 -->
+		<view class="infoLine">
+			<text>所在地区</text>
+
+			<navigator url="/pages/address/chooseAddress?addrSign=new" class="chooseAddr">
+				<view wx:if="{{!address || !region}}">点击搜索地址</view>
+
+				<view class="address" wx:if="{{address && region}}">
+					<text class="detail">{{address}}</text>
+					<text>{{region}}</text>
+				</view>
+
+				<image src="/images/arrowRight.png" class="arrow"></image>
+			</navigator>
+		</view>
+
+		<view class="line"></view>
+
+		<!-- 详细地址 -->
+		<view class="infoLine">
+			<text>详细地址</text>
+			<input maxlength="50" placeholder="街道、楼牌号等" bindinput="getDetailAddr"></input>
+		</view>
+
+		<view class="line"></view>
+
 		<!-- 姓名 -->
 		<view class="infoLine">
 			<text>姓名</text>
@@ -14,28 +40,6 @@
 		<view class="infoLine">
 			<text>联系电话</text>
 			<input maxlength="20" placeholder="请输入联系电话" bindinput="getTel"></input>
-		</view>
-
-		<view class="line"></view>
-
-		<!-- 地区 -->
-		<view class="infoLine">
-			<text>所在地区</text>
-
-			<picker mode="region" bindchange="bindRegionChange" value="{{region}}">
-				<text class="choice" wx:if="{{region.length == 0}}">选择地区</text>
-				<text wx:if="{{region.length != 0}}">{{region[0]}} {{region[1]}} {{region[2]}}</text>
-
-				<image src="/images/arrowRight.png" class="arrow"></image>
-			</picker>
-		</view>
-
-		<view class="line"></view>
-
-		<!-- 详细地址 -->
-		<view class="infoLine">
-			<text>详细地址</text>
-			<input maxlength="50" placeholder="街道、楼牌号等" bindinput="getDetailAddr"></input>
 		</view>
 
 		<view class="line"></view>

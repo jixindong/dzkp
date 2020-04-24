@@ -52,7 +52,7 @@
 		<view class="line"></view>
 
 		<!-- 关于我们 -->
-		<navigator url="#" class="listLine">
+		<navigator url="/pages/aboutUs/aboutUs" class="listLine">
 			<image src="/images/information.png"></image>
 			<text>关于我们</text>
 			<image src="/images/arrowRight.png" class="arrow"></image>

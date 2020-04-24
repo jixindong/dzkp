@@ -6,10 +6,11 @@ Page({
    */
   data: {
     userId: null,
-    addrId: null, //1=新增发货地址,2=新增收货地址
     name: '', //姓名
     tel: '', //电话
-    region: [], //地区 picker
+    address: '', //地址名称
+    region: '', //地区
+    location: '', //经纬度
     detailAddr: '', //详细地址
     isDefault: false //是否默认地址
   },
@@ -19,7 +20,11 @@ Page({
    */
   onLoad: function (e) {
     let userId = wx.getStorageSync('userId');
-    let addrId = e.addrId; //1=新增发货地址,2=新增收货地址
+    let addrId = e.addrId; //新增地址判断 1=新增发货地址,2=新增收货地址
+
+    if (addrId) {
+      wx.setStorageSync('addrId', addrId); //放入缓存 新增地址判断
+    }
 
     if (addrId == 1) {
       wx.setNavigationBarTitle({
@@ -32,8 +37,7 @@ Page({
     }
 
     this.setData({
-      userId,
-      addrId
+      userId
     })
   },
 
@@ -48,7 +52,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this;
+    let chooseAddress = wx.getStorageSync('chooseAddress'); //已选择地址
 
+    wx.removeStorageSync('chooseAddress'); //删除缓存 已选择地址
+    if (chooseAddress) {
+      let location = chooseAddress.location.lat + ',' + chooseAddress.location.lng; //经纬度
+
+      that.setData({
+        address: chooseAddress.title,
+        region: chooseAddress.address,
+        location
+      })
+    }
   },
 
   /**
@@ -97,12 +113,6 @@ Page({
       tel: e.detail.value
     })
   },
-  bindRegionChange: function (e) { //地区 picker
-    console.log('地区为', e.detail.value);
-    this.setData({
-      region: e.detail.value
-    })
-  },
   getDetailAddr: function (e) { //详细地址
     console.log('详细地址为', e.detail.value);
     this.setData({
@@ -117,11 +127,13 @@ Page({
   },
   saveAddr: function () { //保存地址
     let that = this;
-    let userId = that.data.userId;
-    let addrId = that.data.addrId; //1=新增发货地址,2=新增收货地址
+    let userId = that.data.userId; //用户id
+    let addrId = wx.getStorageSync('addrId'); //新增地址判断 1=新增发货地址,2=新增收货地址
     let name = that.data.name; //姓名
     let tel = that.data.tel; //电话
-    let region = that.data.region.toString(); //地区
+    let address = that.data.address; //地址名称
+    let region = that.data.region; //地区
+    let location = that.data.location; //经纬度
     let detailAddr = that.data.detailAddr; //详细地址
     let isDefault = that.data.isDefault == true ? '1' : '0'; //是否默认地址
 
@@ -135,11 +147,13 @@ Page({
         url: 'https://daizongpaotui.zlogic.cn/index.php/api/address/index',
         method: 'POST',
         data: {
-          username: name, //姓名
-          phone: tel, //电话
-          address: region, //地区
-          address_detail: detailAddr, //详细地址
-          address_sign: addrId, //1=新增发货地址,2=新增收货地址
+          name: name, //姓名
+          tel: tel, //电话
+          address: address,
+          region: region, //地区
+          location: location,
+          detailAddr: detailAddr, //详细地址
+          address_sign: addrId, //新增地址判断 1=新增发货地址,2=新增收货地址
           default: isDefault, //是否默认地址
           token: userId
         },
@@ -151,7 +165,10 @@ Page({
               title: '添加地址成功',
               success() {
                 wx.redirectTo({
-                  url: '/pages/address/address'
+                  url: '/pages/address/address',
+                  success() {
+                    wx.removeStorageSync('addrId'); //删除缓存 新增地址判断
+                  }
                 })
               }
             })

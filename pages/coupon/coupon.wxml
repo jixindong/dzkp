@@ -1,9 +1,9 @@
 <!--pages/coupon/coupon.wxml-->
 <view class="container">
 	<!-- 优惠券卡片 -->
-	<block wx:for="{{coupons}}" wx:for-index="idx" wx:key="*this">
+	<block wx:for="{{coupons}}" wx:for-index="idx" wx:key="index">
 		<navigator url="#" class="couponCard boxShadow" data-index="{{idx}}" data-cid="{{item.id}}" bindtap="getCoupon">
-			<view class="priceBox {{item.tag==1?'':'used'}}">
+			<view class="priceBox {{item.tag == 1 ?'':'used'}}">
 				<view>
 					<text>￥</text>
 					<text class="price">{{item.price}}</text>
@@ -13,7 +13,7 @@
 
 			<view class="limit {{item.tag==1?'':'used'}}">
 				<text>有效期</text>
-				<text class="time {{item.tag==1?'':'used'}}">{{item.stattime}}-{{item.endtime}}</text>
+				<view class="time {{item.tag==1?'':'used'}}">{{item.endtime}}</view>
 			</view>
 
 			<view class="flag">
@@ -35,4 +35,11 @@
 		</navigator>
 	</block>
 	<!-- 优惠券卡片 end -->
+
+	<!-- 暂无优惠券 -->
+	<view class="noData" wx:if="{{coupons.length == 0}}">
+		<image src="/images/noData.png"></image>
+		<text>暂无优惠券</text>
+	</view>
+	<!-- 暂无优惠券 end -->
 </view>

@@ -1,0 +1,21 @@
+/* pages/aboutUs/aboutUs.wxss */
+
+page {
+  background-color: #fff;
+}
+
+/* 介绍 */
+.intro {
+  margin: 0 40rpx;
+  color: #333;
+  font-size: 28rpx;
+}
+
+.intro .title {
+  margin: 50rpx 0 20rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 介绍 end */

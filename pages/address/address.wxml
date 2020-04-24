@@ -17,11 +17,15 @@
 					<block wx:for="{{sendAddress}}" wx:for-index="idx" wx:key="*this">
 						<view class="addressCard boxShadow">
 							<view class="title">
-								<text>发货人：{{item.username}}</text>
-								<text>{{item.phone}}</text>
+								<text>发货人：{{item.name}}</text>
+								<text>{{item.tel}}</text>
 							</view>
 
-							<view class="address">{{item.address}} {{item.address_detail}}</view>
+							<view class="address">
+								<view>{{item.address}}</view>
+								<view>{{item.region}}</view>
+								<view>{{item.detailAddr}}</view>
+							</view>
 
 							<view class="btnBox">
 								<label>
@@ -59,11 +63,15 @@
 					<block wx:for="{{receiveAddress}}" wx:for-index="idx" wx:key="*this">
 						<view class="addressCard boxShadow">
 							<view class="title">
-								<text>收货人：{{item.username}}</text>
-								<text>{{item.phone}}</text>
+								<text>收货人：{{item.name}}</text>
+								<text>{{item.tel}}</text>
 							</view>
 
-							<view class="address">{{item.address}} {{item.address_detail}}</view>
+							<view class="address">
+								<view>{{item.address}}</view>
+								<view>{{item.region}}</view>
+								<view>{{item.detailAddr}}</view>
+							</view>
 
 							<view class="btnBox">
 								<label>

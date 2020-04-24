@@ -6,10 +6,12 @@
 	<text wx:if="{{statusCode == 3}}">订单进行中...</text>
 	<text wx:if="{{statusCode == 4}}">订单已完成</text>
 	<text wx:if="{{statusCode == 5}}">订单已取消</text>
+	<text wx:if="{{statusCode == 6}}">订单已退款</text>
+	<text wx:if="{{statusCode == 7}}">订单已被拒</text>
 
-	<text wx:if="{{getCode && statusCode != 5}}">取件码：{{getCode}}</text>
+	<text wx:if="{{getCode && statusCode != 5 && statusCode != 6 && statusCode != 7}}">取件码：{{getCode}}</text>
 
-	<navigator url="#" class="anewOrder" wx:if="{{statusCode == 5}}">重新下单</navigator>
+	<navigator url="#" class="anewOrder" wx:if="{{statusCode == 5 || statusCode == 6 || statusCode == 7}}">重新下单</navigator>
 </view>
 <!-- 头部 end -->
 
@@ -19,13 +21,13 @@
 	<view class="waitPay boxShadow" wx:if="{{statusCode == 1}}">
 		<view class="title">
 			<text>请在15分钟内完成支付</text>
-			<text class="time">11:11</text>
+			<!-- <text class="time">11:11</text> -->
 		</view>
 
 		<view class="btnBox">
-			<navigator url="#" class="btn" bindtap="cancelOrder">取消订单</navigator>
-			<navigator url="#" class="btn">修改订单</navigator>
-			<navigator url="#" class="btn2">立即支付</navigator>
+			<navigator url="#" class="btn" bindtap="cancelOrderA">取消订单</navigator>
+			<!-- <navigator url="#" class="btn">修改订单</navigator> -->
+			<navigator url="#" class="btn2" bindtap="paymentA">立即支付</navigator>
 		</view>
 	</view>
 	<!-- 待支付信息 end -->
@@ -45,8 +47,8 @@
 		</view>
 
 		<view class="btnBox">
-			<navigator url="#" class="btn" bindtap="cancelOrder">取消订单</navigator>
-			<navigator url="#" class="btn">修改订单</navigator>
+			<navigator url="#" class="btn" bindtap="cancelOrderB">取消订单</navigator>
+			<!-- <navigator url="#" class="btn">修改订单</navigator> -->
 		</view>
 	</view>
 	<!-- 待接单信息 end -->
@@ -68,9 +70,10 @@
 		</view>
 
 		<view class="btnBox">
-			<navigator url="#" class="btn" bindtap="cancelOrder">取消订单</navigator>
-			<navigator url="#" class="btn">修改订单</navigator>
-			<navigator url="#" class="btn2">确认送达</navigator>
+			<!-- <navigator url="#" class="btn" bindtap="cancelOrder">取消订单</navigator> -->
+			<!-- <navigator url="#" class="btn">修改订单</navigator> -->
+			<navigator url="#" class="btn2" bindtap="paymentB" wx:if="{{!payForFlag}}">立即支付</navigator>
+			<navigator url="#" class="btn2" bindtap="complete" wx:if="{{payForFlag}}">确认送达</navigator>
 		</view>
 	</view>
 	<!-- 订单进行信息 end -->
@@ -92,7 +95,7 @@
 		</view>
 
 		<view class="btnBox">
-			<navigator url="#" class="btn">联系商家</navigator>
+			<!-- <navigator url="#" class="btn">联系商家</navigator> -->
 			<navigator url="#" class="btn2">再来一单</navigator>
 		</view>
 	</view>
@@ -115,16 +118,16 @@
 		</view>
 
 		<!-- 服务内容 -->
-		<view class="detailLine">
+		<!-- <view class="detailLine">
 			<view>服务内容</view>
 			<text class="info ellipsis">{{serve}}</text>
-		</view>
+		</view> -->
 
 		<!-- 照片 -->
-		<view class="detailLine">
+		<!-- <view class="detailLine">
 			<view>照片</view>
 			<image src="{{orderImg}}"></image>
-		</view>
+		</view> -->
 
 		<!-- 订单金额 -->
 		<view class="detailLine">
@@ -139,8 +142,9 @@
 		</view>
 
 		<!-- 备注 -->
-		<view class="detailLine">
-			<view>备注</view>
+		<view class="detailLine" wx:if="{{remark}}">
+			<view wx:if="{{orderType != 4}}">备注</view>
+			<view wx:if="{{orderType == 4}}">具体事项</view>
 			<text class="info">{{remark}}</text>
 		</view>
 	</view>

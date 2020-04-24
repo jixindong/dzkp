@@ -13,7 +13,7 @@
 
 	<!-- 标题列表 -->
 	<scroll-view scroll-x="true" scroll-left="{{scrollLeft+'rpx'}}" class="tabHead">
-		<block wx:for="{{goods}}" wx:for-index="tid" wx:key="*this">
+		<block wx:for="{{goods}}" wx:for-index="tid" wx:key="index">
 			<view class="tabHeadItem {{currentTab == tid?'active':''}}" data-current="{{tid}}" bindtap="swichNav">{{item.name}}</view>
 		</block>
 	</scroll-view>
@@ -21,10 +21,10 @@
 
 	<!-- 商品列表 -->
 	<swiper class="tabContent" style="height:{{height}};min-height:{{minHeight}}" current="{{currentTab}}" duration="500" circular bindchange="switchTab">
-		<block wx:for="{{goods}}" wx:key="*this">
+		<block wx:for="{{goods}}" wx:key="index">
 			<swiper-item id="{{'s'+index}}" data-index="{{index}}">
 				<!-- 商品 -->
-				<block wx:for="{{item.child}}" wx:key="*this">
+				<block wx:for="{{item.child}}" wx:key="index">
 					<view data-pid="{{item.id}}" class="good">
 						<image src="{{item.photoimages}}" class="goodImg" wx:if="{{item.photoimages}}"></image>
 						<image src="/images/goodImgNone.jpg" class="goodImg" wx:if="{{!item.photoimages}}"></image>

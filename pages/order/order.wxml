@@ -13,45 +13,58 @@
 
 	<!-- 内容 -->
 	<swiper class="tabContent" style="height:{{contentHeight}}rpx" current="{{currentTab}}" duration="500" circular bindchange="switchTab">
+		<!-- 全部订单 -->
 		<swiper-item>
 			<scroll-view scroll-y="true" class="scrollBox">
 				<!-- 订单卡片 -->
-				<block wx:for="{{orderAll}}" wx:key="*this">
-					<navigator url="/pages/order/orderDetail" class="orderCard boxShadow">
+				<block wx:for="{{orderAll}}" wx:key="index">
+					<navigator url="/pages/order/orderDetail?oId={{item.id}}" class="orderCard boxShadow">
 						<!-- 头部 -->
 						<view class="header">
-							<text class="title" wx:if="{{item.nameCode == 1}}">帮我买</text>
-							<text class="title" wx:if="{{item.nameCode == 2}}">帮我送</text>
-							<text class="title" wx:if="{{item.nameCode == 3}}">帮我取</text>
+							<text class="title" wx:if="{{item.order_type == 1}}">帮我送</text>
+							<text class="title" wx:if="{{item.order_type == 2}}">帮我取</text>
+							<text class="title" wx:if="{{item.order_type == 3}}">帮我买</text>
+							<text class="title" wx:if="{{item.order_type == 4}}">其他服务</text>
 
-							<text class="waitPay" wx:if="{{item.statusCode == 1}}">待支付</text>
-							<text class="waitReceive" wx:if="{{item.statusCode == 2}}">待接单</text>
-							<text class="proceed" wx:if="{{item.statusCode == 3}}">进行中</text>
-							<text wx:if="{{item.statusCode == 4}}">已完成</text>
-							<text wx:if="{{item.statusCode == 5}}">已取消</text>
+							<text class="waitPay" wx:if="{{item.state == 1}}">待支付</text>
+							<text class="waitReceive" wx:if="{{item.state == 2}}">待接单</text>
+							<text class="proceed" wx:if="{{item.state == 3}}">进行中</text>
+							<text wx:if="{{item.state == 4}}">已完成</text>
+							<text wx:if="{{item.state == 5}}">已取消</text>
+							<text wx:if="{{item.state == 6}}">已退单</text>
+							<text wx:if="{{item.state == 7}}">已拒单</text>
 						</view>
 
 						<!-- 中部 -->
 						<view class="detailBox">
 							<view class="detail">
-								<image src="/images/buy2.png" wx:if="{{item.nameCode == 1}}"></image>
-								<image src="/images/fetch.png" wx:if="{{item.nameCode == 2}}"></image>
-								<image src="/images/fetch.png" wx:if="{{item.nameCode == 3}}"></image>
+								<image src="/images/fetch.png" wx:if="{{item.order_type == 1 || item.order_type == 2}}"></image>
+								<image src="/images/buy2.png" wx:if="{{item.order_type == 3}}"></image>
+								<image src="/images/help2.png" wx:if="{{item.order_type == 4}}"></image>
 
-								<text>买货地址：</text>
-								<text class="address ellipsis">{{item.address1}}</text>
-							</view>
-
-							<view class="detail">
-								<image src="/images/receive2.png"></image>
-								<text>收货地址：</text>
-								<text class="address ellipsis">{{item.address2}}</text>
+								<text wx:if="{{item.order_type == 1}}">发货地址：</text>
+								<text wx:if="{{item.order_type == 2}}">取货地址：</text>
+								<text wx:if="{{item.order_type == 3}}">买货地址：</text>
+								<text wx:if="{{item.order_type == 4}}">服务地址：</text>
+								<text class="address ellipsis">{{item.from}}</text>
 							</view>
 
 							<view class="detail">
 								<image src="/images/tel.png"></image>
 								<text>联系方式：</text>
-								<text>{{item.tel}}</text>
+								<text>{{item.consignor_phone}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/receive2.png"></image>
+								<text>收货地址：</text>
+								<text class="address ellipsis">{{item.to}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignee_phone}}</text>
 							</view>
 						</view>
 
@@ -59,24 +72,418 @@
 						<view class="footer">
 							<view class="time">
 								<image src="/images/time.png"></image>
-								<text>{{item.time}}</text>
+								<text>{{item.create_time}}</text>
 							</view>
 
 							<view class="getCode">
 								<text>收货码：</text>
-								<text>{{item.getCode}}</text>
+								<text>{{item.receipt_code}}</text>
 							</view>
 						</view>
 					</navigator>
 				</block>
 				<!-- 订单卡片 end -->
+
+				<!-- 暂无订单 -->
+				<view class="noData" wx:if="{{orderAll.length == 0}}">
+					<image src="/images/noData.png"></image>
+					<text>暂无订单</text>
+				</view>
+				<!-- 暂无订单 end -->
 			</scroll-view>
 		</swiper-item>
-		<swiper-item>2</swiper-item>
-		<swiper-item>3</swiper-item>
-		<swiper-item>4</swiper-item>
-		<swiper-item>5</swiper-item>
-		<swiper-item>6</swiper-item>
+		<!-- 全部订单 end -->
+
+		<!-- 待支付订单 -->
+		<swiper-item>
+			<scroll-view scroll-y="true" class="scrollBox">
+				<!-- 订单卡片 -->
+				<block wx:for="{{orderNoPay}}" wx:key="index">
+					<navigator url="/pages/order/orderDetail?oId={{item.id}}" class="orderCard boxShadow">
+						<!-- 头部 -->
+						<view class="header">
+							<text class="title" wx:if="{{item.order_type == 1}}">帮我送</text>
+							<text class="title" wx:if="{{item.order_type == 2}}">帮我取</text>
+							<text class="title" wx:if="{{item.order_type == 3}}">帮我买</text>
+							<text class="title" wx:if="{{item.order_type == 4}}">其他服务</text>
+
+							<text class="waitPay">待支付</text>
+							<!-- <text class="waitReceive" wx:if="{{item.state == 2}}">待接单</text>
+							<text class="proceed" wx:if="{{item.state == 3}}">进行中</text>
+							<text wx:if="{{item.state == 4}}">已完成</text>
+							<text wx:if="{{item.state == 5}}">已取消</text> -->
+						</view>
+
+						<!-- 中部 -->
+						<view class="detailBox">
+							<view class="detail">
+								<image src="/images/fetch.png" wx:if="{{item.order_type == 1 || item.order_type == 2}}"></image>
+								<image src="/images/buy2.png" wx:if="{{item.order_type == 3}}"></image>
+								<image src="/images/help2.png" wx:if="{{item.order_type == 4}}"></image>
+
+								<text wx:if="{{item.order_type == 1}}">发货地址：</text>
+								<text wx:if="{{item.order_type == 2}}">取货地址：</text>
+								<text wx:if="{{item.order_type == 3}}">买货地址：</text>
+								<text wx:if="{{item.order_type == 4}}">服务地址：</text>
+								<text class="address ellipsis">{{item.from}}</text>
+							</view>
+
+							<view class="detail">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignor_phone}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/receive2.png"></image>
+								<text>收货地址：</text>
+								<text class="address ellipsis">{{item.to}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignee_phone}}</text>
+							</view>
+						</view>
+
+						<!-- 底部 -->
+						<view class="footer">
+							<view class="time">
+								<image src="/images/time.png"></image>
+								<text>{{item.create_time}}</text>
+							</view>
+
+							<view class="getCode">
+								<text>收货码：</text>
+								<text>{{item.receipt_code}}</text>
+							</view>
+						</view>
+					</navigator>
+				</block>
+				<!-- 订单卡片 end -->
+
+				<!-- 暂无订单 -->
+				<view class="noData" wx:if="{{orderNoPay.length == 0}}">
+					<image src="/images/noData.png"></image>
+					<text>暂无订单</text>
+				</view>
+				<!-- 暂无订单 end -->
+			</scroll-view>
+		</swiper-item>
+		<!-- 待支付订单 end -->
+
+		<!-- 待接单订单 -->
+		<swiper-item>
+			<scroll-view scroll-y="true" class="scrollBox">
+				<!-- 订单卡片 -->
+				<block wx:for="{{orderNoRec}}" wx:key="index">
+					<navigator url="/pages/order/orderDetail?oId={{item.id}}" class="orderCard boxShadow">
+						<!-- 头部 -->
+						<view class="header">
+							<text class="title" wx:if="{{item.order_type == 1}}">帮我送</text>
+							<text class="title" wx:if="{{item.order_type == 2}}">帮我取</text>
+							<text class="title" wx:if="{{item.order_type == 3}}">帮我买</text>
+							<text class="title" wx:if="{{item.order_type == 4}}">其他服务</text>
+
+							<!-- <text class="waitPay" wx:if="{{item.state == 1}}">待支付</text> -->
+							<text class="waitReceive">待接单</text>
+							<!-- <text class="proceed" wx:if="{{item.state == 3}}">进行中</text>
+							<text wx:if="{{item.state == 4}}">已完成</text>
+							<text wx:if="{{item.state == 5}}">已取消</text> -->
+						</view>
+
+						<!-- 中部 -->
+						<view class="detailBox">
+							<view class="detail">
+								<image src="/images/fetch.png" wx:if="{{item.order_type == 1 || item.order_type == 2}}"></image>
+								<image src="/images/buy2.png" wx:if="{{item.order_type == 3}}"></image>
+
+								<text wx:if="{{item.order_type == 1}}">发货地址：</text>
+								<text wx:if="{{item.order_type == 2}}">取货地址：</text>
+								<text wx:if="{{item.order_type == 3}}">买货地址：</text>
+								<text wx:if="{{item.order_type == 4}}">服务地址：</text>
+								<text class="address ellipsis">{{item.from}}</text>
+							</view>
+
+							<view class="detail">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignor_phone}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/receive2.png"></image>
+								<text>收货地址：</text>
+								<text class="address ellipsis">{{item.to}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignee_phone}}</text>
+							</view>
+						</view>
+
+						<!-- 底部 -->
+						<view class="footer">
+							<view class="time">
+								<image src="/images/time.png"></image>
+								<text>{{item.create_time}}</text>
+							</view>
+
+							<view class="getCode">
+								<text>收货码：</text>
+								<text>{{item.receipt_code}}</text>
+							</view>
+						</view>
+					</navigator>
+				</block>
+				<!-- 订单卡片 end -->
+
+				<!-- 暂无订单 -->
+				<view class="noData" wx:if="{{orderNoRec.length == 0}}">
+					<image src="/images/noData.png"></image>
+					<text>暂无订单</text>
+				</view>
+				<!-- 暂无订单 end -->
+			</scroll-view>
+		</swiper-item>
+		<!-- 待接单订单 end -->
+
+		<!-- 进行中订单 -->
+		<swiper-item>
+			<scroll-view scroll-y="true" class="scrollBox">
+				<!-- 订单卡片 -->
+				<block wx:for="{{orderUnderway}}" wx:key="index">
+					<navigator url="/pages/order/orderDetail?oId={{item.id}}" class="orderCard boxShadow">
+						<!-- 头部 -->
+						<view class="header">
+							<text class="title" wx:if="{{item.order_type == 1}}">帮我送</text>
+							<text class="title" wx:if="{{item.order_type == 2}}">帮我取</text>
+							<text class="title" wx:if="{{item.order_type == 3}}">帮我买</text>
+							<text class="title" wx:if="{{item.order_type == 4}}">其他服务</text>
+
+							<!-- <text class="waitPay" wx:if="{{item.state == 1}}">待支付</text>
+							<text class="waitReceive" wx:if="{{item.state == 2}}">待接单</text> -->
+							<text class="proceed">进行中</text>
+							<!-- <text wx:if="{{item.state == 4}}">已完成</text>
+							<text wx:if="{{item.state == 5}}">已取消</text> -->
+						</view>
+
+						<!-- 中部 -->
+						<view class="detailBox">
+							<view class="detail">
+								<image src="/images/fetch.png" wx:if="{{item.order_type == 1 || item.order_type == 2}}"></image>
+								<image src="/images/buy2.png" wx:if="{{item.order_type == 3}}"></image>
+
+								<text wx:if="{{item.order_type == 1}}">发货地址：</text>
+								<text wx:if="{{item.order_type == 2}}">取货地址：</text>
+								<text wx:if="{{item.order_type == 3}}">买货地址：</text>
+								<text wx:if="{{item.order_type == 4}}">服务地址：</text>
+								<text class="address ellipsis">{{item.from}}</text>
+							</view>
+
+							<view class="detail">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignor_phone}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/receive2.png"></image>
+								<text>收货地址：</text>
+								<text class="address ellipsis">{{item.to}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignee_phone}}</text>
+							</view>
+						</view>
+
+						<!-- 底部 -->
+						<view class="footer">
+							<view class="time">
+								<image src="/images/time.png"></image>
+								<text>{{item.create_time}}</text>
+							</view>
+
+							<view class="getCode">
+								<text>收货码：</text>
+								<text>{{item.receipt_code}}</text>
+							</view>
+						</view>
+					</navigator>
+				</block>
+				<!-- 订单卡片 end -->
+
+				<!-- 暂无订单 -->
+				<view class="noData" wx:if="{{orderUnderway.length == 0}}">
+					<image src="/images/noData.png"></image>
+					<text>暂无订单</text>
+				</view>
+				<!-- 暂无订单 end -->
+			</scroll-view>
+		</swiper-item>
+		<!-- 进行中订单 end -->
+
+		<!-- 已完成订单 -->
+		<swiper-item>
+			<scroll-view scroll-y="true" class="scrollBox">
+				<!-- 订单卡片 -->
+				<block wx:for="{{orderComplete}}" wx:key="index">
+					<navigator url="/pages/order/orderDetail?oId={{item.id}}" class="orderCard boxShadow">
+						<!-- 头部 -->
+						<view class="header">
+							<text class="title" wx:if="{{item.order_type == 1}}">帮我送</text>
+							<text class="title" wx:if="{{item.order_type == 2}}">帮我取</text>
+							<text class="title" wx:if="{{item.order_type == 3}}">帮我买</text>
+							<text class="title" wx:if="{{item.order_type == 4}}">其他服务</text>
+
+							<!-- <text class="waitPay" wx:if="{{item.state == 1}}">待支付</text>
+							<text class="waitReceive" wx:if="{{item.state == 2}}">待接单</text>
+							<text class="proceed" wx:if="{{item.state == 3}}">进行中</text> -->
+							<text>已完成</text>
+							<!-- <text wx:if="{{item.state == 5}}">已取消</text> -->
+						</view>
+
+						<!-- 中部 -->
+						<view class="detailBox">
+							<view class="detail">
+								<image src="/images/fetch.png" wx:if="{{item.order_type == 1 || item.order_type == 2}}"></image>
+								<image src="/images/buy2.png" wx:if="{{item.order_type == 3}}"></image>
+
+								<text wx:if="{{item.order_type == 1}}">发货地址：</text>
+								<text wx:if="{{item.order_type == 2}}">取货地址：</text>
+								<text wx:if="{{item.order_type == 3}}">买货地址：</text>
+								<text wx:if="{{item.order_type == 4}}">服务地址：</text>
+								<text class="address ellipsis">{{item.from}}</text>
+							</view>
+
+							<view class="detail">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignor_phone}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/receive2.png"></image>
+								<text>收货地址：</text>
+								<text class="address ellipsis">{{item.to}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignee_phone}}</text>
+							</view>
+						</view>
+
+						<!-- 底部 -->
+						<view class="footer">
+							<view class="time">
+								<image src="/images/time.png"></image>
+								<text>{{item.create_time}}</text>
+							</view>
+
+							<view class="getCode">
+								<text>收货码：</text>
+								<text>{{item.receipt_code}}</text>
+							</view>
+						</view>
+					</navigator>
+				</block>
+				<!-- 订单卡片 end -->
+
+				<!-- 暂无订单 -->
+				<view class="noData" wx:if="{{orderComplete.length == 0}}">
+					<image src="/images/noData.png"></image>
+					<text>暂无订单</text>
+				</view>
+				<!-- 暂无订单 end -->
+			</scroll-view>
+		</swiper-item>
+		<!-- 已完成订单 end -->
+
+		<!-- 已取消订单 -->
+		<swiper-item>
+			<scroll-view scroll-y="true" class="scrollBox">
+				<!-- 订单卡片 -->
+				<block wx:for="{{orderCanceled}}" wx:key="index">
+					<navigator url="/pages/order/orderDetail?oId={{item.id}}" class="orderCard boxShadow">
+						<!-- 头部 -->
+						<view class="header">
+							<text class="title" wx:if="{{item.order_type == 1}}">帮我送</text>
+							<text class="title" wx:if="{{item.order_type == 2}}">帮我取</text>
+							<text class="title" wx:if="{{item.order_type == 3}}">帮我买</text>
+							<text class="title" wx:if="{{item.order_type == 4}}">其他服务</text>
+
+							<!-- <text class="waitPay" wx:if="{{item.state == 1}}">待支付</text>
+							<text class="waitReceive" wx:if="{{item.state == 2}}">待接单</text>
+							<text class="proceed" wx:if="{{item.state == 3}}">进行中</text>
+							<text wx:if="{{item.state == 4}}">已完成</text> -->
+							<text>已取消</text>
+						</view>
+
+						<!-- 中部 -->
+						<view class="detailBox">
+							<view class="detail">
+								<image src="/images/fetch.png" wx:if="{{item.order_type == 1 || item.order_type == 2}}"></image>
+								<image src="/images/buy2.png" wx:if="{{item.order_type == 3}}"></image>
+
+								<text wx:if="{{item.order_type == 1}}">发货地址：</text>
+								<text wx:if="{{item.order_type == 2}}">取货地址：</text>
+								<text wx:if="{{item.order_type == 3}}">买货地址：</text>
+								<text wx:if="{{item.order_type == 4}}">服务地址：</text>
+								<text class="address ellipsis">{{item.from}}</text>
+							</view>
+
+							<view class="detail">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignor_phone}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/receive2.png"></image>
+								<text>收货地址：</text>
+								<text class="address ellipsis">{{item.to}}</text>
+							</view>
+
+							<view class="detail" wx:if="{{item.order_type != 4}}">
+								<image src="/images/tel.png"></image>
+								<text>联系方式：</text>
+								<text>{{item.consignee_phone}}</text>
+							</view>
+						</view>
+
+						<!-- 底部 -->
+						<view class="footer">
+							<view class="time">
+								<image src="/images/time.png"></image>
+								<text>{{item.create_time}}</text>
+							</view>
+
+							<view class="getCode">
+								<text>收货码：</text>
+								<text>{{item.receipt_code}}</text>
+							</view>
+						</view>
+					</navigator>
+				</block>
+				<!-- 订单卡片 end -->
+
+				<!-- 暂无订单 -->
+				<view class="noData" wx:if="{{orderCanceled.length == 0}}">
+					<image src="/images/noData.png"></image>
+					<text>暂无订单</text>
+				</view>
+				<!-- 暂无订单 end -->
+			</scroll-view>
+		</swiper-item>
+		<!-- 已取消订单 end -->
 	</swiper>
 	<!-- 内容 end -->
 </view>

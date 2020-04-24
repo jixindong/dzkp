@@ -21,23 +21,31 @@
   text-align: right;
 }
 
-/* picker */
-.infoBox .infoLine picker {
+.infoBox .infoLine .chooseAddr {
   flex: 1;
-  text-align: right;
-}
-
-.infoBox .infoLine picker .choice {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
   color: #808080;
 }
 
-.infoBox .infoLine picker .arrow {
+.infoBox .infoLine .chooseAddr .address {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0 0 0 40rpx;
+}
+
+.infoBox .infoLine .chooseAddr .address .detail {
+  color: #333;
+  font-weight: bold;
+}
+
+.infoBox .infoLine .chooseAddr .arrow {
   margin: 0 0 0 20rpx;
   width: 12rpx;
   height: 22rpx;
 }
-
-/* picker end */
 
 /* checkbox */
 

@@ -1,10 +1,10 @@
 <!--index.wxml-->
 <view class="container">
 	<!-- 顶部轮播图 -->
-	<view class="topSwiper boxShadow">
+	<view class="topSwiper boxShadow" wx:if="{{topSwiper.length != 0}}">
 		<swiper autoplay indicator-dots indicator-color="#fff" indicator-active-color="#1865F3" interval="5000" circular>
 			<swiper-item wx:for="{{topSwiper}}" wx:key="*this">
-				<image src="{{item.img}}"></image>
+				<image src="https://daizongpaotui.zlogic.cn{{item}}"></image>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -26,32 +26,40 @@
 			<!-- 帮我买 -->
 			<swiper-item class="toBuy">
 				<!-- 地址 -->
-				<view class="addressBox boxShadow">
+				<!-- <view class="addressBox boxShadow">
 					<view class="address">
 						<image src="/images/buy.png"></image>
-						<navigator url="/pages/address/fillAddress" class="chooseAddress">
-							<text class="ellipsis choice" wx:if="{{!buyAddress||!buyAddressArea}}">请选择购买地址</text>
-							<text class="ellipsis detail" wx:if="{{buyAddress&&buyAddressArea}}">{{buyAddress}}</text>
-							<text class="ellipsis location" wx:if="{{buyAddress&&buyAddressArea}}">{{buyAddressArea}}</text>
+						<navigator url="/pages/address/fillAddress?addrSign=b1" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{buyAddrInfo == ''}}">请选择购买地址</text>
+
+							<view class="addrDetailBox" wx:if="{{buyAddrInfo}}">
+								<text class="ellipsis detail">{{buyAddrInfo.address}}</text>
+								<text class="ellipsis location">{{buyAddrInfo.region}}</text>
+								<text class="ellipsis location">{{buyAddrInfo.detailAddr}}</text>
+							</view>
 						</navigator>
-						<navigator url="#" class="common">常用</navigator>
+						<navigator url="#" class="common" bindtap="setDefaultAddrA">默认</navigator>
 					</view>
 
 					<view class="address">
 						<image src="/images/receive.png"></image>
-						<navigator url="/pages/address/fillAddress" class="chooseAddress">
-							<text class="ellipsis choice" wx:if="{{!takeAddress||!takeAddressArea}}">请选择收货地址</text>
-							<text class="ellipsis detail" wx:if="{{takeAddress&&takeAddressArea}}">{{takeAddress}}</text>
-							<text class="ellipsis location" wx:if="{{takeAddress&&takeAddressArea}}">{{takeAddressArea}}</text>
+						<navigator url="/pages/address/fillAddress?addrSign=b2" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{buyTakeAddrInfo == ''}}">请选择收货地址</text>
+
+							<view class="addrDetailBox" wx:if="{{buyTakeAddrInfo}}">
+								<text class="ellipsis detail">{{buyTakeAddrInfo.address}}</text>
+								<text class="ellipsis location">{{buyTakeAddrInfo.region}}</text>
+								<text class="ellipsis location">{{buyTakeAddrInfo.detailAddr}}</text>
+							</view>
 						</navigator>
-						<navigator url="#" class="common">常用</navigator>
+						<navigator url="#" class="common" bindtap="setDefaultAddrB">默认</navigator>
 					</view>
-				</view>
+				</view> -->
 				<!-- 地址 end -->
 
 				<!-- 市场 -->
 				<navigator url="/pages/market/market" class="market boxShadow">
-					<image src="https://ae01.alicdn.com/kf/H69fa7006c5b347348ef46b19dd4c61faJ.png"></image>
+					<image src="https://s1.ax1x.com/2020/04/24/JBjEin.png"></image>
 				</navigator>
 				<view class="marketInfo boxShadow" wx:if="{{marketDetail}}">
 					<text class="title">已选购商品</text>
@@ -62,26 +70,24 @@
 				<!-- 购买商品 -->
 				<view class="product boxShadow">
 					<text class="title">填写需要购买的商品</text>
-					<textarea maxlength="200" placeholder="请填写商品名称和数量等"></textarea>
+					<textarea maxlength="200" placeholder="请填写商品名称和数量等" bindinput="buyGoods"></textarea>
 				</view>
 				<!-- 购买商品 end -->
 
 				<!-- 购买 -->
-				<view class="purchase boxShadow">
-					<!-- 购买时间 -->
+				<!-- <view class="purchase boxShadow">
 					<view class="pLine">
 						<image src="/images/time.png" class="leftImg"></image>
 						<view class="pBox pBoxBorder">
 							<text class="title">购买时间</text>
 
-							<picker bindchange="buyTimeChange" value="{{buyTimeIndex}}" range="{{buyTime}}">
-								<text class="{{buyTimeIndex!=0?'active':''}}">{{buyTime[buyTimeIndex]}}</text>
+							<picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+								<text>{{startDate}}</text>
 								<image src="/images/arrowRight.png"></image>
 							</picker>
 						</view>
 					</view>
 
-					<!-- 小费 -->
 					<view class="pLine">
 						<image src="/images/fee.png" class="leftImg"></image>
 						<view class="pBox pBoxBorder">
@@ -94,7 +100,6 @@
 						</view>
 					</view>
 
-					<!-- 备注 -->
 					<view class="pLine">
 						<image src="/images/write.png" class="leftImg"></image>
 						<view class="pBox">
@@ -105,13 +110,15 @@
 							</navigator>
 						</view>
 					</view>
-				</view>
+				</view> -->
 				<!-- 购买 end -->
 
 				<!-- 下单 -->
-				<navigator url="#" class="placeOrder" catchtap="placeOrder">
-					<text>跑腿费￥{{price}}</text>
-					<text>|</text>
+				<navigator url="#" class="placeOrder" catchtap="bPlaceOrder">
+					<!-- <text>跑腿费￥{{price.bPrice}}</text> -->
+					<!-- <text wx:if="{{marketPrice != 0}}">商品价格￥{{marketPrice}}</text> -->
+					<!-- <text wx:if="{{feeNum}}">小费￥{{feeNum}}</text> -->
+					<!-- <text>|</text> -->
 					<text>下单</text>
 				</navigator>
 				<!-- 下单 end -->
@@ -124,22 +131,33 @@
 				<view class="addressBox boxShadow">
 					<view class="address">
 						<image src="/images/send.png"></image>
-						<navigator url="/pages/address/fillAddress" class="chooseAddress">
-							<text class="ellipsis choice" wx:if="{{!sendAddress||!sendAddressArea}}">请选择发货地址</text>
+						<navigator url="/pages/address/fillAddress?addrSign=s1" class="chooseAddress">
+							<!-- <text class="ellipsis choice" wx:if="{{!sendAddress||!sendAddressArea}}">请选择发货地址</text>
 							<text class="ellipsis detail" wx:if="{{sendAddress&&sendAddressArea}}">{{sendAddress}}</text>
-							<text class="ellipsis location" wx:if="{{sendAddress&&sendAddressArea}}">{{sendAddressArea}}</text>
+							<text class="ellipsis location" wx:if="{{sendAddress&&sendAddressArea}}">{{sendAddressArea}}</text> -->
+							<text class="ellipsis choice" wx:if="{{sendAddrInfo == ''}}">请选择发货地址</text>
+
+							<view class="addrDetailBox" wx:if="{{sendAddrInfo}}">
+								<text class="ellipsis detail">{{sendAddrInfo.address}}</text>
+								<text class="ellipsis location">{{sendAddrInfo.region}}</text>
+								<text class="ellipsis location">{{sendAddrInfo.detailAddr}}</text>
+							</view>
 						</navigator>
-						<navigator url="#" class="common">常用</navigator>
+						<navigator url="#" class="common" bindtap="setDefaultAddrA">默认</navigator>
 					</view>
 
 					<view class="address">
 						<image src="/images/receive.png"></image>
-						<navigator url="/pages/address/fillAddress" class="chooseAddress">
-							<text class="ellipsis choice" wx:if="{{!sendTakeAddress||!sendTakeAddressArea}}">请选择收货地址</text>
-							<text class="ellipsis detail" wx:if="{{sendTakeAddress&&sendTakeAddressArea}}">{{sendTakeAddress}}</text>
-							<text class="ellipsis location" wx:if="{{sendTakeAddress&&sendTakeAddressArea}}">{{sendTakeAddressArea}}</text>
+						<navigator url="/pages/address/fillAddress?addrSign=s2" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{sendTakeAddrInfo == ''}}">请选择收货地址</text>
+
+							<view class="addrDetailBox" wx:if="{{sendTakeAddrInfo}}">
+								<text class="ellipsis detail">{{sendTakeAddrInfo.address}}</text>
+								<text class="ellipsis location">{{sendTakeAddrInfo.region}}</text>
+								<text class="ellipsis location">{{sendTakeAddrInfo.detailAddr}}</text>
+							</view>
 						</navigator>
-						<navigator url="#" class="common">常用</navigator>
+						<navigator url="#" class="common" bindtap="setDefaultAddrB">默认</navigator>
 					</view>
 				</view>
 				<!-- 地址 end -->
@@ -170,9 +188,8 @@
 						<image src="/images/time.png" class="leftImg"></image>
 						<view class="pBox pBoxBorder">
 							<text class="title">发货时间</text>
-
-							<picker bindchange="sendTimeChange" value="{{sendTimeIndex}}" range="{{sendTime}}">
-								<text class="{{sendTimeIndex!=0?'active':''}}">{{sendTime[sendTimeIndex]}}</text>
+							<picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+								<text>{{startDate}}</text>
 								<image src="/images/arrowRight.png"></image>
 							</picker>
 						</view>
@@ -226,8 +243,10 @@
 				<!-- 购买 end -->
 
 				<!-- 下单 -->
-				<navigator url="#" class="placeOrder" catchtap="placeOrder">
-					<text>跑腿费￥{{price}}</text>
+				<navigator url="#" class="placeOrder" catchtap="sPlaceOrder">
+					<text>跑腿费￥{{price.sPrice}}</text>
+					<text wx:if="{{sendSupportValueNum}}">保价费￥{{sendSupportValueNum}}</text>
+					<text wx:if="{{feeNum}}">小费￥{{feeNum}}</text>
 					<text>|</text>
 					<text>下单</text>
 				</navigator>
@@ -241,22 +260,30 @@
 				<view class="addressBox boxShadow">
 					<view class="address">
 						<image src="/images/send.png"></image>
-						<navigator url="/pages/address/fillAddress" class="chooseAddress">
-							<text class="ellipsis choice" wx:if="{{!fetchAddress||!fetchAddressArea}}">请选择取货地址</text>
-							<text class="ellipsis detail" wx:if="{{fetchAddress&&fetchAddressArea}}">{{fetchAddress}}</text>
-							<text class="ellipsis location" wx:if="{{fetchAddress&&fetchAddressArea}}">{{fetchAddressArea}}</text>
+						<navigator url="/pages/address/fillAddress?addrSign=f1" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{fetchAddrInfo == ''}}">请选择取货地址</text>
+
+							<view class="addrDetailBox" wx:if="{{fetchAddrInfo}}">
+								<text class="ellipsis detail">{{fetchAddrInfo.address}}</text>
+								<text class="ellipsis location">{{fetchAddrInfo.region}}</text>
+								<text class="ellipsis location">{{fetchAddrInfo.detailAddr}}</text>
+							</view>
 						</navigator>
-						<navigator url="#" class="common">常用</navigator>
+						<navigator url="#" class="common" bindtap="setDefaultAddrA">默认</navigator>
 					</view>
 
 					<view class="address">
 						<image src="/images/receive.png"></image>
-						<navigator url="/pages/address/fillAddress" class="chooseAddress">
-							<text class="ellipsis choice" wx:if="{{!fetchTakeAddress||!fetchTakeAddressArea}}">请选择收货地址</text>
-							<text class="ellipsis detail" wx:if="{{fetchTakeAddress&&fetchTakeAddressArea}}">{{fetchTakeAddress}}</text>
-							<text class="ellipsis location" wx:if="{{fetchTakeAddress&&fetchTakeAddressArea}}">{{fetchTakeAddressArea}}</text>
+						<navigator url="/pages/address/fillAddress?addrSign=f2" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{fetchTakeAddrInfo == ''}}">请选择收货地址</text>
+
+							<view class="addrDetailBox" wx:if="{{fetchTakeAddrInfo}}">
+								<text class="ellipsis detail">{{fetchTakeAddrInfo.address}}</text>
+								<text class="ellipsis location">{{fetchTakeAddrInfo.region}}</text>
+								<text class="ellipsis location">{{fetchTakeAddrInfo.detailAddr}}</text>
+							</view>
 						</navigator>
-						<navigator url="#" class="common">常用</navigator>
+						<navigator url="#" class="common" bindtap="setDefaultAddrB">默认</navigator>
 					</view>
 				</view>
 				<!-- 地址 end -->
@@ -288,8 +315,12 @@
 						<view class="pBox pBoxBorder">
 							<text class="title">取货时间</text>
 
-							<picker bindchange="fetchTimeChange" value="{{fetchTimeIndex}}" range="{{fetchTime}}">
+							<!-- <picker bindchange="fetchTimeChange" value="{{fetchTimeIndex}}" range="{{fetchTime}}">
 								<text class="{{fetchTimeIndex!=0?'active':''}}">{{fetchTime[fetchTimeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker> -->
+							<picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+								<text>{{startDate}}</text>
 								<image src="/images/arrowRight.png"></image>
 							</picker>
 						</view>
@@ -343,8 +374,10 @@
 				<!-- 购买 end -->
 
 				<!-- 下单 -->
-				<navigator url="#" class="placeOrder" catchtap="placeOrder">
-					<text>跑腿费￥{{price}}</text>
+				<navigator url="#" class="placeOrder" catchtap="fPlaceOrder">
+					<text>跑腿费￥{{price.fPrice}}</text>
+					<text wx:if="{{fetchSupportValueNum}}">保价费￥{{fetchSupportValueNum}}</text>
+					<text wx:if="{{feeNum}}">小费￥{{feeNum}}</text>
 					<text>|</text>
 					<text>下单</text>
 				</navigator>
@@ -356,14 +389,14 @@
 			<swiper-item class="toDo">
 				<!-- 服务事项 -->
 				<radio-group class="serveItemBox boxShadow" bindchange="serveRadioChange">
-					<block wx:for="{{serveItems}}" wx:for-index="idx" wx:key="*this">
+					<block wx:for="{{serveItems}}" wx:for-index="idx" wx:key="index">
 						<label class="serveItem {{item.checked?'active':''}}">
 							<radio value="{{idx}}" checked="{{item.checked}}" />
 
-							<image src="{{item.img}}" wx:if="{{item.checked}}"></image>
-							<image src="{{item.imgSelected}}" wx:if="{{!item.checked}}"></image>
+							<!-- <image src="{{item.img}}" wx:if="{{item.checked}}"></image> -->
+							<!-- <image src="{{item.imgSelected}}" wx:if="{{!item.checked}}"></image> -->
 
-							<text>{{item.value}}</text>
+							<text>{{item.tag_name}}</text>
 						</label>
 					</block>
 				</radio-group>
@@ -373,12 +406,16 @@
 				<view class="addressBox boxShadow">
 					<view class="address">
 						<image src="/images/help.png"></image>
-						<navigator url="/pages/address/fillAddress" class="chooseAddress">
-							<text class="ellipsis choice" wx:if="{{!helpAddress||!helpAddressArea}}">请选择收货地址</text>
-							<text class="ellipsis detail" wx:if="{{helpAddress&&helpAddressArea}}">{{helpAddress}}</text>
-							<text class="ellipsis location" wx:if="{{helpAddress&&helpAddressArea}}">{{helpAddressArea}}</text>
+						<navigator url="/pages/address/fillAddress?addrSign=d1" class="chooseAddress">
+							<text class="ellipsis choice" wx:if="{{helpAddrInfo == ''}}">请选择帮忙地址</text>
+
+							<view class="addrDetailBox" wx:if="{{helpAddrInfo}}">
+								<text class="ellipsis detail">{{helpAddrInfo.address}}</text>
+								<text class="ellipsis location">{{helpAddrInfo.region}}</text>
+								<text class="ellipsis location">{{helpAddrInfo.detailAddr}}</text>
+							</view>
 						</navigator>
-						<navigator url="#" class="common">常用</navigator>
+						<navigator url="#" class="common" bindtap="setDefaultAddrA">默认</navigator>
 					</view>
 				</view>
 				<!-- 地址 end -->
@@ -391,8 +428,12 @@
 						<view class="pBox pBoxBorder">
 							<text class="title">服务时间</text>
 
-							<picker bindchange="helpTimeChange" value="{{helpTimeIndex}}" range="{{helpTime}}">
+							<!-- <picker bindchange="helpTimeChange" value="{{helpTimeIndex}}" range="{{helpTime}}">
 								<text class="{{helpTimeIndex!=0?'active':''}}">{{helpTime[helpTimeIndex]}}</text>
+								<image src="/images/arrowRight.png"></image>
+							</picker> -->
+							<picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+								<text>{{startDate}}</text>
 								<image src="/images/arrowRight.png"></image>
 							</picker>
 						</view>
@@ -421,8 +462,9 @@
 				<!-- 服务具体事项 end -->
 
 				<!-- 下单 -->
-				<navigator url="#" class="placeOrder" catchtap="placeOrder">
-					<text>跑腿费￥{{price}}</text>
+				<navigator url="#" class="placeOrder" catchtap="dPlaceOrder">
+					<text>服务费￥{{price.hPrice}}</text>
+					<text wx:if="{{feeNum}}">小费￥{{feeNum}}</text>
 					<text>|</text>
 					<text>下单</text>
 				</navigator>
@@ -456,47 +498,67 @@
 				<image src="/images/close.png"></image>
 			</navigator>
 		</view>
+		<!-- 头部 end -->
 
-		<!-- 物品类型 -->
-		<text class="title">物品类型</text>
-		<checkbox-group class="goodItemBox" bindchange="goodCheckboxChange">
-			<block wx:for="{{goodItems}}" wx:for-index="idx" wx:key="*this">
-				<label class="goodItem {{item.checked?'active':''}}">
-					<checkbox value="{{idx}}" checked="{{item.checked}}" />
-					<text>{{item.value}}</text>
-				</label>
-			</block>
-		</checkbox-group>
+		<!-- 中部 -->
+		<scroll-view class="content" scroll-y="true">
+			<!-- 物品类型 -->
+			<text class="title">物品类型</text>
+			<checkbox-group class="goodItemBox" bindchange="goodCheckboxChange">
+				<block wx:for="{{goodItems}}" wx:for-index="idx" wx:key="index">
+					<label class="goodItem {{item.checked?'active':''}}">
+						<checkbox value="{{idx}}" checked="{{item.checked}}" />
+						<text>{{item.value}}</text>
+					</label>
+				</block>
+			</checkbox-group>
 
-		<!-- 物品价值 -->
-		<text class="title">物品价值</text>
-		<radio-group class="goodItemBox" bindchange="valueRadioChange">
-			<block wx:for="{{valueItems}}" wx:for-index="idx" wx:key="*this">
-				<label class="goodItem {{item.checked?'active':''}}">
-					<radio value="{{idx}}" checked="{{item.checked}}" />
-					<text>{{item.value}}</text>
-				</label>
-			</block>
-		</radio-group>
+			<!-- 物品价值 -->
+			<text class="title">物品价值</text>
+			<radio-group class="goodItemBox" bindchange="valueRadioChange">
+				<block wx:for="{{valueItems}}" wx:for-index="idx" wx:key="index">
+					<label class="goodItem {{item.checked?'active':''}}">
+						<radio value="{{idx}}" checked="{{item.checked}}" />
+						<text>{{item.value}}</text>
+					</label>
+				</block>
+			</radio-group>
 
-		<!-- 保价服务 -->
-		<text class="title">保价服务</text>
-		<radio-group class="goodItemBox" bindchange="guardRadioChange">
-			<block wx:for="{{guardItems}}" wx:for-index="idx" wx:key="*this">
-				<label class="goodItem {{item.checked?'active':''}}">
-					<radio value="{{idx}}" checked="{{item.checked}}" />
-					<text>{{item.value}}</text>
-				</label>
-			</block>
-		</radio-group>
+			<!-- 保价服务 -->
+			<text class="title">保价服务</text>
+			<radio-group class="goodItemBox" bindchange="guardRadioChange">
+				<block wx:for="{{guardItems}}" wx:for-index="idx" wx:key="index">
+					<label class="goodItem {{item.checked?'active':''}}">
+						<radio value="{{idx}}" checked="{{item.checked}}" />
+						<text>{{item.value}}</text>
+					</label>
+				</block>
+			</radio-group>
 
-		<!-- 物品重量 -->
-		<text class="title">物品重量</text>
-		<view class="weight">
-			<text>5公斤内不加价，最大25公斤</text>
-			<input maxlength="2" value="{{goodWeight}}" placeholder="请输入" bindinput="goodWeight"></input>
-			<text>公斤</text>
-		</view>
+			<!-- 物品重量 -->
+			<text class="title">物品重量</text>
+			<view class="weight">
+				<input maxlength="2" value="{{goodWeight}}" placeholder="请输入" bindinput="goodWeight"></input>
+				<text>公斤</text>
+				<text class="tip">5公斤内不加价，最大25公斤</text>
+			</view>
+
+			<!-- 上传图片 -->
+			<text class="title">上传图片</text>
+			<view class="upImg">
+				<block wx:for="{{imgArr}}" wx:key="index">
+					<view class="imgBox">
+						<image src="/images/close2.png" class="del" data-index="{{index}}" bindtap="delUpImg"></image>
+						<image src="{{item}}" class="upImages"></image>
+					</view>
+				</block>
+
+				<button class="upImgBtn" bindtap="uploadImg">
+					<image src="/images/image.png"></image>
+				</button>
+			</view>
+		</scroll-view>
+		<!-- 中部 end -->
 
 		<!-- 确定按钮 -->
 		<navigator url="#" class="sure" catchtap="subGoodInfo">确定</navigator>

@@ -5,38 +5,45 @@ Page({
    * 页面的初始数据
    */
   data: {
-    coupons: [{
-        id: 1001,
-        stattime: '2020.4.1',
-        endtime: '2020.10.1',
-        quota: '30',
-        price: '5',
-        tag: 1
-      },
-      {
-        id: 1002,
-        stattime: '2020.4.1',
-        endtime: '2020.10.1',
-        quota: '30',
-        price: '5',
-        tag: 1
-      },
-      {
-        id: 1003,
-        stattime: '2020.4.1',
-        endtime: '2020.10.1',
-        quota: '30',
-        price: '5',
-        tag: 1
-      }
-    ] //优惠券
+    coupons: [] //优惠券
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
+    let that = this;
+    let userId = wx.getStorageSync('userId'); //用户id
 
+    if (!userId) { //未登录
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+        duration: 2000,
+        success() {
+          wx.switchTab({
+            url: '/pages/user/user'
+          })
+        }
+      })
+    } else {
+      wx.request({ //获取个人优惠券
+        url: 'https://daizongpaotui.zlogic.cn/index.php/api/youhui/index',
+        method: "POST",
+        data: {
+          token: userId
+        },
+        success: function (res) {
+          let coupons = Object.values(res.data);
+
+          console.log('优惠券', coupons);
+
+          that.setData({
+            coupons
+          })
+        }
+      })
+    }
   },
 
   /**
@@ -88,20 +95,22 @@ Page({
 
   },
   getCoupon: function (e) { //领取优惠券
-    const index = e.currentTarget.dataset.index; //优惠券索引
-    const cid = e.currentTarget.dataset.cid; //优惠券id
-    const coupons = this.data.coupons; //优惠券
+    let index = e.currentTarget.dataset.index; //优惠券索引
+    let coupons = this.data.coupons; //优惠券
+    let useCoupon = coupons[index]; //当前使用优惠券
 
-    coupons.forEach((value, index) => {
+    console.log('当前使用优惠券',useCoupon);
+
+    coupons.forEach(value => {
       value.tag = 1
     })
-
     coupons[index].tag = 0;
 
     this.setData({
       coupons
     })
-    wx.setStorageSync('cid', cid);
+
+    wx.setStorageSync('useCoupon', useCoupon);//放入缓存 当前使用优惠券
 
     wx.showToast({
       title: '使用成功'

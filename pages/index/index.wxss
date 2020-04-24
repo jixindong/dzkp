@@ -107,13 +107,18 @@
   font-size: 26rpx;
 }
 
-.service .tabContent .addressBox .address .chooseAddress .detail {
+.service .tabContent .addressBox .address .chooseAddress .addrDetailBox {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.service .tabContent .addressBox .address .chooseAddress .addrDetailBox .detail {
   width: 100%;
   color: #1a1a1a;
   font-size: 28rpx;
 }
 
-.service .tabContent .addressBox .address .chooseAddress .location {
+.service .tabContent .addressBox .address .chooseAddress .addrDetailBox .location {
   width: 100%;
   color: #999;
   font-size: 22rpx;
@@ -286,7 +291,7 @@
 }
 
 .service .tabContent .placeOrder text {
-  padding: 0 20rpx;
+  padding: 0 6rpx;
   color: #fff;
   font-size: 26rpx;
 }
@@ -306,10 +311,10 @@
 /* 市场 */
 
 .service .tabContent .toBuy .market {
-  margin: 20rpx 0;
-  width: 100%;
-  height: 120rpx;
-  border-radius: 80rpx;
+  margin: 10rpx 0 30rpx;
+  height: 200rpx;
+  border-radius: 40rpx;
+  overflow: hidden;
 }
 
 .service .tabContent .toBuy .market image {
@@ -559,21 +564,30 @@
   height: 100%;
 }
 
-/* 标题 */
-.choiceInfoBox .container .title {
+/* 头部 end */
+
+/* 中部 */
+.choiceInfoBox .container .content {
   padding: 20rpx 0;
+  height: 700rpx;
+}
+
+/* 标题 */
+.choiceInfoBox .container .content .title {
+  margin: 20rpx 0;
   color: #1a1a1a;
   font-size: 28rpx;
+  font-weight: bold;
 }
 
 /* 单选框、复选框 */
-.choiceInfoBox .container .goodItemBox {
+.choiceInfoBox .container .content .goodItemBox {
   display: flex;
   flex-flow: row wrap;
 
 }
 
-.choiceInfoBox .container .goodItemBox .goodItem {
+.choiceInfoBox .container .content .goodItemBox .goodItem {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -587,48 +601,103 @@
   border-radius: 8rpx;
 }
 
-.choiceInfoBox .container .goodItemBox .goodItem.active {
+.choiceInfoBox .container .content .goodItemBox .goodItem.active {
   color: #fff;
   background-color: #1865f3;
 }
 
-.choiceInfoBox .container .goodItemBox .goodItem radio {
+.choiceInfoBox .container .content .goodItemBox .goodItem radio {
   width: 0;
   height: 0;
   opacity: 0;
 }
 
-.choiceInfoBox .container .goodItemBox .goodItem checkbox {
+.choiceInfoBox .container .content .goodItemBox .goodItem checkbox {
   width: 0;
   height: 0;
   opacity: 0;
 }
 
 /* 重量 */
-.choiceInfoBox .container .weight {
+.choiceInfoBox .container .content .weight {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  margin: 20rpx 0;
   color: #333;
   font-size: 24rpx;
 }
 
-.choiceInfoBox .container .weight input {
-  margin: 0 20rpx 0 auto;
-  width: 90rpx;
-  text-align: right;
+.choiceInfoBox .container .content .weight input {
+  margin-right: 10rpx;
+  width: 140rpx;
+  font-size: 24rpx;
+  text-align: center;
+  background-color: #efefef;
 }
+
+.choiceInfoBox .container .content .weight .tip {
+  margin-left: auto;
+  color: #999;
+}
+
+/* 上传图片 */
+.choiceInfoBox .container .content .upImg {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.choiceInfoBox .container .content .upImg .imgBox {
+  position: relative;
+  margin: 20rpx;
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.choiceInfoBox .container .content .upImg .imgBox .upImages {
+  width: 100%;
+  height: 100%;
+  border: 2rpx solid #eee;
+  border-radius: 10rpx;
+}
+
+.choiceInfoBox .container .content .upImg .imgBox .del {
+  position: absolute;
+  top: -16rpx;
+  right: -10rpx;
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+}
+
+.choiceInfoBox .container .content .upImg .upImgBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20rpx;
+  padding: 0;
+  width: 120rpx;
+  height: 120rpx;
+  background-color: #f2f2f2;
+}
+
+.choiceInfoBox .container .content .upImg .upImgBtn image {
+  width: 40rpx;
+  height: 30rpx;
+}
+
+/* 中部 end */
 
 /* 确定按钮 */
 .choiceInfoBox .container .sure {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 40rpx 0 0;
-  width: 100%;
-  height: 70rpx;
+  margin: 10rpx auto;
+  width: 90%;
+  height: 60rpx;
   color: #fff;
-  font-size: 30rpx;
+  font-size: 28rpx;
   background-color: #1865F3;
   border-radius: 10rpx;
 }

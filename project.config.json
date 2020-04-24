@@ -110,6 +110,20 @@
 					"id": -1,
 					"name": "市场",
 					"pathName": "pages/market/market",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "关于我们",
+					"pathName": "pages/aboutUs/aboutUs",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "选择地址",
+					"pathName": "pages/address/chooseAddress",
 					"scene": null
 				}
 			]

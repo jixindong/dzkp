@@ -1,0 +1,7 @@
+<!--pages/aboutUs/aboutUs.wxml-->
+<!-- 介绍 -->
+<view class="intro">
+	<view class="title">代综快跑</view>
+	<view>{{intro}}</view>
+</view>
+<!-- 介绍 end -->
