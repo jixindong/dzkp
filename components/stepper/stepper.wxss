@@ -4,11 +4,12 @@
 .stepper {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
 }
 
 .stepper .stepBtn {
-  width: 40rpx;
-  height: 40rpx;
+  width: 50rpx;
+  height: 50rpx;
   overflow: hidden;
   border-radius: 50%;
 }

@@ -26,15 +26,15 @@
 				<!-- 商品 -->
 				<block wx:for="{{item.child}}" wx:key="index">
 					<view data-pid="{{item.id}}" class="good">
-						<image src="{{item.photoimages}}" class="goodImg" wx:if="{{item.photoimages}}"></image>
+						<image src="https://daizongpaotui.zlogic.cn{{item.photoimages}}" class="goodImg" wx:if="{{item.photoimages}}"></image>
 						<image src="/images/goodImgNone.jpg" class="goodImg" wx:if="{{!item.photoimages}}"></image>
 
 						<view class="goodInfo">
-							<text space="nbsp">{{item.name}} {{item.zhongliang}}</text>
+							<text space="nbsp">{{item.name}} {{item.zhongliang}} 公斤</text>
 							<text class="price">￥{{item.price}}</text>
 						</view>
 
-						<stepper pid="{{item.id}}" pdetail="{{item.name}}{{item.zhongliang}}" price="{{item.price}}" bind:goodInfo="calcPrice" />
+						<stepper pid="{{item.id}}" pdetail="{{item.name}}{{item.zhongliang}}" pname="{{item.name}}" pweight="{{item.zhongliang}}" price="{{item.price}}" bind:goodInfo="calcPrice" />
 					</view>
 				</block>
 				<!-- 商品 end -->

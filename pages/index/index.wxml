@@ -59,7 +59,7 @@
 
 				<!-- 市场 -->
 				<navigator url="/pages/market/market" class="market boxShadow">
-					<image src="https://s1.ax1x.com/2020/04/24/JBjEin.png"></image>
+					<image src="/images/market.png"></image>
 				</navigator>
 				<view class="marketInfo boxShadow" wx:if="{{marketDetail}}">
 					<text class="title">已选购商品</text>
@@ -68,7 +68,7 @@
 				<!-- 市场 end -->
 
 				<!-- 购买商品 -->
-				<view class="product boxShadow">
+				<view class="product boxShadow" wx:if="{{!marketDetail}}">
 					<text class="title">填写需要购买的商品</text>
 					<textarea maxlength="200" placeholder="请填写商品名称和数量等" bindinput="buyGoods"></textarea>
 				</view>
@@ -114,12 +114,12 @@
 				<!-- 购买 end -->
 
 				<!-- 下单 -->
-				<navigator url="#" class="placeOrder" catchtap="bPlaceOrder">
+				<navigator url="/pages/buy/buy" class="placeOrder">
 					<!-- <text>跑腿费￥{{price.bPrice}}</text> -->
 					<!-- <text wx:if="{{marketPrice != 0}}">商品价格￥{{marketPrice}}</text> -->
 					<!-- <text wx:if="{{feeNum}}">小费￥{{feeNum}}</text> -->
 					<!-- <text>|</text> -->
-					<text>下单</text>
+					<text>帮我买</text>
 				</navigator>
 				<!-- 下单 end -->
 			</swiper-item>
@@ -132,9 +132,6 @@
 					<view class="address">
 						<image src="/images/send.png"></image>
 						<navigator url="/pages/address/fillAddress?addrSign=s1" class="chooseAddress">
-							<!-- <text class="ellipsis choice" wx:if="{{!sendAddress||!sendAddressArea}}">请选择发货地址</text>
-							<text class="ellipsis detail" wx:if="{{sendAddress&&sendAddressArea}}">{{sendAddress}}</text>
-							<text class="ellipsis location" wx:if="{{sendAddress&&sendAddressArea}}">{{sendAddressArea}}</text> -->
 							<text class="ellipsis choice" wx:if="{{sendAddrInfo == ''}}">请选择发货地址</text>
 
 							<view class="addrDetailBox" wx:if="{{sendAddrInfo}}">
@@ -235,7 +232,8 @@
 							<text class="title">备注</text>
 
 							<navigator url="#" class="remark" catchtap="showRemarkBox">
-								<text class="ellipsis">{{remark}}</text>
+								<text class="ellipsis" wx:if="{{remark}}">{{remark}}</text>
+								<text wx:if="{{!remark}}">备注</text>
 							</navigator>
 						</view>
 					</view>
@@ -314,11 +312,6 @@
 						<image src="/images/time.png" class="leftImg"></image>
 						<view class="pBox pBoxBorder">
 							<text class="title">取货时间</text>
-
-							<!-- <picker bindchange="fetchTimeChange" value="{{fetchTimeIndex}}" range="{{fetchTime}}">
-								<text class="{{fetchTimeIndex!=0?'active':''}}">{{fetchTime[fetchTimeIndex]}}</text>
-								<image src="/images/arrowRight.png"></image>
-							</picker> -->
 							<picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
 								<text>{{startDate}}</text>
 								<image src="/images/arrowRight.png"></image>
@@ -366,7 +359,8 @@
 							<text class="title">备注</text>
 
 							<navigator url="#" class="remark" catchtap="showRemarkBox">
-								<text class="ellipsis">{{remark}}</text>
+								<text class="ellipsis" wx:if="{{remark}}">{{remark}}</text>
+								<text wx:if="{{!remark}}">备注</text>
 							</navigator>
 						</view>
 					</view>
@@ -388,7 +382,7 @@
 			<!-- 其他服务 -->
 			<swiper-item class="toDo">
 				<!-- 服务事项 -->
-				<radio-group class="serveItemBox boxShadow" bindchange="serveRadioChange">
+				<radio-group class="serveItemBox" bindchange="serveRadioChange">
 					<block wx:for="{{serveItems}}" wx:for-index="idx" wx:key="index">
 						<label class="serveItem {{item.checked?'active':''}}">
 							<radio value="{{idx}}" checked="{{item.checked}}" />
@@ -427,11 +421,6 @@
 						<image src="/images/time.png" class="leftImg"></image>
 						<view class="pBox pBoxBorder">
 							<text class="title">服务时间</text>
-
-							<!-- <picker bindchange="helpTimeChange" value="{{helpTimeIndex}}" range="{{helpTime}}">
-								<text class="{{helpTimeIndex!=0?'active':''}}">{{helpTime[helpTimeIndex]}}</text>
-								<image src="/images/arrowRight.png"></image>
-							</picker> -->
 							<picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
 								<text>{{startDate}}</text>
 								<image src="/images/arrowRight.png"></image>
@@ -538,7 +527,7 @@
 			<!-- 物品重量 -->
 			<text class="title">物品重量</text>
 			<view class="weight">
-				<input maxlength="2" value="{{goodWeight}}" placeholder="请输入" bindinput="goodWeight"></input>
+				<input type="number" maxlength="2" value="{{goodWeight}}" placeholder="请输入" bindinput="goodWeight"></input>
 				<text>公斤</text>
 				<text class="tip">5公斤内不加价，最大25公斤</text>
 			</view>

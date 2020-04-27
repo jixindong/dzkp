@@ -10,7 +10,10 @@
     "pages/address/chooseAddress",
     "pages/coupon/coupon",
     "pages/market/market",
-    "pages/aboutUs/aboutUs"
+    "pages/aboutUs/aboutUs",
+    "pages/buy/buy",
+    "pages/buy/buyFillAddressA",
+    "pages/buy/buyFillAddressB"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -40,6 +43,17 @@
     ],
     "color": "#999",
     "selectedColor": "#1865F3"
+  },
+  "plugins": {
+    "chooseLocation": {
+      "version": "1.0.2",
+      "provider": "wx76a9a06e5b4e693e"
+    }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置将用于小程序定位"
+    }
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

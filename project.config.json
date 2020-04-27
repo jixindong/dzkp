@@ -56,77 +56,7 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": [
-				{
-					"id": -1,
-					"name": "订单",
-					"pathName": "pages/order/order",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "订单详情",
-					"pathName": "pages/order/orderDetail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的",
-					"pathName": "pages/user/user",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 3,
-					"name": "新增地址",
-					"pathName": "pages/address/addAddress",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "地址管理",
-					"pathName": "pages/address/address",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "填写地址",
-					"pathName": "pages/address/fillAddress",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "优惠券",
-					"pathName": "pages/coupon/coupon",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "市场",
-					"pathName": "pages/market/market",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "关于我们",
-					"pathName": "pages/aboutUs/aboutUs",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "选择地址",
-					"pathName": "pages/address/chooseAddress",
-					"scene": null
-				}
-			]
+			"list": []
 		}
 	}
 }

@@ -1,4 +1,4 @@
-/* pages/address/fillAddress.wxss */
+/* pages/buy/buyFillAddressB.wxss */
 
 /* 地址信息 */
 .addrInfo {
@@ -61,25 +61,6 @@
 
 /* 地址信息 end */
 
-/* 智能填写 */
-.autoFill {
-  margin: 40rpx 20rpx;
-  padding: 20rpx;
-  font-size: 26rpx;
-  border-radius: 10rpx;
-}
-
-.autoFill .title {
-  color: #1A1A1A;
-}
-
-.autoFill textarea {
-  padding: 20rpx 0;
-  width: 100%;
-  height: 200rpx;
-}
-
-/* 智能填写 end */
 
 /* 确定 */
 .sure {

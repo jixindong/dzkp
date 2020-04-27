@@ -13,6 +13,7 @@ Page({
     selectedGoods: [], //已选商品
     selectedGoodsStr: '', //已选商品字符串（即帮我买 已选购商品）
     selectedNum: 0, //已选商品数量
+    selectedWeight: 0, //已选商品重量
     selectedNumHeight: '', //已选商品数量盒子高度
     totalPrice: '0', //同济市场选购商品总价
   },
@@ -21,22 +22,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    const that = this;
 
-    wx.request({ //获取 商品列表
-      url: 'https://daizongpaotui.zlogic.cn/index.php/api/productlist/index',
-      success: function (res) {
-        console.log('商品列表', res.data);
-
-        that.setData({
-          goods: res.data
-        })
-
-        that.swiperHeight(); //设置当前选项卡高度
-      }
-    })
-
-    that.calcMinHeight(); //设置当前选项卡最小高度
   },
 
   /**
@@ -50,7 +36,30 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this;
 
+    wx.request({ //获取 商品列表
+      url: 'https://daizongpaotui.zlogic.cn/index.php/api/productlist/index',
+      success: function (res) {
+        if (res.data) {
+          res.data.forEach(value => {
+            if (value.child) {
+              value.child.forEach(value => {
+                value.zhongliang = value.zhongliang / 1000
+              })
+            }
+          })
+        }
+        console.log('商品列表', res.data);
+        that.setData({
+          goods: res.data
+        })
+
+        that.swiperHeight(); //设置当前选项卡高度
+      }
+    })
+
+    that.calcMinHeight(); //设置当前选项卡最小高度
   },
 
   /**
@@ -168,41 +177,49 @@ Page({
     let selectedGoods = this.data.selectedGoods; //已选商品
     let selectedGoodsStr = ''; //已选商品字符串（即帮我买 已选购商品）
     let selectedNum = 0; //已选商品数量
+    let selectedWeight = 0; //已选商品重量
     let totalPrice = 0; //同济市场选购商品总价
     let pid = e.detail.pid; //当前商品id
     let pdetail = e.detail.pdetail; //当前商品 名称、重量
+    let pname = e.detail.pname; //当前商品 名称
+    let pweight = e.detail.pweight; //当前商品 重量
     let num = e.detail.num; //当前商品数量
     let price = e.detail.price; //当前商品价格
 
     //更新已选商品
     selectedGoods[pid] = {
-      pid: pid,
-      num: num,
+      pid,
+      num,
       pdetail,
-      price: price
+      pname,
+      pweight,
+      price
     };
-    console.log('已选商品', selectedGoods);
+    // console.log('已选商品', selectedGoods);
 
 
     // 更新已选商品字符串（即帮我买 已选购商品）、更新已选商品数量、根据已选商品计算总价
-    selectedGoods.forEach((value, index) => {
+    selectedGoods.forEach(value => {
       if (value.num != 0) {
-        selectedGoodsStr += value.pdetail + ' ' + 'x' + value.num + '、'; // 更新已选商品字符串（即帮我买 已选购商品）
+        selectedGoodsStr += value.pname + ' ' + value.pweight + '公斤 ' + 'x' + value.num + '、'; // 更新已选商品字符串（即帮我买 已选购商品）
         selectedNum += value.num; //更新已选商品数量
+        selectedWeight += value.num * parseFloat(value.pweight); //更新已选商品重量
         totalPrice += (value.price * value.num); // 根据已选商品计算总价
       }
     })
     selectedGoodsStr = selectedGoodsStr.slice(0, selectedGoodsStr.length - 1); //删除 已选商品字符串 末尾顿号
 
-    console.log('已选商品字符串', selectedGoodsStr);
-    console.log('已选商品数量', selectedNum);
-    console.log('同济市场选购商品总价', totalPrice);
+    // console.log('已选商品字符串', selectedGoodsStr);
+    // console.log('已选商品数量', selectedNum);
+    // console.log('已选商品重量', selectedWeight);
+    // console.log('同济市场选购商品总价', totalPrice.toFixed(2));
 
     this.setData({
       selectedGoods,
       selectedGoodsStr,
       selectedNum,
-      totalPrice
+      selectedWeight,
+      totalPrice: parseFloat(totalPrice).toFixed(2)
     })
 
     this.selNumHeight(); //设置已选商品数量盒子高度
@@ -223,6 +240,7 @@ Page({
 
     wx.setStorageSync('marketSelGoods', marketSelGoods); //放入缓存 已选商品
     wx.setStorageSync('marketDetail', selectedGoodsStr); //放入缓存 已选商品字符串
+    wx.setStorageSync('selectedWeight', this.data.selectedWeight); //放入缓存 已选商品重量
     wx.setStorageSync('marketPrice', totalPrice); //放入缓存 同济市场选购商品总价
 
     wx.showToast({

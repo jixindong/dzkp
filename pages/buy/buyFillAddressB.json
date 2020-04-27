@@ -1,5 +1,6 @@
 {
   "usingComponents": {},
   "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "帮我买 收货地址",
   "navigationBarBackgroundColor": "#fff"
 }

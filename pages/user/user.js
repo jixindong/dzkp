@@ -15,7 +15,7 @@ Page({
     verifyCode: '', //验证码
     status: 1, //发送验证码按钮状态 1=获取验证码,2=重新发送,3=倒计时
     timer: null, //定时器
-    countTime: 10 //倒计时 秒数
+    countTime: 120 //倒计时 秒数
   },
 
   /**
@@ -109,14 +109,15 @@ Page({
     wx.login({
       success: function (res) {
         let code = res.code;
-
         console.log('code', code);
 
         wx.request({
           url: 'https://daizongpaotui.zlogic.cn/index.php/api/wxlogin/index',
           method: 'POST',
           data: {
-            code
+            code:code,
+            username:e.detail.userInfo.nickName,
+            headimages:e.detail.userInfo.avatarUrl
           },
           success: function (res) {
             let userId = res.data;
@@ -173,7 +174,7 @@ Page({
 
           that.setData({
             status: 2, //发送验证码按钮状态
-            countTime: 10 //倒计时 秒数
+            countTime: 120 //倒计时 秒数
           })
         }
       }, 1000) //定时器

@@ -86,8 +86,18 @@ Page({
       }
     ], //物品价值（帮我送、帮我取）
     guardItems: [{
+        value: '0元（不投保）',
+        num: 0,
+        checked: false
+      },
+      {
         value: '1元（保100）',
         num: 1,
+        checked: false
+      },
+      {
+        value: '2元（保200）',
+        num: 2,
         checked: false
       },
       {
@@ -99,10 +109,15 @@ Page({
         value: '5元（保500）',
         num: 5,
         checked: false
+      },
+      {
+        value: '10元（保1000）',
+        num: 10,
+        checked: false
       }
     ], //保价服务（帮我送、帮我取）
     supportValueNum: '', //保价价格（帮我送、帮我取）
-    goodWeight: 0, //物品重量（帮我送、帮我取）
+    goodWeight: '', //物品重量（帮我送、帮我取）
     defaultAddrA: '', //默认地址A
     defaultAddrB: '', //默认地址B
 
@@ -114,7 +129,6 @@ Page({
     buyAddrInfo: '', //购买地址 详情
     buyTakeAddrInfo: '', //收货地址 详情
 
-
     // 帮我送
     sendGoods: '', //物品信息
     sendGoodsImg: false, //物品图片
@@ -125,7 +139,7 @@ Page({
     sendGoodValue: '', //物品价值
     sendSupportValue: '', //保价服务
     sendSupportValueNum: '', //保价价格
-    sendGoodWeight: 1, //物品重量
+    sendGoodWeight: 0, //物品重量
     sImgStr: '', //上传图片 字符串
 
     // 帮我取
@@ -154,11 +168,35 @@ Page({
    */
   onLoad: function () {
     let that = this;
-    let userId = wx.getStorageSync('userId'); //用户id
 
     wx.removeStorageSync('marketSelGoods'); //清除缓存 已选商品
     wx.removeStorageSync('marketDetail'); //清除缓存 已选商品字符串
+    wx.removeStorageSync('selectedWeight'); //清除缓存 已选商品重量
     wx.removeStorageSync('marketPrice'); //清除缓存 同济市场选购商品总价
+    wx.removeStorageSync('buyGoods'); //清除缓存 填写购买商品
+
+    that.swiperHeight(); //设置当前选项卡高度
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    let that = this;
+    let userId = wx.getStorageSync('userId'); //用户id
+    let marketDetail = wx.getStorageSync('marketDetail'); //市场选购详情（帮我买）
+    let marketPrice = wx.getStorageSync('marketPrice'); //同济市场选购商品总价
+    let addrInfo = wx.getStorageSync('addrInfo'); //填写地址信息
+    let addrA = ''; //计算距离临时变量A
+    let addrB = ''; //计算距离临时变量B
+    let addrC = ''; //计算距离临时变量C
 
     wx.request({ //获取首页5个信息
       url: 'https://daizongpaotui.zlogic.cn/index.php/api/shouye/index',
@@ -187,6 +225,23 @@ Page({
             defaultAddrB = res.data.shouhuo[0]; //默认地址B
           }
 
+          if (typeof (defaultAddrA.location) == 'string') {
+            let site = defaultAddrA.location.split(',');
+            let location = {
+              lat: site[0],
+              lng: site[1]
+            }
+            defaultAddrA.location = location;
+          }
+          if (typeof (defaultAddrB.location) == 'string') {
+            let site = defaultAddrB.location.split(',');
+            let location = {
+              lat: site[0],
+              lng: site[1]
+            }
+            defaultAddrB.location = location;
+          }
+
           discount = res.data.num; //优惠券（帮我送、帮我取）
         }
 
@@ -194,33 +249,12 @@ Page({
           topSwiper, //顶部轮播图
           defaultAddrA, //默认地址A
           defaultAddrB, //默认地址B
+          marketDetail, //市场选购详情（帮我买）
           discount, //优惠券（帮我送、帮我取）
           serveItems //服务事项 列表
         })
       }
     })
-
-    that.swiperHeight(); //设置当前选项卡高度
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    let that = this;
-    let marketDetail = wx.getStorageSync('marketDetail'); //市场选购详情（帮我买）
-    let marketPrice = wx.getStorageSync('marketPrice'); //同济市场选购商品总价
-    let addrInfo = wx.getStorageSync('addrInfo'); //填写地址信息
-    let addrA = ''; //计算距离临时变量A
-    let addrB = ''; //计算距离临时变量B
-    let addrC = ''; //计算距离临时变量C
 
     if (addrInfo) {
       if (addrInfo.addrSign == 'b1') { //帮我买 购买地址
@@ -362,7 +396,7 @@ Page({
         sendGoods: '', //物品信息（帮我送）
         fetchGoods: '', //物品信息（帮我取）
         supportValueNum: '', //保价价格（帮我送、帮我取）
-        goodWeight: 0, //物品重量（帮我送、帮我取）
+        goodWeight: '', //物品重量（帮我送、帮我取）
         imgArr: [], //上传图片
         imgStr: '', //上传图片 字符串
         sendGoodType: '', //物品类型
@@ -394,7 +428,7 @@ Page({
       sendGoods: '', //物品信息（帮我送）
       fetchGoods: '', //物品信息（帮我取）
       supportValueNum: '', //保价价格（帮我送、帮我取）
-      goodWeight: 0, //物品重量（帮我送、帮我取）
+      goodWeight: '', //物品重量（帮我送、帮我取）
       imgArr: [], //上传图片
       imgStr: '', //上传图片 字符串
       sendGoodType: '', //物品类型
@@ -545,6 +579,7 @@ Page({
     })
   },
   subGoodInfo: function () { //物品信息确定按钮（帮我送、帮我取）
+    let that = this;
     let currentTab = this.data.currentTab; //当前选项卡
     let goodItems = this.data.goodItems; //物品类型（帮我送、帮我取）
     let valueItems = this.data.valueItems; //物品价值（帮我送、帮我取）
@@ -555,7 +590,7 @@ Page({
     let valueItemsSel = []; //物品价值已选择
     let guardItemsSel = []; //保价服务已选择
     let goodItemsSelS = ''; //物品类型已选择（字符串格式）
-    let imgStr = this.data.imgStr;//上传图片 字符串
+    let imgStr = this.data.imgStr; //上传图片 字符串
     let finalSelected = ''; //最终选择
 
     // 物品类型
@@ -614,8 +649,10 @@ Page({
           sendSupportValue: guardItemsSel[0], //保价服务
           sendSupportValueNum: supportValueNum, //保价价格
           sendGoodWeight: goodWeight, //物品重量
-          sImgStr:imgStr//上传图片 字符串
+          sImgStr: imgStr //上传图片 字符串
         })
+
+        that.addrCalc(that.data.sendAddrInfo, that.data.sendTakeAddrInfo, 2);
       } else if (currentTab == 2) {
         console.log('帮我取 物品信息');
 
@@ -626,8 +663,10 @@ Page({
           fetchSupportValue: guardItemsSel[0], //保价服务
           fetchSupportValueNum: supportValueNum, //保价价格
           fetchGoodWeight: goodWeight, //物品重量
-          fImgStr:imgStr//上传图片 字符串
+          fImgStr: imgStr //上传图片 字符串
         })
+
+        that.addrCalc(that.data.fetchAddrInfo, that.data.fetchTakeAddrInfo, 3);
       }
     } else {
       wx.showToast({
@@ -660,6 +699,7 @@ Page({
 
   },
   buyGoods: function (e) { //填写购买商品
+    wx.setStorageSync('buyGoods', e.detail.value); //放入缓存 填写购买商品
     this.setData({
       buyGoods: e.detail.value
     })
@@ -690,155 +730,213 @@ Page({
   addrCalc: function (addrA, addrB, addrC) { //通过经纬度计算价格
     let that = this;
     let price = that.data.price; //跑腿费
+    let sendGoodWeight = that.data.sendGoodWeight;
+    let fetchGoodWeight = that.data.fetchGoodWeight;
 
-    wx.request({
-      url: 'https://daizongpaotui.zlogic.cn/index.php/api/selectaddress/calculate',
-      method: 'POST',
-      data: {
-        from: addrA.location.lat + ',' + addrA.location.lng, //购买地址 经纬度
-        to: addrB.location.lat + ',' + addrB.location.lng, //购买地址 经纬度
-      },
-      success: function (res) {
-        console.log('通过经纬度计算价格', res.data);
+    if (addrA && addrB && addrC && sendGoodWeight) {
+      wx.request({
+        url: 'https://daizongpaotui.zlogic.cn/index.php/api/selectaddress/calculate',
+        method: 'POST',
+        data: {
+          from: addrA.location.lat + ',' + addrA.location.lng, //购买地址 经纬度
+          to: addrB.location.lat + ',' + addrB.location.lng, //购买地址 经纬度
+          weight: sendGoodWeight
+        },
+        success: function (res) {
+          console.log('通过经纬度计算价格', res.data);
 
-        if (addrC == 1) {
-          price.bPrice = res.data;
-        } else if (addrC == 2) {
-          price.sPrice = res.data;
-        } else if (addrC == 3) {
-          price.fPrice = res.data;
-        }
-        that.setData({
-          price
-        })
-      }
-    })
-  },
-  addrCalcB: function (addrA, addrB, addrC) { //通过经纬度计算价格
-    let that = this;
-    let price = that.data.price; //跑腿费
-
-    wx.request({
-      url: 'https://daizongpaotui.zlogic.cn/index.php/api/selectaddress/calculate',
-      method: 'POST',
-      data: {
-        from: addrA.location, //购买地址 经纬度
-        to: addrB.location //购买地址 经纬度
-      },
-      success: function (res) {
-        console.log('通过经纬度计算价格', res.data);
-
-        if (addrC == 1) {
-          price.bPrice = res.data;
-        } else if (addrC == 2) {
-          price.sPrice = res.data;
-        } else if (addrC == 3) {
-          price.fPrice = res.data;
-        }
-        that.setData({
-          price
-        })
-      }
-    })
-  },
-  bPlaceOrder: function () { //下单（帮我买）
-    let that = this;
-    let userId = wx.getStorageSync('userId'); //用户id
-    let buyAddrInfo = that.data.buyAddrInfo; //购买地址 详情
-    let buyTakeAddrInfo = that.data.buyTakeAddrInfo; //收货地址 详情
-    let marketDetail = that.data.marketDetail; //市场选购详情
-    let marketSelGoods = wx.getStorageSync('marketSelGoods'); //已选商品
-    let marketPrice = wx.getStorageSync('marketPrice'); //同济市场选购商品总价
-    let buyGoods = that.data.buyGoods; //填写购买商品
-    let buyTime = that.data.buyTime;
-    let feeNum = that.data.feeNum; //小费金额
-    let bPrice = that.data.price.bPrice; //跑腿费 帮我买
-    let price = 0; //跑腿费
-    let remark = that.data.remark; //备注
-
-    // 地址信息 经纬度 格式
-    if (buyAddrInfo) {
-      buyAddrInfo.site = buyAddrInfo.location.lat + ',' + buyAddrInfo.location.lng;
-    }
-    if (buyTakeAddrInfo) {
-      buyTakeAddrInfo.site = buyTakeAddrInfo.location.lat + ',' + buyTakeAddrInfo.location.lng;
-    }
-
-    // 计算跑腿费
-    marketPrice = marketPrice == '' ? '0' : marketPrice;
-    price = bPrice + parseFloat(marketPrice) + parseInt(feeNum);
-
-    if (userId) {
-      if (buyAddrInfo == '' || buyTakeAddrInfo == '') {
-        wx.showToast({
-          title: '请完善地址信息',
-          icon: 'none'
-        })
-      } else if (marketDetail == '' && buyGoods == '') {
-        wx.showToast({
-          title: '请选择或填写购买物品',
-          icon: 'none'
-        })
-      } else {
-        wx.showLoading({
-          title: '请稍后'
-        })
-
-        wx.request({ //下订单
-          url: 'https://daizongpaotui.zlogic.cn/index.php/api/orders/placeOrder',
-          method: 'POST',
-          data: {
-            token: userId, //用户id
-            orderType: 3, //订单类型 1=帮我送,2=帮我取,3=帮我买,4=其他服务
-            from: buyAddrInfo.address, //购买地址
-            from_jw: buyAddrInfo.site, //购买地址 经纬度
-            fahuoren: buyAddrInfo.name, //购买地址 联系人
-            fahuophone: buyAddrInfo.tel, //购买地址 电话
-            to: buyTakeAddrInfo.address, //收货地址
-            to_jw: buyTakeAddrInfo.site, //收货地址 经纬度
-            shouhuoren: buyTakeAddrInfo.name, //收货地址 联系人
-            shouhuophone: buyTakeAddrInfo.tel, //收货地址 电话
-            goods: marketSelGoods, //已选商品
-            detail: buyGoods, //填写购买商品
-            fahuo: buyTime, //购买时间
-            tip: feeNum, //小费金额
-            price: price, //跑腿费
-            remark: remark //备注
-          },
-          success: function (res) {
-            console.log(res)
-
-            if (res.data.code == 200) {
-              let oId = res.data.orderID //订单id
-              wx.hideLoading({
-                complete: () => {
-                  wx.navigateTo({
-                    url: '/pages/order/orderDetail?oId=' + oId
-                  })
-                }
-              })
-            } else {
-              wx.showToast({
-                title: '下单失败',
-                icon: 'none'
-              })
-            }
+          if (addrC == 1) {
+            price.bPrice = res.data;
+          } else if (addrC == 2) {
+            price.sPrice = res.data;
+          } else if (addrC == 3) {
+            price.fPrice = res.data;
           }
-        })
-      }
-    } else {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none',
-        duration: 2000,
-        success() {
-          wx.switchTab({
-            url: '/pages/user/user'
+          that.setData({
+            price
+          })
+        }
+      })
+    } else if (addrA && addrB && addrC && fetchGoodWeight) {
+      wx.request({
+        url: 'https://daizongpaotui.zlogic.cn/index.php/api/selectaddress/calculate',
+        method: 'POST',
+        data: {
+          from: addrA.location.lat + ',' + addrA.location.lng, //购买地址 经纬度
+          to: addrB.location.lat + ',' + addrB.location.lng, //购买地址 经纬度
+          weight: fetchGoodWeight
+        },
+        success: function (res) {
+          console.log('通过经纬度计算价格', res.data);
+
+          if (addrC == 1) {
+            price.bPrice = res.data;
+          } else if (addrC == 2) {
+            price.sPrice = res.data;
+          } else if (addrC == 3) {
+            price.fPrice = res.data;
+          }
+          that.setData({
+            price
           })
         }
       })
     }
   },
+  addrCalcB: function (addrA, addrB, addrC) { //通过经纬度计算价格
+    let that = this;
+    let price = that.data.price; //跑腿费
+    let sendGoodWeight = that.data.sendGoodWeight;
+    let fetchGoodWeight = that.data.fetchGoodWeight;
+
+    if (addrA && addrB && addrC && sendGoodWeight) {
+      wx.request({
+        url: 'https://daizongpaotui.zlogic.cn/index.php/api/selectaddress/calculate',
+        method: 'POST',
+        data: {
+          from: addrA.location.lat + ',' + addrA.location.lng, //购买地址 经纬度
+          to: addrB.location.lat + ',' + addrB.location.lng, //购买地址 经纬度
+          weight: sendGoodWeight
+        },
+        success: function (res) {
+          console.log('通过经纬度计算价格', res.data);
+
+          if (addrC == 1) {
+            price.bPrice = res.data;
+          } else if (addrC == 2) {
+            price.sPrice = res.data;
+          } else if (addrC == 3) {
+            price.fPrice = res.data;
+          }
+          that.setData({
+            price
+          })
+        }
+      })
+    } else if (addrA && addrB && addrC && fetchGoodWeight) {
+      wx.request({
+        url: 'https://daizongpaotui.zlogic.cn/index.php/api/selectaddress/calculate',
+        method: 'POST',
+        data: {
+          from: addrA.location.lat + ',' + addrA.location.lng, //购买地址 经纬度
+          to: addrB.location.lat + ',' + addrB.location.lng, //购买地址 经纬度
+          weight: fetchGoodWeight
+        },
+        success: function (res) {
+          console.log('通过经纬度计算价格', res.data);
+
+          if (addrC == 1) {
+            price.bPrice = res.data;
+          } else if (addrC == 2) {
+            price.sPrice = res.data;
+          } else if (addrC == 3) {
+            price.fPrice = res.data;
+          }
+          that.setData({
+            price
+          })
+        }
+      })
+    }
+  },
+  // bPlaceOrder: function () { //下单（帮我买）
+  //   let that = this;
+  //   let userId = wx.getStorageSync('userId'); //用户id
+  //   let buyAddrInfo = that.data.buyAddrInfo; //购买地址 详情
+  //   let buyTakeAddrInfo = that.data.buyTakeAddrInfo; //收货地址 详情
+  //   let marketDetail = that.data.marketDetail; //市场选购详情
+  //   let marketSelGoods = wx.getStorageSync('marketSelGoods'); //已选商品
+  //   let marketPrice = wx.getStorageSync('marketPrice'); //同济市场选购商品总价
+  //   let buyGoods = that.data.buyGoods; //填写购买商品
+  //   let buyTime = that.data.buyTime;
+  //   let feeNum = that.data.feeNum; //小费金额
+  //   let bPrice = that.data.price.bPrice; //跑腿费 帮我买
+  //   let price = 0; //跑腿费
+  //   let remark = that.data.remark; //备注
+
+  //   // 地址信息 经纬度 格式
+  //   if (buyAddrInfo) {
+  //     buyAddrInfo.site = buyAddrInfo.location.lat + ',' + buyAddrInfo.location.lng;
+  //   }
+  //   if (buyTakeAddrInfo) {
+  //     buyTakeAddrInfo.site = buyTakeAddrInfo.location.lat + ',' + buyTakeAddrInfo.location.lng;
+  //   }
+
+  //   // 计算跑腿费
+  //   marketPrice = marketPrice == '' ? '0' : marketPrice;
+  //   price = bPrice + parseFloat(marketPrice) + parseInt(feeNum);
+
+  //   if (userId) {
+  //     if (buyAddrInfo == '' || buyTakeAddrInfo == '') {
+  //       wx.showToast({
+  //         title: '请完善地址信息',
+  //         icon: 'none'
+  //       })
+  //     } else if (marketDetail == '' && buyGoods == '') {
+  //       wx.showToast({
+  //         title: '请选择或填写购买物品',
+  //         icon: 'none'
+  //       })
+  //     } else {
+  //       wx.showLoading({
+  //         title: '请稍后'
+  //       })
+
+  //       wx.request({ //下订单
+  //         url: 'https://daizongpaotui.zlogic.cn/index.php/api/orders/placeOrder',
+  //         method: 'POST',
+  //         data: {
+  //           token: userId, //用户id
+  //           orderType: 3, //订单类型 1=帮我送,2=帮我取,3=帮我买,4=其他服务
+  //           from: buyAddrInfo.address, //购买地址
+  //           from_jw: buyAddrInfo.site, //购买地址 经纬度
+  //           fahuoren: buyAddrInfo.name, //购买地址 联系人
+  //           fahuophone: buyAddrInfo.tel, //购买地址 电话
+  //           to: buyTakeAddrInfo.address, //收货地址
+  //           to_jw: buyTakeAddrInfo.site, //收货地址 经纬度
+  //           shouhuoren: buyTakeAddrInfo.name, //收货地址 联系人
+  //           shouhuophone: buyTakeAddrInfo.tel, //收货地址 电话
+  //           goods: marketSelGoods, //已选商品
+  //           detail: buyGoods, //填写购买商品
+  //           fahuo: buyTime, //购买时间
+  //           tip: feeNum, //小费金额
+  //           price: price, //跑腿费
+  //           remark: remark //备注
+  //         },
+  //         success: function (res) {
+  //           console.log(res)
+
+  //           if (res.data.code == 200) {
+  //             let oId = res.data.orderID //订单id
+  //             wx.hideLoading({
+  //               complete: () => {
+  //                 wx.navigateTo({
+  //                   url: '/pages/order/orderDetail?oId=' + oId
+  //                 })
+  //               }
+  //             })
+  //           } else {
+  //             wx.showToast({
+  //               title: '下单失败',
+  //               icon: 'none'
+  //             })
+  //           }
+  //         }
+  //       })
+  //     }
+  //   } else {
+  //     wx.showToast({
+  //       title: '请先登录',
+  //       icon: 'none',
+  //       duration: 2000,
+  //       success() {
+  //         wx.switchTab({
+  //           url: '/pages/user/user'
+  //         })
+  //       }
+  //     })
+  //   }
+  // },
   sPlaceOrder: function () { //下单（帮我送）
     let that = this;
     let userId = wx.getStorageSync('userId'); //用户id
@@ -848,8 +946,8 @@ Page({
     let sendGoodValue = that.data.sendGoodValue; //物品价值
     let sendSupportValue = that.data.sendSupportValue; //保价服务
     let sendSupportValueNum = that.data.sendSupportValueNum; //保价价格
-    let sendGoodWeight = that.data.sendGoodWeight; //物品重量
-    let sImgStr = that.data.sImgStr;//上传图片 字符串
+    let sendGoodWeight = that.data.sendGoodWeight == 0 || '' ? 0 : parseInt(that.data.sendGoodWeight); //物品重量
+    let sImgStr = that.data.sImgStr; //上传图片 字符串
     let sendTime = that.data.sendTime;
     let useCoupon = wx.getStorageSync('useCoupon'); //当前使用优惠券
     let useCouponId = useCoupon == '' ? '' : useCoupon.id; //当前使用优惠券id
@@ -867,7 +965,7 @@ Page({
     }
 
     // 计算跑腿费
-    price = sPrice + parseInt(sendSupportValueNum) + parseInt(feeNum);
+    price = sPrice;
 
     // 计算当前使用优惠券
     if (useCoupon && sPrice >= useCoupon.quota) {
@@ -889,54 +987,62 @@ Page({
         wx.showLoading({
           title: '请稍后'
         })
-        wx.request({ //下订单
-          url: 'https://daizongpaotui.zlogic.cn/index.php/api/orders/placeOrder',
-          method: 'POST',
-          data: {
-            token: userId, //用户id
-            orderType: 1, //订单类型 1=帮我送,2=帮我取,3=帮我买,4=其他服务
-            from: sendAddrInfo.address, //发货地址
-            from_jw: sendAddrInfo.site, //发货地址 经纬度
-            fahuoren: sendAddrInfo.name, //发货地址 联系人
-            fahuophone: sendAddrInfo.tel, //发货地址 电话
-            to: sendTakeAddrInfo.address, //收货地址
-            to_jw: sendTakeAddrInfo.site, //收货地址 经纬度
-            shouhuoren: sendTakeAddrInfo.name, //收货地址 联系人
-            shouhuophone: sendTakeAddrInfo.tel, //收货地址 电话
-            class: sendGoodType, //物品类型
-            jiazhi: sendGoodValue, //物品价值
-            insured_price: sendSupportValue, //保价服务
-            weight: sendGoodWeight, //物品重量
-            photoimages:sImgStr,//上传图片 字符串
-            fahuo: sendTime, //发货时间
-            youhuijuanid: useCouponId, //当前使用优惠券id
-            tip: feeNum, //小费金额
-            price: price, //跑腿费
-            remark: remark //备注
-          },
-          success: function (res) {
-            console.log(res)
 
-            if (res.data.code == 200) {
-              let oId = res.data.orderID //订单id
+        if (sendAddrInfo.address == sendTakeAddrInfo.address && sendAddrInfo.region == sendTakeAddrInfo.region) {
+          wx.showToast({
+            title: '送货地址不能与收货地址一样',
+            icon: 'none'
+          })
+        } else {
+          wx.request({ //下订单
+            url: 'https://daizongpaotui.zlogic.cn/index.php/api/orders/placeOrder',
+            method: 'POST',
+            data: {
+              token: userId, //用户id
+              orderType: 1, //订单类型 1=帮我送,2=帮我取,3=帮我买,4=其他服务
+              from: sendAddrInfo.address, //发货地址
+              // from_jw: sendAddrInfo.site, //发货地址 经纬度
+              fahuoren: sendAddrInfo.name, //发货地址 联系人
+              fahuophone: sendAddrInfo.tel, //发货地址 电话
+              to: sendTakeAddrInfo.address, //收货地址
+              // to_jw: sendTakeAddrInfo.site, //收货地址 经纬度
+              shouhuoren: sendTakeAddrInfo.name, //收货地址 联系人
+              shouhuophone: sendTakeAddrInfo.tel, //收货地址 电话
+              class: sendGoodType, //物品类型
+              jiazhi: sendGoodValue, //物品价值
+              insured_price: parseInt(sendSupportValue), //保价服务
+              weight: sendGoodWeight, //物品重量
+              photoimages: sImgStr, //上传图片 字符串
+              fahuo: sendTime, //发货时间
+              youhuijuanid: useCouponId, //当前使用优惠券id
+              tip: feeNum, //小费金额
+              price: price, //跑腿费
+              remark: remark //备注
+            },
+            success: function (res) {
+              console.log(res)
 
-              wx.hideLoading({
-                complete: () => {
-                  wx.removeStorageSync('useCoupon'); //删除缓存 当前使用优惠券
+              if (res.data.code == 200) {
+                let oId = res.data.orderID //订单id
 
-                  wx.navigateTo({
-                    url: '/pages/order/orderDetail?oId=' + oId
-                  })
-                }
-              })
-            } else {
-              wx.showToast({
-                title: '下单失败',
-                icon: 'none'
-              })
+                wx.hideLoading({
+                  complete: () => {
+                    wx.removeStorageSync('useCoupon'); //删除缓存 当前使用优惠券
+
+                    wx.navigateTo({
+                      url: '/pages/order/orderDetail?oId=' + oId
+                    })
+                  }
+                })
+              } else {
+                wx.showToast({
+                  title: '下单失败',
+                  icon: 'none'
+                })
+              }
             }
-          }
-        })
+          })
+        }
       }
     } else {
       wx.showToast({
@@ -960,7 +1066,7 @@ Page({
     let fetchGoodValue = that.data.fetchGoodValue; //物品价值
     let fetchSupportValue = that.data.fetchSupportValue; //保价服务
     let fetchSupportValueNum = that.data.fetchSupportValueNum; //保价价格
-    let fetchGoodWeight = that.data.fetchGoodWeight; //物品重量
+    let fetchGoodWeight = that.data.fetchGoodWeight == 0 || '' ? 0 : parseInt(that.data.fetchGoodWeight); //物品重量
     let fetchTime = that.data.fetchTime;
     let useCoupon = wx.getStorageSync('useCoupon'); //当前使用优惠券
     let useCouponId = useCoupon == '' ? '' : useCoupon.id; //当前使用优惠券id
@@ -978,7 +1084,7 @@ Page({
     }
 
     // 计算跑腿费
-    price = fPrice + parseInt(fetchSupportValueNum) + parseInt(feeNum);
+    price = fPrice;
 
     // 计算当前使用优惠券
     if (useCoupon && sPrice >= useCoupon.quota) {
@@ -1001,54 +1107,61 @@ Page({
           title: '请稍后'
         })
 
-        wx.request({ //下订单
-          url: 'https://daizongpaotui.zlogic.cn/index.php/api/orders/placeOrder',
-          method: 'POST',
-          data: {
-            token: userId, //用户id
-            orderType: 2, //订单类型 1=帮我送,2=帮我取,3=帮我买,4=其他服务
-            from: fetchAddrInfo.address, //取货地址
-            from_jw: fetchAddrInfo.site, //取货地址 经纬度
-            fahuoren: fetchAddrInfo.name, //取货地址 联系人
-            fahuophone: fetchAddrInfo.tel, //取货地址 电话
-            to: fetchTakeAddrInfo.address, //收货地址
-            to_jw: fetchTakeAddrInfo.site, //收货地址 经纬度
-            shouhuoren: fetchTakeAddrInfo.name, //收货地址 联系人
-            shouhuophone: fetchTakeAddrInfo.tel, //收货地址 电话
-            class: fetchGoodType, //物品类型
-            jiazhi: fetchGoodValue, //物品价值
-            insured_price: fetchSupportValue, //保价服务
-            weight: fetchGoodWeight, //物品重量
-            photoimages:that.data.sImgStr,//上传图片 字符串
-            fahuo: fetchTime, //取货时间
-            youhuijuanid: useCouponId, //当前使用优惠券id
-            tip: feeNum, //小费金额
-            price: price, //跑腿费
-            remark: remark //备注
-          },
-          success: function (res) {
-            console.log(res)
+        if (fetchAddrInfo.address == fetchTakeAddrInfo.address && fetchAddrInfo.region == fetchTakeAddrInfo.region) {
+          wx.showToast({
+            title: '送货地址不能与收货地址一样',
+            icon: 'none'
+          })
+        } else {
+          wx.request({ //下订单
+            url: 'https://daizongpaotui.zlogic.cn/index.php/api/orders/placeOrder',
+            method: 'POST',
+            data: {
+              token: userId, //用户id
+              orderType: 2, //订单类型 1=帮我送,2=帮我取,3=帮我买,4=其他服务
+              from: fetchAddrInfo.address, //取货地址
+              // from_jw: fetchAddrInfo.site, //取货地址 经纬度
+              fahuoren: fetchAddrInfo.name, //取货地址 联系人
+              fahuophone: fetchAddrInfo.tel, //取货地址 电话
+              to: fetchTakeAddrInfo.address, //收货地址
+              // to_jw: fetchTakeAddrInfo.site, //收货地址 经纬度
+              shouhuoren: fetchTakeAddrInfo.name, //收货地址 联系人
+              shouhuophone: fetchTakeAddrInfo.tel, //收货地址 电话
+              class: fetchGoodType, //物品类型
+              jiazhi: fetchGoodValue, //物品价值
+              insured_price: parseInt(fetchSupportValue), //保价服务
+              weight: fetchGoodWeight, //物品重量
+              photoimages: that.data.sImgStr, //上传图片 字符串
+              fahuo: fetchTime, //取货时间
+              youhuijuanid: useCouponId, //当前使用优惠券id
+              tip: feeNum, //小费金额
+              price: price, //跑腿费
+              remark: remark //备注
+            },
+            success: function (res) {
+              console.log(res)
 
-            if (res.data.code == 200) {
-              let oId = res.data.orderID //订单id
+              if (res.data.code == 200) {
+                let oId = res.data.orderID //订单id
 
-              wx.hideLoading({
-                complete: () => {
-                  wx.removeStorageSync('useCoupon'); //删除缓存 当前使用优惠券
+                wx.hideLoading({
+                  complete: () => {
+                    wx.removeStorageSync('useCoupon'); //删除缓存 当前使用优惠券
 
-                  wx.navigateTo({
-                    url: '/pages/order/orderDetail?oId=' + oId
-                  })
-                }
-              })
-            } else {
-              wx.showToast({
-                title: '下单失败',
-                icon: 'none'
-              })
+                    wx.navigateTo({
+                      url: '/pages/order/orderDetail?oId=' + oId
+                    })
+                  }
+                })
+              } else {
+                wx.showToast({
+                  title: '下单失败',
+                  icon: 'none'
+                })
+              }
             }
-          }
-        })
+          })
+        }
       }
     } else {
       wx.showToast({
@@ -1069,7 +1182,6 @@ Page({
     let helpAddrInfo = that.data.helpAddrInfo; //发货地址 详情
     let serve = that.data.serve; //已选服务事项
     let serveDetail = that.data.serveDetail; //服务具体事项
-    // let helpTime = that.data.helpTime[that.data.helpTimeIndex] == '服务时间' ? '' : that.data.helpTime[that.data.helpTimeIndex]; //服务时间
     let helpTime = that.data.helpTime;
     let feeNum = that.data.feeNum; //小费金额
     let hPrice = that.data.price.hPrice; //跑腿费 其他服务
@@ -1106,7 +1218,7 @@ Page({
             token: userId, //用户id
             orderType: 4, //订单类型 1=帮我送,2=帮我取,3=帮我买,4=其他服务
             from: helpAddrInfo.address, //服务地址
-            from_jw: helpAddrInfo.site, //服务地址 经纬度
+            // from_jw: helpAddrInfo.site, //服务地址 经纬度
             fahuoren: helpAddrInfo.name, //服务地址 联系人
             fahuophone: helpAddrInfo.tel, //服务地址 电话
             class: serve.tag_name, //服务事项 名称
@@ -1336,7 +1448,7 @@ Page({
 
     this.setData(data);
   },
-  bindMultiPickerColumnChange: function (e) {
+  bindMultiPickerColumnChange: function (e) { // 选择时间
     date = new Date();
 
     var that = this;
@@ -1404,9 +1516,7 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
-
   loadData: function (hours, minute) { // 选择时间
-
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
       minuteIndex = 10;
@@ -1442,8 +1552,7 @@ Page({
       }
     }
   },
-
-  loadHoursMinute: function (hours, minute) {
+  loadHoursMinute: function (hours, minute) { // 选择时间
     // 时
     for (var i = 0; i < 24; i++) {
       hours.push(i);
@@ -1453,7 +1562,6 @@ Page({
       minute.push(i);
     }
   },
-
   loadMinute: function (hours, minute) { // 选择时间
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
@@ -1509,12 +1617,11 @@ Page({
     }
 
     var startDate = monthDay + " " + hours + ":" + minute;
-
+    console.log('时间', startDate);
     that.setData({
       startDate: startDate
     })
 
-    console.log('时间', startDate);
     if (currentTab == 0) {
       that.setData({
         buyTime: startDate

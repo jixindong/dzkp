@@ -1,0 +1,129 @@
+<!--pages/buy/buy.wxml-->
+<view class="container">
+	<!-- 地址 -->
+	<view class="addressBox boxShadow">
+		<view class="address" wx:if="{{marketDetail}}">
+			<image src="/images/buy.png"></image>
+			<view class="chooseAddress">
+				<view class="addrDetailBox">
+					<text class="ellipsis detail">{{marketAddr.address}}</text>
+					<text class="ellipsis location">{{marketAddr.region}}</text>
+				</view>
+			</view>
+		</view>
+
+		<view class="address" wx:if="{{!marketDetail}}">
+			<image src="/images/buy.png"></image>
+			<navigator url="/pages/buy/buyFillAddressA" class="chooseAddress">
+				<text class="ellipsis choice" wx:if="{{buyAddrInfo == ''}}">请选择购买地址</text>
+
+				<view class="addrDetailBox" wx:if="{{buyAddrInfo}}">
+					<text class="ellipsis detail">{{buyAddrInfo.address}}</text>
+					<text class="ellipsis location">{{buyAddrInfo.region}}</text>
+					<text class="ellipsis location">{{buyAddrInfo.detailAddr}}</text>
+				</view>
+			</navigator>
+			<navigator url="#" class="common" bindtap="setDefaultAddrA">默认</navigator>
+		</view>
+
+		<view class="address">
+			<image src="/images/receive.png"></image>
+			<navigator url="/pages/buy/buyFillAddressB" class="chooseAddress">
+				<text class="ellipsis choice" wx:if="{{buyTakeAddrInfo == ''}}">请选择收货地址</text>
+
+				<view class="addrDetailBox" wx:if="{{buyTakeAddrInfo}}">
+					<text class="ellipsis detail">{{buyTakeAddrInfo.address}}</text>
+					<text class="ellipsis location">{{buyTakeAddrInfo.region}}</text>
+					<text class="ellipsis location">{{buyTakeAddrInfo.detailAddr}}</text>
+				</view>
+			</navigator>
+			<navigator url="#" class="common" bindtap="setDefaultAddrB">默认</navigator>
+		</view>
+	</view>
+	<!-- 地址 end -->
+
+	<!-- 市场 -->
+	<view class="marketInfo boxShadow" wx:if="{{marketDetail}}">
+		<text class="title">已选购商品</text>
+		<view class="detail">{{marketDetail}}</view>
+	</view>
+	<!-- 市场 end -->
+
+	<!-- 购买商品 -->
+	<view class="product boxShadow" wx:if="{{!marketDetail}}">
+		<text class="title">填写需要购买的商品</text>
+		<textarea maxlength="200" value="{{buyGoods}}" placeholder="请填写商品名称和数量等" bindinput="buyGoods"></textarea>
+	</view>
+	<!-- 购买商品 end -->
+
+	<!-- 物品重量 -->
+	<view class="weightBox">
+		<text class="title">物品重量</text>
+		<view class="weight boxShadow">
+			<input type="number" maxlength="5" value="{{goodWeight}}" placeholder="请输入" bindinput="goodWeight" disabled="{{marketDetail}}"></input>
+			<text>公斤</text>
+		</view>
+	</view>
+	<!-- 物品重量 end -->
+
+	<!-- 购买 -->
+	<view class="purchase boxShadow">
+		<view class="pLine">
+			<image src="/images/time.png" class="leftImg"></image>
+			<view class="pBox pBoxBorder">
+				<text class="title">购买时间</text>
+
+				<picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+					<text>{{startDate}}</text>
+					<image src="/images/arrowRight.png"></image>
+				</picker>
+			</view>
+		</view>
+
+		<view class="pLine">
+			<image src="/images/fee.png" class="leftImg"></image>
+			<view class="pBox pBoxBorder">
+				<text class="title">小费</text>
+
+				<picker bindchange="feeChange" value="{{feeIndex}}" range="{{fee}}">
+					<text class="{{feeIndex!=0?'active':''}}">{{fee[feeIndex]}}</text>
+					<image src="/images/arrowRight.png"></image>
+				</picker>
+			</view>
+		</view>
+
+		<view class="pLine">
+			<image src="/images/write.png" class="leftImg"></image>
+			<view class="pBox">
+				<text class="title">备注</text>
+
+				<navigator url="#" class="remark" catchtap="showRemarkBox">
+					<text class="ellipsis" wx:if="{{remark}}">{{remark}}</text>
+					<text wx:if="{{!remark}}">备注</text>
+				</navigator>
+			</view>
+		</view>
+	</view>
+	<!-- 购买 end -->
+
+	<!-- 下单 -->
+	<navigator url="#" class="placeOrder" bindtap="bPlaceOrder">
+		<text wx:if="{{price == 0 || price == ''}}">跑腿费￥0</text>
+		<text wx:if="{{price != 0 && price != ''}}">跑腿费￥{{price}}</text>
+		<text wx:if="{{marketPrice != 0}}">商品价格￥{{marketPrice}}</text>
+		<text wx:if="{{feeNum}}">小费￥{{feeNum}}</text>
+		<text>|</text>
+		<text>下单</text>
+	</navigator>
+	<!-- 下单 end -->
+</view>
+
+<!-- 备注隐藏盒子 -->
+<view class="remarkBox" hidden="{{remarkBox}}">
+	<view class="mask" catchtouchmove="catchTouchMove" catchtap="remarkMask"></view>
+	<view class="container" catchtouchmove="catchTouchMove">
+		<textarea maxlength="200" value="{{remark}}" bindinput="inputRemark"></textarea>
+		<navigator url="#" class="sure" catchtap="returnRemark">确定</navigator>
+	</view>
+</view>
+<!-- 备注隐藏盒子 end -->

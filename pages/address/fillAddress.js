@@ -128,6 +128,7 @@ Page({
     })
   },
   smartFill: function (e) { //智能填写
+
   },
   sure: function () { //确定
     let that = this;

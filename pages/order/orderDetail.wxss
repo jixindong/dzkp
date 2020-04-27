@@ -59,7 +59,7 @@
 
 .container .waitPay .btnBox .btn {
   margin: 30rpx 10rpx 10rpx;
-  padding: 10rpx 40rpx;
+  padding: 20rpx 50rpx;
   color: #999;
   font-size: 26rpx;
   border: 1rpx solid #999;
@@ -68,7 +68,7 @@
 
 .container .waitPay .btnBox .btn2 {
   margin: 30rpx 10rpx 10rpx;
-  padding: 10rpx 40rpx;
+  padding: 20rpx 50rpx;
   color: #1865F3;
   font-size: 26rpx;
   border: 1rpx solid #1865F3;
@@ -129,10 +129,19 @@
 
 .container .waitOrder .btnBox .btn {
   margin: 30rpx 20rpx 10rpx;
-  padding: 10rpx 40rpx;
+  padding: 20rpx 50rpx;
   color: #999;
   font-size: 26rpx;
   border: 1rpx solid #999;
+  border-radius: 10rpx;
+}
+
+.container .waitOrder .btnBox .btn2 {
+  margin: 30rpx 20rpx 10rpx;
+  padding: 20rpx 50rpx;
+  color: #1865F3;
+  font-size: 26rpx;
+  border: 1rpx solid #1865F3;
   border-radius: 10rpx;
 }
 
@@ -197,7 +206,7 @@
 
 .container .orderProceed .btnBox .btn {
   margin: 30rpx 10rpx 10rpx;
-  padding: 10rpx 40rpx;
+  padding: 20rpx 50rpx;
   color: #999;
   font-size: 26rpx;
   border: 1rpx solid #999;
@@ -206,7 +215,7 @@
 
 .container .orderProceed .btnBox .btn2 {
   margin: 30rpx 10rpx 10rpx;
-  padding: 10rpx 40rpx;
+  padding: 20rpx 50rpx;
   color: #1865F3;
   font-size: 26rpx;
   border: 1rpx solid #1865F3;
@@ -274,7 +283,7 @@
 
 .container .orderComplete .btnBox .btn {
   margin: 30rpx 20rpx 10rpx;
-  padding: 10rpx 40rpx;
+  padding: 20rpx 50rpx;
   color: #999;
   font-size: 26rpx;
   border: 1rpx solid #999;
@@ -283,7 +292,7 @@
 
 .container .orderComplete .btnBox .btn2 {
   margin: 30rpx 20rpx 10rpx;
-  padding: 10rpx 40rpx;
+  padding: 20rpx 50rpx;
   color: #1865F3;
   font-size: 26rpx;
   border: 1rpx solid #1865F3;
@@ -319,14 +328,20 @@
   border-top: 1rpx solid #e6e6e6;
 }
 
+.container .orderDetail .detailLine .title {
+  padding: 0 10rpx 0 0;
+  white-space: nowrap;
+}
+
 .container .orderDetail .detailLine .info {
   flex: 1;
-  padding: 0 0 0 20rpx;
+  padding: 0 10rpx;
   color: #999;
   text-align: right;
 }
 
 .container .orderDetail .detailLine image {
+  margin: 10rpx;
   width: 60rpx;
   height: 60rpx;
   border-radius: 10rpx;

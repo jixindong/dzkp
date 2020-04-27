@@ -12,6 +12,14 @@ Component({
       type: String,
       value: ''
     }, //当前商品 名称、重量
+    pname:{
+      type:String,
+      value:''
+    },//当前商品 名称
+    pweight:{
+      type:Number,
+      value:0
+    },//当前商品 重量
     price: {
       type: Number,
       value: 0
@@ -79,11 +87,15 @@ Component({
     returnGood: function () { //返回商品
       let pid = this.data.pid; //当前商品id
       let pdetail = this.data.pdetail; //当前商品 名称、重量
+      let pname = this.data.pname;//当前商品 名称
+      let pweight = this.data.pweight;//当前商品 重量
       let price = this.data.price; //当前商品价格
       let num = this.data.num;
       let goodInfo = {
         'pid': pid,
         'pdetail': pdetail,
+        'pname':pname,
+        'pweight':pweight,
         'price': price,
         'num': num
       };

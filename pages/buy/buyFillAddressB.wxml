@@ -1,4 +1,4 @@
-<!--pages/address/fillAddress.wxml-->
+<!--pages/buy/buyFillAddressB.wxml-->
 <view class="container">
 	<!-- 地址信息 -->
 	<view class="addrInfo">
@@ -7,7 +7,7 @@
 			<image src="/images/site2.png"></image>
 			<text>所在地区</text>
 
-			<navigator url="/pages/address/chooseAddress?addrSign=fill" class="chooseAddr">
+			<navigator url="#" class="chooseAddr" bindtap="map">
 				<view wx:if="{{!address || !region}}">选择地址</view>
 
 				<view class="address" wx:if="{{address && region}}">
@@ -50,13 +50,6 @@
 		</view>
 	</view>
 	<!-- 地址信息 end -->
-
-	<!-- 智能填写 -->
-	<!-- <view class="autoFill boxShadow">
-		<text class="title">智能填写</text>
-		<textarea placeholder="粘贴个人信息，按确定键智能拆分" bindinput="smartFill"></textarea>
-	</view> -->
-	<!-- 智能填写 end -->
 
 	<!-- 确定 -->
 	<navigator url="#" class="sure boxShadow" bindtap="sure">确定</navigator>

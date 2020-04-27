@@ -11,7 +11,7 @@
 
 	<text wx:if="{{getCode && statusCode != 5 && statusCode != 6 && statusCode != 7}}">取件码：{{getCode}}</text>
 
-	<navigator url="#" class="anewOrder" wx:if="{{statusCode == 5 || statusCode == 6 || statusCode == 7}}">重新下单</navigator>
+	<navigator class="anewOrder" url="/pages/index/index" open-type="switchTab" wx:if="{{statusCode == 5 || statusCode == 6 || statusCode == 7}}">重新下单</navigator>
 </view>
 <!-- 头部 end -->
 
@@ -25,8 +25,8 @@
 		</view>
 
 		<view class="btnBox">
-			<navigator url="#" class="btn" bindtap="cancelOrderA">取消订单</navigator>
 			<!-- <navigator url="#" class="btn">修改订单</navigator> -->
+			<navigator url="#" class="btn" bindtap="cancelOrderA">取消订单</navigator>
 			<navigator url="#" class="btn2" bindtap="paymentA">立即支付</navigator>
 		</view>
 	</view>
@@ -48,6 +48,7 @@
 
 		<view class="btnBox">
 			<navigator url="#" class="btn" bindtap="cancelOrderB">取消订单</navigator>
+			<navigator open-type="switchTab" url="/pages/order/order" class="btn2">查看订单</navigator>
 			<!-- <navigator url="#" class="btn">修改订单</navigator> -->
 		</view>
 	</view>
@@ -59,7 +60,9 @@
 
 		<view class="info">
 			<view class="getImg">
-				<image src="{{getImg}}"></image>
+				<block wx:for="{{getImg}}" wx:key="index">
+					<image src="{{item}}" data-index="{{index}}" bindtap="getImg"></image>
+				</block>
 				<text>已拍照取件</text>
 			</view>
 
@@ -72,8 +75,9 @@
 		<view class="btnBox">
 			<!-- <navigator url="#" class="btn" bindtap="cancelOrder">取消订单</navigator> -->
 			<!-- <navigator url="#" class="btn">修改订单</navigator> -->
-			<navigator url="#" class="btn2" bindtap="paymentB" wx:if="{{!payForFlag}}">立即支付</navigator>
-			<navigator url="#" class="btn2" bindtap="complete" wx:if="{{payForFlag}}">确认送达</navigator>
+			<navigator url="#" class="btn2" bindtap="paymentB" wx:if="{{payForFlag == 1}}">立即支付</navigator>
+			<navigator url="#" class="btn2" bindtap="complete" wx:if="{{payForFlag != 1}}">确认送达</navigator>
+			<navigator open-type="switchTab" url="/pages/order/order" class="btn">查看订单</navigator>
 		</view>
 	</view>
 	<!-- 订单进行信息 end -->
@@ -84,7 +88,9 @@
 
 		<view class="info">
 			<view class="getImg">
-				<image src="{{getImg}}"></image>
+				<block wx:for="{{getImg}}" wx:key="index">
+					<image src="{{item}}" data-index="{{index}}" bindtap="getImg"></image>
+				</block>
 				<text>已拍照取件</text>
 			</view>
 
@@ -96,7 +102,8 @@
 
 		<view class="btnBox">
 			<!-- <navigator url="#" class="btn">联系商家</navigator> -->
-			<navigator url="#" class="btn2">再来一单</navigator>
+			<navigator open-type="switchTab" url="/pages/order/order" class="btn">查看订单</navigator>
+			<navigator url="/pages/index/index" open-type="switchTab" class="btn2">再来一单</navigator>
 		</view>
 	</view>
 	<!-- 订单已完成 end -->
@@ -119,20 +126,36 @@
 
 		<!-- 服务内容 -->
 		<!-- <view class="detailLine">
-			<view>服务内容</view>
-			<text class="info ellipsis">{{serve}}</text>
+			<view class="title">服务内容</view>
+			<view>
+				<text class="info" wx:if="{{orderType == 1}}">帮我送 | </text>
+				<text class="info" wx:if="{{orderType == 2}}">帮我取 | </text>
+				<text class="info" wx:if="{{orderType == 3}}">帮我买 | </text>
+				<text class="info" wx:if="{{orderType == 4}}">其他服务 | </text>
+				<text class="info">{{serve}}</text>
+			</view>
 		</view> -->
 
 		<!-- 照片 -->
-		<!-- <view class="detailLine">
+		<view class="detailLine" wx:if="{{orderImg.length != 0}}">
 			<view>照片</view>
-			<image src="{{orderImg}}"></image>
-		</view> -->
+			<view>
+				<block wx:for="{{orderImg}}" wx:key="index">
+					<image src="{{item}}" data-index="{{index}}" bindtap="orderImg"></image>
+				</block>
+			</view>
+		</view>
 
 		<!-- 订单金额 -->
 		<view class="detailLine">
 			<view>订单金额</view>
 			<text class="info ellipsis">{{price}}</text>
+		</view>
+
+		<!-- 预约时间 -->
+		<view class="detailLine" wx:if="{{subscribeTime}}">
+			<view>预约时间</view>
+			<text class="info ellipsis">{{subscribeTime}}</text>
 		</view>
 
 		<!-- 保价 -->

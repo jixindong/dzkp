@@ -15,14 +15,15 @@ Page({
     orderNumber: '', //订单编号
     orderTime: '', //订单时间
     serve: '', //服务内容
-    // orderImg: 'http://img5.imgtn.bdimg.com/it/u=2701377388,507364627&fm=26&gp=0.jpg', //订单照片
+    subscribeTime: '', //预约时间
+    orderImg: [], //订单照片
     price: '', //订单金额
-    payForFlag:0,//是否支付 骑手垫付
-    payForNum:'',//骑手垫付编号
+    payForFlag: 0, //是否支付 骑手垫付
+    payForNum: '', //骑手垫付编号
     payFor: 0, //骑手垫付金额
     supportValue: '', //保价
     remark: '', //备注
-    getImg: '', //取件拍照
+    getImg: [], //取件拍照
     horsemanTel: '', //骑手电话（订单进行、订单完成）
   },
 
@@ -31,38 +32,7 @@ Page({
    */
   onLoad: function (e) {
     let that = this;
-    let oId = e.oId;//订单id
-
-    wx.request({
-      url: 'https://daizongpaotui.zlogic.cn/index.php/api/orders/seeOrder',
-      method: 'POST',
-      data: {
-        orderId: oId
-      },
-      success: function (res) {
-        let timestamp = res.data.create_time * 1000; //订单时间 时间戳
-        let date = new Date(timestamp); //订单时间 时间对象
-        let orderTime = util.formatTimeA(date); //订单时间
-
-        console.log(res)
-
-        that.setData({
-          orderType: res.data.order_type, //订单类型
-          statusCode: res.data.state, //订单状态
-          getCode: res.data.receipt_code, //订单取件码
-          orderNumber: res.data.order_num, //订单编号
-          orderTime, //订单时间
-          price: res.data.price + '元', //订单金额
-          supportValue: res.data.insured_price == '' || null ? '不保价' : res.data.insured_price, //保价
-          remark: res.data.remark == null ? '' : res.data.remark, //备注
-          getImg: 'https://daizongpaotui.zlogic.cn' + res.data.ticketimages, //取件拍照
-          horsemanTel: res.data.qishouphone, //骑手电话
-          payForFlag:res.data.status,//是否支付 骑手垫付
-          payForNum:res.data.pay_other,//骑手垫付编号
-          payFor: res.data.yonghu_pay //骑手垫付金额
-        })
-      }
-    })
+    let oId = e.oId; //订单id
 
     that.setData({
       oId
@@ -80,7 +50,62 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this;
+    let oId = that.data.oId;
 
+    wx.request({
+      url: 'https://daizongpaotui.zlogic.cn/index.php/api/orders/seeOrder',
+      method: 'POST',
+      data: {
+        orderId: oId
+      },
+      success: function (res) {
+        let timestamp = res.data.create_time * 1000; //订单时间 时间戳
+        let date = new Date(timestamp); //订单时间 时间对象
+        let orderTime = util.formatTimeA(date); //订单时间
+        // let serve = res.data.class + '/' + res.data.prices + '/' + res.data.weight + '公斤'; //服务内容
+        let subscribeTime = res.data.fahuo; //预约时间
+        let orderImgs = []; //订单照片
+        let orderImg = [];
+        let getImgs = []; //取件拍照
+        let getImg = [];
+
+        if (res.data.photoimages != '' && res.data.photoimages != null) {
+          orderImgs = res.data.photoimages.split(',');
+        }
+        if (res.data.ticketimages != '' && res.data.ticketimages != null) {
+          getImgs = res.data.ticketimages.split(',');
+        }
+
+        orderImgs.forEach(value => {
+          value = 'https://daizongpaotui.zlogic.cn' + value;
+          orderImg.push(value);
+        })
+        getImgs.forEach(value => {
+          value = 'https://daizongpaotui.zlogic.cn' + value;
+          getImg.push(value);
+        })
+
+        that.setData({
+          orderType: res.data.order_type, //订单类型
+          statusCode: res.data.state, //订单状态
+          getCode: res.data.receipt_code, //订单取件码
+          orderNumber: res.data.order_num, //订单编号
+          orderTime, //订单时间
+          // serve, //服务内容
+          subscribeTime, //预约时间
+          orderImg, //订单照片
+          price: res.data.price + '元', //订单金额
+          supportValue: res.data.insured_price == '' || null ? '不保价' : res.data.insured_price, //保价
+          remark: res.data.remark == null ? '' : res.data.remark, //备注
+          getImg, //取件拍照
+          horsemanTel: res.data.qishouphone, //骑手电话
+          payForFlag: res.data.status, //是否支付 骑手垫付
+          payForNum: res.data.pay_other, //骑手垫付编号
+          payFor: res.data.yonghu_pay //骑手垫付金额
+        })
+      }
+    })
   },
 
   /**
@@ -262,8 +287,6 @@ Page({
           total: price
         },
         success: function (res) {
-          // console.log(res)
-
           wx.requestPayment({
             nonceStr: res.data.nonceStr,
             package: res.data.package,
@@ -299,8 +322,6 @@ Page({
         total: payFor
       },
       success: function (res) {
-        // console.log(res)
-
         wx.requestPayment({
           nonceStr: res.data.nonceStr,
           package: res.data.package,
@@ -313,7 +334,7 @@ Page({
             })
 
             that.setData({
-              payForFlag:1//是否支付 骑手垫付
+              payForFlag: 1 //是否支付 骑手垫付
             })
           }
         })
@@ -368,7 +389,7 @@ Page({
                   title: '签收成功'
                 })
                 that.setData({
-                  statusCode:4//订单状态 已完成
+                  statusCode: 4 //订单状态 已完成
                 })
               } else {
                 wx.showToast({
@@ -385,6 +406,34 @@ Page({
           })
         }
       }
+    })
+  },
+  orderImg: function (e) { //查看 订单照片
+    let that = this;
+    let index = e.currentTarget.dataset.index;
+    let imgUrl = that.data.orderImg;
+    let urls = [];
+
+    for (let i = 0; i < imgUrl.length; i++) {
+      urls[i] = imgUrl[i]
+    }
+    wx.previewImage({
+      urls: urls,
+      current: urls[index]
+    })
+  },
+  getImg: function (e) { //查看 取件拍照
+    let that = this;
+    let index = e.currentTarget.dataset.index;
+    let imgUrl = that.data.getImg;
+    let urls = [];
+
+    for (let i = 0; i < imgUrl.length; i++) {
+      urls[i] = imgUrl[i]
+    }
+    wx.previewImage({
+      urls: urls,
+      current: urls[index]
     })
   }
 })
