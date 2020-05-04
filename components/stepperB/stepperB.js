@@ -1,4 +1,4 @@
-// components/stepper/stepper.js
+// components/stepperB/stepperB.js
 Component({
   /**
    * 组件的属性列表
@@ -16,6 +16,10 @@ Component({
       type: String,
       value: ''
     }, //当前商品 名称
+    num: {
+      type: Number,
+      value: 0
+    }, //当前商品 数量
     pweight: {
       type: Number,
       value: 0
@@ -23,11 +27,7 @@ Component({
     price: {
       type: Number,
       value: 0
-    }, //当前商品 价格
-    num: {
-      type: Number,
-      value: 0
-    } //当前商品 数量
+    } //当前商品 价格
   },
 
   /**
@@ -44,7 +44,7 @@ Component({
   ready: function () {
     let minusStatus = 'disabled';
 
-    if (this.data.num >= 1) {
+    if (this.data.num >= 2) {
       minusStatus = '';
     }
     this.setData({
@@ -60,11 +60,11 @@ Component({
     bindMinus: function () { //减号按钮
       let num = this.data.num;
 
-      if (num >= 1) {
+      if (num >= 2) {
         num--;
       }
 
-      let minusStatus = num < 1 ? 'disabled' : ''; //减号按钮状态
+      let minusStatus = num < 2 ? 'disabled' : ''; //减号按钮状态
 
       this.setData({
         num,
@@ -78,7 +78,7 @@ Component({
 
       num++;
 
-      let minusStatus = num >= 1 ? '' : 'disabled'; //减号按钮状态
+      let minusStatus = num >= 2 ? '' : 'disabled'; //减号按钮状态
 
       this.setData({
         num,
@@ -89,7 +89,7 @@ Component({
     },
     bindManual: function (e) { //输入框
       let num = e.detail.value;
-      let minusStatus = num < 1 ? 'disabled' : ''; //减号按钮状态
+      let minusStatus = num < 2 ? 'disabled' : ''; //减号按钮状态
 
       this.setData({
         num,

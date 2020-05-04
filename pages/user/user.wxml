@@ -45,9 +45,18 @@
 		<!-- 客服 -->
 		<button open-type="contact" class="serveBtn">
 			<image src="/images/server.png"></image>
-			<text>客服</text>
+			<text>客服/投诉/建议</text>
 			<image src="/images/arrowRight.png" class="arrow"></image>
 		</button>
+
+		<view class="line"></view>
+
+		<!-- 联系我们 -->
+		<navigator url="#" class="listLine" bindtap="showContactBox">
+			<image src="/images/contact.png"></image>
+			<text>联系我们</text>
+			<image src="/images/arrowRight.png" class="arrow"></image>
+		</navigator>
 
 		<view class="line"></view>
 
@@ -59,6 +68,12 @@
 		</navigator>
 	</view>
 	<!-- 功能列表 end -->
+
+	<!-- 退出登录 -->
+	<navigator url="#" class="quit boxShadow" bindtap="quit" wx:if="{{userInfo}}">
+		<image src="/images/door.png"></image>
+		<text>退出登录</text>
+	</navigator>
 </view>
 <!-- 主体 end -->
 
@@ -84,3 +99,13 @@
 	</view>
 </view>
 <!-- 验证手机号隐藏盒子 end -->
+
+<!-- 联系我们隐藏盒子 -->
+<view class="contactBox" hidden="{{contactBox}}">
+	<view class="mask" catchtouchmove="catchTouchMove" catchtap="contactMask"></view>
+	<view class="container" catchtouchmove="catchTouchMove">
+		<textarea maxlength="200" value="{{contact}}" bindinput="inputContact"></textarea>
+		<navigator url="#" class="sure" catchtap="contact">确定</navigator>
+	</view>
+</view>
+<!-- 联系我们隐藏盒子 end -->

@@ -49,7 +49,7 @@
 								<text class="address ellipsis">{{item.from}}</text>
 							</view>
 
-							<view class="detail">
+							<view class="detail" wx:if="{{item.consignor_phone}}">
 								<image src="/images/tel.png"></image>
 								<text>联系方式：</text>
 								<text>{{item.consignor_phone}}</text>

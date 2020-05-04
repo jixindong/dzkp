@@ -94,7 +94,7 @@ Page({
             })
           }
         })
-      }, 500);
+      }, 300);
     }
   },
   chooseAddr: function (e) { //选择地址卡片

@@ -25,22 +25,22 @@
 }
 
 .container .userInfo text {
-  margin: 20rpx 0;
+  margin: 40rpx 0;
 }
 
 /* 头像 */
 .container .userInfo .avatarBox {
-  margin-top: -45rpx;
-  width: 90rpx;
-  height: 90rpx;
+  margin-top: -60rpx;
+  width: 120rpx;
+  height: 120rpx;
   border-radius: 50%;
   overflow: hidden;
 }
 
 .container .userInfo .avatarBox .avatar {
   padding: 0;
-  width: 90rpx;
-  height: 90rpx;
+  width: 120rpx;
+  height: 120rpx;
 }
 
 .container .userInfo .avatarBox .avatar image {
@@ -51,6 +51,7 @@
 /* 昵称 */
 
 .container .userInfo .userName {
+  margin: 20rpx 0;
   font-size: 30rpx;
   color: #1a1a1a;
 }
@@ -86,14 +87,13 @@
   display: flex;
   flex-flow: column nowrap;
   margin: 0 20rpx;
-  padding: 0 20rpx;
   border-radius: 10rpx;
 }
 
 .container .fList .listLine {
   display: flex;
   align-items: center;
-  padding: 20rpx 0;
+  padding: 20rpx;
   color: #1A1A1A;
   font-size: 26rpx;
 }
@@ -113,7 +113,7 @@
 .container .fList .serveBtn {
   display: flex;
   align-items: center;
-  padding: 20rpx 0;
+  padding: 20rpx;
   width: 100%;
   color: #1A1A1A;
   font-size: 26rpx;
@@ -139,6 +139,24 @@
 }
 
 /* 功能列表 end */
+
+/* 退出登录 */
+.container .quit {
+  display: flex;
+  align-items: center;
+  margin: 20rpx;
+  padding: 14rpx 20rpx;
+  font-size: 26rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+}
+
+.container .quit image {
+  margin: 0 20rpx 0 0;
+  width: 28rpx;
+  height: 28rpx;
+}
+
 /* 主体 end */
 
 /* 验证手机号隐藏盒子 */
@@ -204,3 +222,48 @@
 }
 
 /* 验证手机号隐藏盒子 end */
+
+/* 联系我们隐藏盒子 */
+
+.contactBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.contactBox .mask {
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.contactBox .container {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 20rpx;
+  width: 100%;
+  background-color: #fff;
+}
+
+.contactBox .container textarea {
+  padding: 20rpx;
+  width: 100%;
+  font-size: 26rpx;
+  background-color: rgb(245, 245, 245);
+}
+
+.contactBox .container .sure {
+  margin: 20rpx auto;
+  width: 360rpx;
+  height: 74rpx;
+  line-height: 74rpx;
+  color: #fff;
+  font-size: 26rpx;
+  text-align: center;
+  background-color: #1865f3;
+  border-radius: 10rpx;
+}
+
+/* 联系我们隐藏盒子 end */

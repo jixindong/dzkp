@@ -2,11 +2,17 @@
 <view class="container">
 	<!-- banner -->
 	<view class="banner">
-		<image src="https://s1.ax1x.com/2020/04/15/JCYy2q.png" class="bannerImg"></image>
+		<image src="{{marketBanner}}" class="bannerImg"></image>
 
 		<view class="bannerTitle">
-			<image src="/images/greens.png"></image>
-			<text>选购商品</text>
+			<view class="titleBox">
+				<image src="/images/pencil.png"></image>
+				<text>选购商品</text>
+			</view>
+			<view class="tip" wx:if="{{goods.length > 4}}">
+				<text>左滑更多</text>
+				<image src="/images/arrowRight3.png"></image>
+			</view>
 		</view>
 	</view>
 	<!-- banner end -->
@@ -26,7 +32,7 @@
 				<!-- 商品 -->
 				<block wx:for="{{item.child}}" wx:key="index">
 					<view data-pid="{{item.id}}" class="good">
-						<image src="https://daizongpaotui.zlogic.cn{{item.photoimages}}" class="goodImg" wx:if="{{item.photoimages}}"></image>
+						<image src="https://daizongpaotui.zlogic.cn{{item.goodImgs[0]}}" class="goodImg" data-img="{{item.goodImgs}}" bindtap="goodImg" wx:if="{{item.photoimages}}"></image>
 						<image src="/images/goodImgNone.jpg" class="goodImg" wx:if="{{!item.photoimages}}"></image>
 
 						<view class="goodInfo">
@@ -34,7 +40,7 @@
 							<text class="price">￥{{item.price}}</text>
 						</view>
 
-						<stepper pid="{{item.id}}" pdetail="{{item.name}}{{item.zhongliang}}" pname="{{item.name}}" pweight="{{item.zhongliang}}" price="{{item.price}}" bind:goodInfo="calcPrice" />
+						<stepper pid="{{item.id}}" pdetail="{{item.name}}{{item.zhongliang}}" pname="{{item.name}}" pweight="{{item.zhongliang}}" price="{{item.price}}" num="{{item.num}}" bind:goodInfo="calcPrice" />
 					</view>
 				</block>
 				<!-- 商品 end -->
@@ -52,7 +58,7 @@
 </view>
 
 <!-- 购物车 -->
-<view class="cart boxShadow">
+<view class="cart">
 	<view class="goodsNum">
 		<image src="/images/cart.png"></image>
 		<view class="num" style="height:{{selectedNumHeight}};line-height:{{selectedNumHeight}}" hidden="{{!selectedNum}}">{{selectedNum}}</view>

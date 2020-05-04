@@ -1,6 +1,4 @@
 // pages/user/user.js
-const app = getApp(); //获取应用实例
-
 Page({
 
   /**
@@ -15,38 +13,16 @@ Page({
     verifyCode: '', //验证码
     status: 1, //发送验证码按钮状态 1=获取验证码,2=重新发送,3=倒计时
     timer: null, //定时器
-    countTime: 120 //倒计时 秒数
+    countTime: 120, //倒计时 秒数
+    contactBox: true, //联系我们隐藏盒子
+    contact: '' //联系我们
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    let that = this;
-    let userInfo = wx.getStorageSync('userInfo'); //用户信息
-    let userId = wx.getStorageSync('userId'); //用户id
 
-    wx.request({ //获取 用户手机号
-      url: 'https://daizongpaotui.zlogic.cn/index.php/api/sendmsg/getphone',
-      method: 'POST',
-      data: {
-        token: userId //用户id
-      },
-      success: function (res) {
-        let tel = res.data; //用户手机号
-
-        console.log('用户手机号', tel);
-
-        that.setData({
-          tel //用户手机号
-        })
-      }
-    })
-
-    that.setData({
-      userInfo,
-      userId
-    })
   },
 
   /**
@@ -60,7 +36,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getPhone(); //获取用户手机号
   },
 
   /**
@@ -115,9 +91,9 @@ Page({
           url: 'https://daizongpaotui.zlogic.cn/index.php/api/wxlogin/index',
           method: 'POST',
           data: {
-            code:code,
-            username:e.detail.userInfo.nickName,
-            headimages:e.detail.userInfo.avatarUrl
+            code: code,
+            username: e.detail.userInfo.nickName,
+            headimages: e.detail.userInfo.avatarUrl
           },
           success: function (res) {
             let userId = res.data;
@@ -126,6 +102,7 @@ Page({
             that.setData({
               userId
             })
+            that.getPhone(); //获取用户手机号
           }
         })
       }
@@ -268,6 +245,96 @@ Page({
     } else {
       wx.showToast({
         title: '请先登录',
+        icon: 'none'
+      })
+    }
+  },
+  getPhone: function () { //获取用户手机号
+    let that = this;
+    let userInfo = wx.getStorageSync('userInfo'); //用户信息
+    let userId = wx.getStorageSync('userId'); //用户id
+
+    if (userId) {
+      wx.request({ //获取 用户手机号
+        url: 'https://daizongpaotui.zlogic.cn/index.php/api/sendmsg/getphone',
+        method: 'POST',
+        data: {
+          token: userId //用户id
+        },
+        success: function (res) {
+          let tel = res.data; //用户手机号
+
+          console.log('用户手机号', tel);
+
+          that.setData({
+            tel //用户手机号
+          })
+        }
+      })
+
+      that.setData({
+        userInfo,
+        userId
+      })
+    }
+  },
+  quit: function () { //退出登录
+    let that = this;
+    wx.showModal({
+      cancelColor: '#1865F3',
+      cancelText: '点错啦',
+      confirmColor: '#999',
+      confirmText: '残忍退出',
+      title: '退出登录',
+      content: '您确定退出登录吗？',
+      success(res) {
+        if (res.confirm) {
+          wx.removeStorageSync('userInfo'); //清除缓存 用户信息
+          wx.removeStorageSync('userId'); //清除缓存 用户id
+          that.setData({
+            userInfo: null,
+            userId: null
+          })
+          wx.showToast({
+            title: '成功退出'
+          })
+        } else if (res.cancel) {
+          wx.showToast({
+            title: '操作已取消',
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+  showContactBox: function () { //联系我们 按钮
+    this.setData({
+      contactBox: !this.data.contactBox
+    })
+  },
+  contactMask: function () { //联系我们隐藏盒子 mask
+    this.setData({
+      contactBox: !this.data.contactBox
+    })
+  },
+  inputContact: function (e) { //联系我们 输入框
+    this.setData({
+      contact: e.detail.value
+    })
+  },
+  contact: function () { //联系我们
+    let contact = this.data.contact; //联系我们
+
+    if (contact) {
+      wx.showToast({
+        title: '感谢您的反馈'
+      })
+      this.setData({
+        contactBox: !this.data.contactBox
+      })
+    } else {
+      wx.showToast({
+        title: '内容不能为空',
         icon: 'none'
       })
     }

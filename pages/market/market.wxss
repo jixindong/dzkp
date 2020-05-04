@@ -18,7 +18,7 @@ page {
 .banner .bannerTitle {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 90rpx;
   color: #1A1A1A;
@@ -26,10 +26,30 @@ page {
   font-weight: bold;
 }
 
-.banner .bannerTitle image {
-  margin: 0 20rpx;
+.banner .bannerTitle .titleBox {
+  display: flex;
+  align-items: center;
+}
+
+.banner .bannerTitle .titleBox image {
+  margin: 0 20rpx 0 40rpx;
   width: 36rpx;
   height: 30rpx;
+}
+
+.banner .bannerTitle .tip {
+  display: flex;
+  align-items: center;
+  margin: 0 12rpx 0 0;
+  color: #F78617;
+  font-size: 26rpx;
+  font-weight: normal;
+}
+
+.banner .bannerTitle .tip image {
+  margin: 0 10rpx;
+  width: 36rpx;
+  height: 26rpx;
 }
 
 /* banner end */
@@ -118,7 +138,7 @@ page {
 .cart {
   position: fixed;
   left: 50%;
-  bottom: 70rpx;
+  bottom: 50rpx;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -128,6 +148,7 @@ page {
   overflow: hidden;
   background-color: #fff;
   border-radius: 42rpx;
+  box-shadow: 0 0 10rpx 0 rgba(247, 134, 23, 0.5);
 }
 
 .cart .goodsNum {

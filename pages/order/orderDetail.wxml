@@ -21,11 +21,9 @@
 	<view class="waitPay boxShadow" wx:if="{{statusCode == 1}}">
 		<view class="title">
 			<text>请在15分钟内完成支付</text>
-			<!-- <text class="time">11:11</text> -->
 		</view>
 
 		<view class="btnBox">
-			<!-- <navigator url="#" class="btn">修改订单</navigator> -->
 			<navigator url="#" class="btn" bindtap="cancelOrderA">取消订单</navigator>
 			<navigator url="#" class="btn2" bindtap="paymentA">立即支付</navigator>
 		</view>
@@ -49,14 +47,13 @@
 		<view class="btnBox">
 			<navigator url="#" class="btn" bindtap="cancelOrderB">取消订单</navigator>
 			<navigator open-type="switchTab" url="/pages/order/order" class="btn2">查看订单</navigator>
-			<!-- <navigator url="#" class="btn">修改订单</navigator> -->
 		</view>
 	</view>
 	<!-- 待接单信息 end -->
 
 	<!-- 订单进行信息 -->
 	<view class="orderProceed boxShadow" wx:if="{{statusCode == 3}}">
-		<view class="title">预计11:00送达</view>
+		<!-- <view class="title">预计11:00送达</view> -->
 
 		<view class="info">
 			<view class="getImg">
@@ -73,10 +70,8 @@
 		</view>
 
 		<view class="btnBox">
-			<!-- <navigator url="#" class="btn" bindtap="cancelOrder">取消订单</navigator> -->
-			<!-- <navigator url="#" class="btn">修改订单</navigator> -->
-			<navigator url="#" class="btn2" bindtap="paymentB" wx:if="{{payForFlag == 1}}">立即支付</navigator>
-			<navigator url="#" class="btn2" bindtap="complete" wx:if="{{payForFlag != 1}}">确认送达</navigator>
+			<navigator url="#" class="btn2" bindtap="paymentB" wx:if="{{orderType == 3 && payForFlag == 1}}">立即支付</navigator>
+			<navigator url="#" class="btn2" bindtap="complete" wx:if="{{orderType != 3 || payForFlag != 1}}">确认送达</navigator>
 			<navigator open-type="switchTab" url="/pages/order/order" class="btn">查看订单</navigator>
 		</view>
 	</view>
@@ -84,8 +79,6 @@
 
 	<!-- 订单已完成 -->
 	<view class="orderComplete boxShadow" wx:if="{{statusCode == 4}}">
-		<view class="title">11:00准时送达</view>
-
 		<view class="info">
 			<view class="getImg">
 				<block wx:for="{{getImg}}" wx:key="index">
@@ -101,7 +94,6 @@
 		</view>
 
 		<view class="btnBox">
-			<!-- <navigator url="#" class="btn">联系商家</navigator> -->
 			<navigator open-type="switchTab" url="/pages/order/order" class="btn">查看订单</navigator>
 			<navigator url="/pages/index/index" open-type="switchTab" class="btn2">再来一单</navigator>
 		</view>

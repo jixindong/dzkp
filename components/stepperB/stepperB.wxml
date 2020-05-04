@@ -1,0 +1,17 @@
+<!--components/stepperB/stepperB.wxml-->
+<!-- 步进器 -->
+<view class="stepper">
+	<!-- 减号 -->
+	<navigator url="#" class="stepBtn {{minusStatus}}" bindtap="bindMinus">
+		<image src="/images/minus2.png"></image>
+	</navigator>
+
+	<!-- 数值 -->
+	<input class="stepIpt" type="number" bindinput="bindManual" value="{{num}}" hidden="{{num == 0}}" />
+
+	<!-- 加号 -->
+	<navigator url="#" class="stepBtn" bindtap="bindPlus">
+		<image src="/images/plus2.png"></image>
+	</navigator>
+</view>
+<!-- 步进器 end -->

@@ -102,12 +102,13 @@ Page({
         }
       })
     } else {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none',
+      wx.switchTab({
+        url: '/pages/user/user',
         success() {
-          wx.switchTab({
-            url: '/pages/user/user'
+          wx.showToast({
+            title: '请先登录',
+            icon: 'none',
+            duration: 2000
           })
         }
       })
